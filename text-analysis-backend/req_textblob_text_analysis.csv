@@ -1,0 +1,194 @@
+timestamp,input_text,polarity,subjectivity,noun_phrases
+2024-05-07T16:37:06.676983,"Users at education establishments upload text documents (Word files or pdf – if pdf uploaded then converted into text and images). There will be an interface providing text analyses at different levels of granularity (sentence, paragraph, section, document) and providing insights that help users understand and reflect on the creation process such as originality, complexity, quality of images, tables and footnotes. The field of AI in education is currently developing rapidly so we will collaborate with schools and universities in the design of the analyses and user interface to ensure that the product meets demand.",0.0,0.5,"['users', 'education establishments upload text documents', 'word files', 'pdf –', 'text analyses', 'different levels', 'creation process', 'ai', 'user interface']"
+2024-05-07T16:38:02.395163,"Now, when you send a POST request to the /analyze endpoint of your Flask backend, it should log the input text, polarity, and subjectivity along with a timestamp into the req_textblob_text_analysis.csv file in the /app directory, which is mapped to ./text-analysis-backend on your host machine.",0.0,0.0,"['post', '/analyze endpoint', 'flask', 'input text', 'req_textblob_text_analysis.csv file', '/app directory', 'host machine']"
+2024-05-07T17:14:23.639469,"Now, when you send a POST request to the /analyze endpoint of your Flask backend, it should log the input text, polarity, and subjectivity along with a timestamp into the req_textblob_text_analysis.csv file in the /app directory, which is mapped to ./text-analysis-backend on your host machine.",0.0,0.0,"['post', '/analyze endpoint', 'flask', 'input text', 'req_textblob_text_analysis.csv file', '/app directory', 'host machine']"
+2024-05-07T17:15:24.566872,"Now, when you send a POST request to the /analyze endpoint of your Flask backend, it should log the input text, polarity, and subjectivity along with a timestamp into the req_textblob_text_analysis.csv file in the /app directory, which is mapped to ./text-analysis-backend on your host machine.",0.0,0.0,"['post', '/analyze endpoint', 'flask', 'input text', 'req_textblob_text_analysis.csv file', '/app directory', 'host machine']"
+2024-05-07T17:16:43.872385,"Now, when you send a POST request to the /analyze endpoint of your Flask backend, it should log the input text, polarity, and subjectivity along with a timestamp into the req_textblob_text_analysis.csv file in the /app directory, which is mapped to ./text-analysis-backend on your host machine.",0.0,0.0,"['post', '/analyze endpoint', 'flask', 'input text', 'req_textblob_text_analysis.csv file', '/app directory', 'host machine']"
+2024-05-07T17:28:55.848353,"Seems like everyone is gonna have their emails deactivated at some point, heads up so you can back it up and all that. How is the new job coming along btw? Pourquoi elle dit des lettres comme dans Motus",0.06818181818181818,0.22727272727272727,"['seems', 'gon na', 'new job', 'pourquoi', 'elle dit des lettres comme dans', 'motus']"
+2024-05-07T17:32:27.337637,"I was walking down the street when out the corner of my eye
+I saw a pretty little thing approaching me
+She said, ""I never seen a man, who looks so all alone
+Oh, could you use a little company?
+If you pay the right price, your evening will be nice
+And you can go and send me on my way.""
+I said, ""You're such a sweet young thing, why you do this to yourself?""
+She looked at me and this is what she said:",0.10551587301587302,0.5374603174603175,"['pretty little thing', 'oh', 'right price', 'young thing']"
+2024-05-07T17:39:31.162715,"I was walking down the street when out the corner of my eye
+I saw a pretty little thing approaching me
+She said, ""I never seen a man, who looks so all alone
+Oh, could you use a little company?
+If you pay the right price, your evening will be nice
+And you can go and send me on my way.""
+I said, ""You're such a sweet young thing, why you do this to yourself?""
+She looked at me and this is what she said:",0.10551587301587302,0.5374603174603175,"['pretty little thing', 'oh', 'right price', 'young thing']"
+2024-05-07T17:40:29.839254,"I was walking down the street when out the corner of my eye
+I saw a pretty little thing approaching me
+She said, ""I never seen a man, who looks so all alone
+Oh, could you use a little company?
+If you pay the right price, your evening will be nice
+And you can go and send me on my way.""
+I said, ""You're such a sweet young thing, why you do this to yourself?""
+She looked at me and this is what she said:",0.10551587301587302,0.5374603174603175,"['pretty little thing', 'oh', 'right price', 'young thing']"
+2024-05-07T17:46:26.580621,"I was walking down the street when out the corner of my eye
+I saw a pretty little thing approaching me
+She said, ""I never seen a man, who looks so all alone
+Oh, could you use a little company?
+If you pay the right price, your evening will be nice
+And you can go and send me on my way.""
+I said, ""You're such a sweet young thing, why you do this to yourself?""
+She looked at me and this is what she said",0.10551587301587302,0.5374603174603175,"['pretty little thing', 'oh', 'right price', 'young thing']"
+2024-05-07T17:49:28.093010,"I was walking down the street when out the corner of my eye
+I saw a pretty little thing approaching me
+She said, ""I never seen a man, who looks so all alone
+Oh, could you use a little company?
+If you pay the right price, your evening will be nice
+And you can go and send me on my way.""
+I said, ""You're such a sweet young thing, why you do this to yourself?""
+She looked at me and this is what she said:",0.10551587301587302,0.5374603174603175,"['pretty little thing', 'oh', 'right price', 'young thing']"
+2024-05-07T17:51:31.738405,"I was walking down the street when out the corner of my eye
+I saw a pretty little thing approaching me
+She said, ""I never seen a man, who looks so all alone
+Oh, could you use a little company?
+If you pay the right price, your evening will be nice
+And you can go and send me on my way.""
+I said, ""You're such a sweet young thing, why you do this to yourself?""
+She looked at me and this is what she said:",0.10551587301587302,0.5374603174603175,"['pretty little thing', 'oh', 'right price', 'young thing']"
+2024-05-07T17:55:02.190273,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T10:19:04.955544,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T10:27:26.540192,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T10:31:07.192693,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T10:33:25.514051,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T10:33:33.363123,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T10:33:37.139790,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T10:33:49.568818,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""
+
+Rock & Roll!",0.1638888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't"", 'rock', 'roll']"
+2024-05-08T14:00:41.225486,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T14:03:16.828231,"""Oh there ain't no rest for the wicked
+Money don't grow on trees
+I got bills to pay, I got mouths to feed
+There ain't nothing in this world for free
+Oh no, I can't slow down, I can't hold back
+Though you know, I wish I could
+Oh no there ain't no rest for the wicked
+Until we close our eyes for good""",0.1288888888888889,0.4177777777777778,"['oh', ""ai n't"", ""ai n't"", 'oh', ""ca n't"", ""ca n't hold"", 'oh', ""ai n't""]"
+2024-05-08T14:12:19.953814,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.",0.13194444444444445,0.3833333333333333,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T14:19:15.863497,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.",0.13194444444444445,0.3833333333333333,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T14:28:49.007611,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.",0.13194444444444445,0.3833333333333333,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T14:33:33.865012,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.",0.13194444444444445,0.3833333333333333,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T14:36:20.810170,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T14:42:36.997340,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T14:43:55.519411,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T14:44:05.324313,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T15:00:46.811863,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T15:02:19.648382,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.
+This was generated with chatGPT.",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T15:02:30.473852,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.
+This was generated with chatGPT.",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T16:47:51.213767,"I am trying to set a docker image for domain ai-dev.site. The website I want to develop consists of a front-end React and a back-end Flask, both docker images uploaded. Then I set Docker Proxy Rules for them to be accessible. When clicking on “Preview” button, the url works fine, but the button for “Open in web” does not work. In the tab “Hosting & DNS” I can see that “Domain is not resolvable”. The website was accessible fine when clicking on “Open in web” prior to setting up the Docker Proxy Rules.
+Maybe the issue is related to Proxy Rules? All I find online relates to a “Proxy Rules” button but it is not present.
+As you can see, with Plesk, I'm confused on how I am supposed to organize nginx in order to have a domain serve docker images. Should I make modifications to local files on the server? If so, where? I saw some files that detailed some proxy rules but they specify they should not be modified.
+I am available for further discussion and can provide further information if necessary.
+This was generated with chatGPT. yeppppppppppppppppppppppppppppppp",0.12395833333333334,0.4375,"['docker image', 'domain ai-dev.site', 'react', 'flask', 'docker images', 'docker proxy', 'preview', '” button', '“ open', 'web ”', 'tab “', 'hosting', 'dns', 'domain', 'resolvable ”', '“ open', 'web ”', 'docker proxy', 'proxy', 'online relates', 'proxy', '” button', 'plesk', 'docker images', 'local files', 'proxy rules']"
+2024-05-08T16:49:54.157859,"The axis component renders human-readable reference marks for position scales. It works with most scale types, including linear, log, band, and time scales as shown above.
+
+Calling the axis component on a selection of SVG containers (usually a single G element) populates the axes. Axes are rendered at the origin. To change the position of the axis with respect to the chart, specify a transform attribute on the containing element.",0.14285714285714288,0.2714285714285714,"['axis component renders', 'human-readable reference marks', 'position scales', 'scale types', 'time scales', 'axis component', 'svg', 'axes', 'transform attribute']"
+2024-05-08T16:58:40.373374,"The axis component renders human-readable reference marks for position scales. It works with most scale types, including linear, log, band, and time scales as shown above.
+Calling the axis component on a selection of SVG containers (usually a single G element) populates the axes. Axes are rendered at the origin. To change the position of the axis with respect to the chart, specify a transform attribute on the containing element.",0.14285714285714288,0.2714285714285714,"['axis component renders', 'human-readable reference marks', 'position scales', 'scale types', 'time scales', 'axis component', 'svg', 'axes', 'transform attribute']"
+2024-05-08T17:04:12.592718,"The axis component renders human-readable reference marks for position scales. It works with most scale types, including linear, log, band, and time scales as shown above.
+Calling the axis component on a selection of SVG containers (usually a single G element) populates the axes. Axes are rendered at the origin. To change the position of the axis with respect to the chart, specify a transform attribute on the containing element.",0.14285714285714288,0.2714285714285714,"['axis component renders', 'human-readable reference marks', 'position scales', 'scale types', 'time scales', 'axis component', 'svg', 'axes', 'transform attribute']"
+2024-05-08T17:40:05.259082,"The axis component renders human-readable reference marks for position scales. It works with most scale types, including linear, log, band, and time scales as shown above. Pretty rough...
+Calling the axis component on a selection of SVG containers (usually a single G element) populates the axes. Axes are rendered at the origin. To change the position of the axis with respect to the chart, specify a transform attribute on the containing element.",0.11571428571428573,0.4428571428571429,"['axis component renders', 'human-readable reference marks', 'position scales', 'scale types', 'time scales', 'pretty rough ...', 'axis component', 'svg', 'axes', 'transform attribute']"
+2024-05-13T11:59:25.878076,"Vampire The Masquerade: Coteries of New seems like an interesting game, for a low price...",0.05909090909090908,0.41363636363636364,"['vampire', 'masquerade', 'coteries', 'interesting game', 'low price ...']"

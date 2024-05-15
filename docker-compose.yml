@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./text-analysis-backend
+    image: compose_backend_text_analysis
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./text-analysis-backend:/app
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=development
+  frontend:
+    build: ./text-analysis-frontend-next
+    image: compose_frontendnext_text_analysis
+    ports:
+      - "3000:3000"
+    # volumes:
+    #   - ./text-analysis-frontend-next:/app
