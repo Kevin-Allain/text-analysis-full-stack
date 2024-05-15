@@ -165,7 +165,7 @@ function App() {
             <InteractiveSVGText/>
             <InteractiveSVGWithD3/> 
           */}
-          <h1 className="heading-section">Text Analysis: Docker Compose </h1>
+          <h1 className="heading-section">Text Analysis </h1>
           <div className="mb-3">
             <label htmlFor="text-input" className="form-label">Enter Text</label>
             <textarea className="form-control" id="text-input" rows="3" onChange={handleTextChange}></textarea>
