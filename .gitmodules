@@ -1,0 +1,3 @@
+[submodule "text-analysis-backend/binoculars"]
+	path = text-analysis-backend/binoculars
+	url = https://github.com/SyedHuq28/Binoculars.git
