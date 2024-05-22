@@ -7,7 +7,7 @@ export default function Navbar(){
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           {/* <Link className="black-link" href="/">AI Text Analysis</Link> */}
-          <h3 className="black-link" href="/">AI Text Analysis v0.0.1</h3>
+          <h3 className="black-link" href="/">AI Text Analysis v0.0.2</h3>
         </div>
       </nav>
     </div>

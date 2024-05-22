@@ -20,6 +20,9 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [outputAI, setOutputAI] = useState([]);
+  const [isLoadingAI,setIsLoadingAI] = useState(false);
+
   const [testText, setTestText] = useState("Here is a simple example where each word will have a background color based on its length and some will have borders.");
   
   // If you plan on having the frontend communicate with the backend, you should update the frontend code to use http://backend:5000 when making requests to the backend. This leverages Docker's internal networking.
@@ -45,12 +48,13 @@ function App() {
         setProgress(((index + 1) / words.length) * 100);
       }, (index + 1) * 25); // Adjusted for quicker visualization, shorter value means less wait
     });
+    loadAIText();
   };
 
   const loadMetaText = async () => {
     // Reset previous analysis
     setMetaText([]);
-    setIsLoading(true);
+    setIsLoadingAI(true);
     try {
       console.log("window.location.href: ", window.location.href);
       const is_localhost = window.location.href.indexOf('localhost');
@@ -73,6 +77,35 @@ function App() {
       setIsLoading(false);  // Stop loading regardless of the outcome
     }
   };
+
+  const loadAIText = async () => {
+    console.log("loadAIText");
+    setOutputAI([]);
+    setIsLoadingAI(true);
+    try {
+      console.log("window.location.href loadAIText: ", window.location.href);
+      const is_localhost = window.location.href.indexOf('localhost');
+      const is_127_0_0_1 = window.location.href.indexOf('127.0.0.1');
+      const strAnalyze = is_localhost? window.location.href.replace('3000','5000')+'api/analyze_t_b' : window.location.href+'api/analyze_t_b';
+      console.log("strAnalyze AI Text: ",strAnalyze);
+      // Flask runs on port 5000 by default
+      const response = await fetch(strAnalyze, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify({ text: text }),
+      });
+      if (!response.ok) throw new Error('Network response was not ok.');
+      const data = await response.json();
+      console.log("data loadAIText: ",data)
+      // setOutputAI([data]);
+      setOutputAI(JSON.stringify(data, null, 2)); // Update your state or UI accordingly
+
+    } catch (error) {
+      console.error('Error during API call:', error);
+    } finally {
+      setIsLoadingAI(false);  // Stop loading regardless of the outcome
+    }
+  }
 
   // Map word length to hue (0-360)
   const mapLengthToHue = (length, minLength, maxLength) => {
@@ -157,85 +190,141 @@ function App() {
         <title>Text Analysis Docker</title>
       </Head>
       <div className="container-fluid d-flex flex-column min-vh-100">
-        <Navbar/> 
+        <Navbar />
         <div className="container p-5">
           {/* 
             Attempts to set different styles to a text set
-            <TextCanvas/>
-            <InteractiveSVGText/>
-            <InteractiveSVGWithD3/> 
+            <TextCanvas/> <InteractiveSVGText/> <InteractiveSVGWithD3/> 
           */}
           <h1 className="heading-section">Text Analysis </h1>
           <div className="mb-3">
-            <label htmlFor="text-input" className="form-label">Enter Text</label>
-            <textarea className="form-control" id="text-input" rows="3" onChange={handleTextChange}></textarea>
+            <label htmlFor="text-input" className="form-label">
+              Enter Text
+            </label>
+            <textarea
+              className="form-control"
+              id="text-input"
+              rows="3"
+              onChange={handleTextChange}
+            ></textarea>
           </div>
-          <button className="btn btn-primary" onClick={analyzeText}>Analyze Text</button>
+          <button className="btn btn-primary" onClick={analyzeText}>
+            Analyze Text
+          </button>
           <div className="textSearchOutput">
             <div className="row">
               <div className="col-md-6 overflow-auto" style={containerStyle}>
-              {(analyzedText.length>0 || progress>0) && 
+                {(analyzedText.length > 0 || progress > 0) && (
                   <>
-                    <h3 className="heading-section text-center">Generated Text Probability</h3>
+                    <h3 className="heading-section text-center">
+                      Generated Text Probability
+                    </h3>
                     <div className="progress my-3">
-                      <div className="progress-bar" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
+                      <div
+                        className="progress-bar"
+                        role="progressbar"
+                        style={{ width: `${progress}%` }}
+                        aria-valuenow={progress}
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
                     </div>
                   </>
-              }
-              {analyzedText.length>0 && 
-                <>
-                  
-                  {analyzedText.map(({ word, length }, index) => (
-                    <span key={index} style={{ backgroundColor: getBackgroundColor(length), color: '#fff', padding: '2px 4px', margin: '2px', display: 'inline-block' }}>
-                      {word}
-                    </span>
-                  ))}
-                </>
-              }
+                )}
+                {analyzedText.length > 0 && (
+                  <>
+                    {analyzedText.map(({ word, length }, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          backgroundColor: getBackgroundColor(length),
+                          color: "#fff",
+                          padding: "2px 4px",
+                          margin: "2px",
+                          display: "inline-block",
+                        }}
+                      >
+                        {word}
+                      </span>
+                    ))}
+                  </>
+                )}
               </div>
               <div className="col-md-6 overflow-auto" style={containerStyle}>
                 {isLoading ? (
                   <>
-                    <h3 className="heading-section text-center">Text Metadata</h3>
+                    <h3 className="heading-section text-center">
+                      Text Metadata
+                    </h3>
                     <div className="text-center">
-                      <div className="spinner-border text-primary" role="status">
+                      <div
+                        className="spinner-border text-primary"
+                        role="status"
+                      >
                         {/* <span className="sr-only">Loading...</span> */}
                       </div>
                     </div>
                   </>
-                ) : metaText.length > 0 && (
-                  <>
-                    <h3 className="heading-section text-center">Text Metadata</h3>
-                    <div className="meta-data-container">
-                      <h4>Sentiment Analysis</h4>
-                      <p><strong>Polarity:</strong> {metaText[0].sentiment.polarity.toFixed(2)}</p>
-                      <p><strong>Subjectivity:</strong> {metaText[0].sentiment.subjectivity.toFixed(2)}</p>
-                      <h4>Noun Phrases</h4>
-                      <ul>
-                        {metaText[0].noun_phrases.map((phrase, index) => (
-                          <li key={index}>{phrase}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </>
-                )}              
+                ) : (
+                  metaText.length > 0 && (
+                    <>
+                      <h3 className="heading-section text-center">
+                        Text Metadata
+                      </h3>
+                      <div className="meta-data-container">
+                        <h4>Sentiment Analysis</h4>
+                        <p>
+                          <strong>Polarity:</strong>{" "}
+                          {metaText[0].sentiment.polarity.toFixed(2)}
+                        </p>
+                        <p>
+                          <strong>Subjectivity:</strong>{" "}
+                          {metaText[0].sentiment.subjectivity.toFixed(2)}
+                        </p>
+                        <h4>Noun Phrases</h4>
+                        <ul>
+                          {metaText[0].noun_phrases.map((phrase, index) => (
+                            <li key={index}>{phrase}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  )
+                )}
               </div>
             </div>
             <div className="row">
-            { progress === 100 &&
-              <>
-                <h3 className="heading-section text-center">Score Graphs</h3>
-                <div style={{ width: "100%", height: "400px" }}>
-                  <BarChartD3 data={processedData}/>
-                </div>
-                <BarGraph data={graphData}/>
-              </>
-            }
+              {isLoadingAI ? (
+                <>
+                  <h3 className="heading-section text-center">AI output</h3>
+                  <div className="text-center">
+                    <div className="spinner-border text-primary" role="status"/>
+                  </div>
+                </>
+              ) : (
+                outputAI.length > 0 && (
+                  <>
+                    <h3 className="heading-section text-center">AI output</h3>
+                    <pre>{outputAI}</pre> {/** Not happy with this display, but ok for work in progress */}
+                  </>
+                )
+              )}
+            </div>
+            <div className="row">
+              {progress === 100 && (
+                <>
+                  <h3 className="heading-section text-center">Score Graphs</h3>
+                  <div style={{ width: "100%", height: "400px" }}>
+                    <BarChartD3 data={processedData} />
+                  </div>
+                  <BarGraph data={graphData} />
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
-        <Footer/>
+      <Footer />
     </>
   );
 }

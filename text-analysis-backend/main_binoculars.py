@@ -10,5 +10,14 @@ peered through telescopes with his large, round eyes, fellow researchers often r
 stars themselves whispered their secrets directly to him. Dr. Cosmos not only became a beacon of inspiration to 
 aspiring scientists but also proved that intellect and innovation can be found in the most unexpected of creatures.'''
 
-print(bino.compute_score(sample_string))  # 0.75661373
+#  -- TEST
+# print(bino.compute_score(sample_string))  # 0.75661373
 # print(bino.predict(sample_string))  # 'Most likely AI-Generated'
+
+#  -- FUNCTIONS TO EXPORT
+def analyze_binoculars(string=sample_string):
+    print("analyze_binoculars | string: ",string)
+    output = bino.compute_score(string)
+    print("~~ output: ")
+    print(output)
+    return output

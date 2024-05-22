@@ -7,9 +7,22 @@ import nltk # (update for backend on Docker)
 import csv
 import os
 
+# IMPORT FROM FILES
+from main_binoculars import analyze_binoculars
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
+# CORS(app, resources={r"/*": {"origins": "*"}})
+
+# CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={
+    r"/*": {
+        "origins": "http://localhost:3000",
+        "methods": ["GET", "POST", "PUT", "DELETE"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
+
 
 # Issue with Docker in the backend!!! This could be an alternate point to look at https://dev.to/francescoxx/python-fullstack-rest-api-app-with-docker-1101
 
@@ -38,6 +51,7 @@ def get_prettytime():
 
 @app.route('/api/analyze', methods=['POST'])
 def analyze_text():
+    print("##analyze_text##")
     # Get the text from the request's body
     data = request.json
     text = data.get('text')
@@ -56,19 +70,43 @@ def analyze_text():
     }
     # Get the current timestamp
     timestamp = datetime.now().isoformat()
+    # CORS issues with writing in file...! (wrong file path?)
     # File path
-    csv_file_path = '/app/req_textblob_text_analysis.csv'
-    file_exists = os.path.isfile(csv_file_path)
+    # csv_file_path = '/app/req_textblob_text_analysis.csv'
+    # file_exists = os.path.isfile(csv_file_path)
     # Save the result in a CSV file
-    with open('/app/req_textblob_text_analysis.csv', 'a', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        if not file_exists:
-            writer.writerow(["timestamp", "input_text", "polarity", "subjectivity","noun_phrases"])
-        writer.writerow([timestamp, text, sentiment.polarity, sentiment.subjectivity, noun_phrases])
+    # with open('/app/req_textblob_text_analysis.csv', 'a', newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     if not file_exists:
+    #         writer.writerow(["timestamp", "input_text", "polarity", "subjectivity","noun_phrases"])
+    #     writer.writerow([timestamp, text, sentiment.polarity, sentiment.subjectivity, noun_phrases])
     return jsonify(response)
 
+
+# test binoculars
+@app.route('/api/analyze_t_b', methods=['POST'])
+def analyze_text_t_b():
+    try:
+        print("About to call analyze_binoculars")
+        response = analyze_binoculars()
+        print("___ response")
+        print(response)
+        print(type(response))
+        # Convert the response to a JSON-serializable format
+        response_dict = {
+            "average": response[0],
+            "details": [{"text": item[0], "value": float(item[1])} for item in response[1]]
+        }
+        print("Call of analyze_binoculars done!")
+        return jsonify(response_dict)
+        # return "42"
+    except Exception as e:
+        print("Error happened. e: ",str(e))
+        return jsonify({"error": str(e)}), 500
+
+
 now = datetime.now() # current date and time
-date_time = now.strftime("%m/%d/%Y, %H-%M-%S")
+date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
 print("++"+date_time+"++ Set up with host 0.0.0.0")
 
 if __name__ == '__main__':
