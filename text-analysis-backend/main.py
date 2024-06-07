@@ -88,7 +88,9 @@ def analyze_text():
 def analyze_text_t_b():
     try:
         print("About to call analyze_binoculars")
-        response = analyze_binoculars()
+        data = request.json
+        text = data.get('text')
+        response = analyze_binoculars(text)
         print("___ response")
         print(response)
         print(type(response))
