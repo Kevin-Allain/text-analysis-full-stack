@@ -1,7 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Sidebar(props) {
-  const filesets = props.filesets;
+  
+  const filesets = props.filesets? props.filesets : [];
+
+
 
   if (filesets.length > 0) {
     return (
