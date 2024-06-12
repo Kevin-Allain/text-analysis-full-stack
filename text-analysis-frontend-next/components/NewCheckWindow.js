@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import { FormDataContext } from '@/components/FormDataContext'; // Adjust the path
+import { FormDataContext } from '@/components/context/FormDataContext'; // Adjust the path
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NewCheckWindow(props) {

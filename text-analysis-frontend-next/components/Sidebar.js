@@ -1,12 +1,17 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useContext } from 'react';
+import { FormDataContext } from "@/components/context/FormDataContext";
 
-// TODO how should we pass arguments for Sidebar?!
 export default function Sidebar(props) {
-  
-  const filesets = props.filesets? props.filesets : [];
+  // const filesets = props.filesets? props.filesets : [];
+  const { formData } = useContext(FormDataContext);
+  const { institution, module, name, files } = formData;
 
+  console.log("SideBar | institution, module, name, files: ", {institution, module, name, files});
+  const arrayFiles = Array.from(files);
+  console.log("arrayFiles: ", arrayFiles);
 
-  if (filesets.length > 0) {
+  if (arrayFiles.length > 0) {
     return (
       <div className="col-md-2" style={{ padding: 0 }}>
         <ul
@@ -26,34 +31,19 @@ export default function Sidebar(props) {
               New File Set
             </a>
           </li>
-          {filesets.map((fileset) => {
-            return (
-              <li key={fileset.id} className="list-group-item">
-                {fileset.institution}
+          <li key={"sb_" + institution + "_" + module + "_" + name} className="list-group-item" >
+            {institution}
+            <ul className="list-group">
+              <li key={module} className="list-group-item">
+                {module}
                 <ul className="list-group">
-                  {fileset.modules.map((module) => {
-                    return (
-                      <li key={module.id} className="list-group-item">
-                        {module.name}
-                        <ul className="list-group">
-                          {module.courseworks.map((coursework) => {
-                            return (
-                              <li
-                                key={coursework.id}
-                                className="list-group-item"
-                              >
-                                {coursework.name}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </li>
-                    );
-                  })}
+                  <li key={name} className="list-group-item">
+                    {name}
+                  </li>
                 </ul>
               </li>
-            );
-          })}
+            </ul>
+          </li>
         </ul>
       </div>
     );

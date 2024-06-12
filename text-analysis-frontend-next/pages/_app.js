@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormDataProvider } from '@/components/FormDataContext';
+import { FormDataProvider } from '@/components/context/FormDataContext';
 
 function MyApp({ Component, pageProps }) {
   return (

@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useRouter } from "next/router";
 import { useContext } from 'react';
-import { FormDataContext } from '@/components/FormDataContext';
+import { FormDataContext } from '@/components/context/FormDataContext';
 
 import Link from 'next/link'
 import Head from 'next/head'
@@ -15,22 +15,24 @@ export default function InitialResultsWindow(props){
     // console.log("InitialResultsWindow | formData: ",formData);
 
     // TODO update for this: it will be more robust
-    // const { formData } = useContext(FormDataContext);
-    // console.log("InitialResultsWindow | formData: ",formData);
+    const { formData } = useContext(FormDataContext);
+    console.log("InitialResultsWindow | formData: ",formData);
     // first approach
     const router = useRouter();
     // console.log("router: ", router)
     // console.log("router.asPath: ", router.asPath)
 
-    const { institution, module, name } =   Object.keys(router.query).length !== 0 
-        ? router.query
-        : {
-            // institution : router.asPath.split('?')[1].split('&')[0].split('=')[1],module : router.asPath.split('?')[1].split('&')[1].split('=')[1], name : router.asPath.split('?')[1].split('&')[2].split('=')[1]
-            institution : null,
-            module : null,
-            name: null
-        };
-    // console.log("institution, module, name: ",{institution, module, name});
+    // const { institution, module, name } =   Object.keys(router.query).length !== 0 
+    //     ? router.query
+    //     : {
+    //         // institution : router.asPath.split('?')[1].split('&')[0].split('=')[1],module : router.asPath.split('?')[1].split('&')[1].split('=')[1], name : router.asPath.split('?')[1].split('&')[2].split('=')[1]
+    //         institution : null,
+    //         module : null,
+    //         name: null
+    //     };
+
+    const { institution, module, name } = formData;
+    console.log("institution, module, name: ",{institution, module, name});
 
     let collusionStatMessages_collusion = [
       "On average, any submission has 50% collusion.",

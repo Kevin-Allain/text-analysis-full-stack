@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import Navbar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
 import InitialResultsWindow from '@/components/InitialResultsWindow'
-import { FormDataContext } from '@/components/FormDataContext'; 
+import { FormDataContext } from '@/components/context/FormDataContext'; 
 
 
 // TODO get the values from inputs of form in NewCheckWindow!

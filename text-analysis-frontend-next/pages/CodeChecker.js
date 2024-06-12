@@ -8,7 +8,7 @@ import Sidebar from "@/components/Sidebar";
 import withAuth from "@/components/WithAuth";
 import NewCheckWindow from "@/components/NewCheckWindow";
 
-import { FormDataProvider } from "@/components/FormDataContext";
+import { FormDataProvider } from "@/components/context/FormDataContext";
 
 const CodeChecker = () => {
   const [code, setCode] = useState("");

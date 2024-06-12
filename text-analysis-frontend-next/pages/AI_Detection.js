@@ -6,7 +6,7 @@ import Sidebar from '@/components/Sidebar'
 import Breadcrumb from '@/components/BreadCrumb'
 import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
 
-import '@/Collusion.module.css'
+// import '@/Collusion.module.css'
 
 export default function AI_Detection(){
   let checks = [
