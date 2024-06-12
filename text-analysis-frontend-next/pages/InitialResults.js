@@ -1,16 +1,20 @@
 import Head from 'next/head'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import { useContext } from 'react';
 import Navbar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
 import InitialResultsWindow from '@/components/InitialResultsWindow'
+import { FormDataContext } from '@/components/FormDataContext'; 
+
 
 // TODO get the values from inputs of form in NewCheckWindow!
 export default function InitialResults(props){
 
     console.log("InitialResults | props: ",props);
+    console.log("InitialResults | useContext(FormDataContext): ", useContext(FormDataContext));
 
+    // TODO update with values of context
   let checks = [
     {
       "id": 1,

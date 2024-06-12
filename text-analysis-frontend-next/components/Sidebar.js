@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// TODO how should we pass arguments for Sidebar?!
 export default function Sidebar(props) {
   
   const filesets = props.filesets? props.filesets : [];
-
 
 
   if (filesets.length > 0) {

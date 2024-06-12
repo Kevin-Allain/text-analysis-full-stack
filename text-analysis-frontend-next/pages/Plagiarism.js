@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Navbar from '@/components/NavBar'
 import Sidebar from '@/components/Sidebar'
 import Breadcrumb from '@/components/BreadCrumb'
-import CollusionNetworkGraph from '@/components/CollusionNetworkGraph'
+import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
 
 import '@/Collusion.module.css'
 

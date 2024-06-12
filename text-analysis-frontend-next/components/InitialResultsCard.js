@@ -3,14 +3,14 @@ import { FaWrench } from "react-icons/fa6";
 import Link from 'next/link'
 
 export default function InitialResultsCard(props){
+  // console.log("InitialResultsCard | props: ",props);
+
   return(
     <div className="col-md-4">
-
         <div 
           className="card"
           style={{ height: "89vh" }}
         >
-
           <div className="card-header">
             <h5>{props.cardTitle}</h5>
           </div>
@@ -30,10 +30,7 @@ export default function InitialResultsCard(props){
                   {item}
                 </li>
               })}
-        
             </ol>
-
-
             <Link 
               className="btn btn-primary"
               style={{ width: "100%" }}

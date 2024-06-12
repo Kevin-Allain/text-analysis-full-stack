@@ -29,15 +29,13 @@ export default function Breadcrumb(props){
     ]
   }
 
+  // TODO assess whether we wish to keep the links...
   return (
     <div className="row" style={{paddingTop: "2vh"}}>
-        
         <div className="col">
-
           <div className="container-fluid">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb">
-
                 {
                   breadcrumbLinks.map((item, index) => {
                     if (item.status == 'active'){

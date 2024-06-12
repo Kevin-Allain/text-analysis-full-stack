@@ -6,7 +6,9 @@ import Navbar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import Sidebar from "@/components/Sidebar";
 import withAuth from "@/components/WithAuth";
-import NewCheckWindow from "@/components/NewCheckWindow"
+import NewCheckWindow from "@/components/NewCheckWindow";
+
+import { FormDataProvider } from "@/components/FormDataContext";
 
 const CodeChecker = () => {
   const [code, setCode] = useState("");
@@ -52,17 +54,17 @@ const CodeChecker = () => {
       <Head>
         <title>Code Checker</title>
       </Head>
-      <div className="container-fluid d-flex flex-column min-vh-100">
-        <Navbar />
-        <div className="row">
-        <Sidebar filesets={[]}/>
-          <div className="col-md-10">
-            <h1 className="heading-section text-center">Code Checker</h1>
-            <NewCheckWindow/>
+        <div className="container-fluid d-flex flex-column min-vh-100">
+          <Navbar />
+          <div className="row">
+            <Sidebar filesets={[]} />
+            <div className="col-md-10">
+              <h1 className="heading-section text-center">Code Checker</h1>
+              <NewCheckWindow />
+            </div>
           </div>
         </div>
-      </div>
-      <Footer />
+        <Footer />
     </>
   );
 };
