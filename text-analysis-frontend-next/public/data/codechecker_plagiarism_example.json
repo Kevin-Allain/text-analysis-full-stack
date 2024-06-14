@@ -1,0 +1,17 @@
+{
+  "data": [
+    { "name": "Alice", "globalScore": 0.45,"files": ["Addresses.py", "old_PredatorMovement.cs"] },
+    { "name": "Bob", "globalScore": 0.48, "files": ["evaluate.py"] },
+    { "name": "Charlie", "globalScore": 0.85, "files": ["index.vue"] },
+    { "name": "David", "globalScore": 0.65, "files": ["attack_paraphrase.py"] },
+    { "name": "Ethan", "globalScore": 0.95, "files": ["ggplot_tips.R"] },
+    { "name": "Francis", "globalScore": 0.22 , "files": ["attack_control.py"] },
+    { "name": "Gale", "globalScore": 0.42, "files": ["INSTALL.txt"] },
+    { "name": "Hugo", "globalScore": 0.45, "files": ["NLP_LBS1_answers.R"] },
+    { "name": "Ines", "globalScore": 0.15, "files": ["text_basics.R"] },
+    { "name": "Julian", "globalScore": 0.45, "files": ["vectorFunctions.R"] },
+    { "name": "Karim", "globalScore": 0.35, "files": ["CameraFollowPredator.cs"] },
+    { "name": "Leo", "globalScore": 0.41, "files": ["PredatorMovement.cs", "PreyEvading.cs"] },
+    { "name": "Maxim", "globalScore": 0.12, "files": ["cold_decoding.py"] }
+  ]
+}

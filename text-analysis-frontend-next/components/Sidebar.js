@@ -2,8 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useContext } from 'react';
 import { FormDataContext } from "@/components/context/FormDataContext";
 
-export default function Sidebar(props) {
-  // const filesets = props.filesets? props.filesets : [];
+export default function Sidebar() {
   const { formData } = useContext(FormDataContext);
   const { institution, module, name, files } = formData;
 
