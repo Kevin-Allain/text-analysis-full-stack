@@ -14,6 +14,8 @@ export default function Plagiarism() {
   const [selectedDetail, setSelectedDetail] = useState(null);
   const [fileContent, setFileContent] = useState("");
 
+  const [selectedFile,setSelectedfile] = useState('file1');
+
   const textRef = useRef(null);
   const detailsScoreRef = useRef(null);
 
@@ -35,22 +37,13 @@ export default function Plagiarism() {
       indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
   ]; // Example details list
 
-  // useEffect(() => { if (users.length > 0) { setSelectedUser(users[0]); }}, []);
-
-  useEffect(() => {
-    if (users.length > 0) {
-      setSelectedUser(users[0].name);
-    }
-  }, [users]);
+  useEffect(() => { if (users.length > 0) { setSelectedUser(users[0].name); } }, [users]);
 
   useEffect(() => {
     if (selectedUser) {
       const userData = codecheckerData.data.find(user => user.name === selectedUser);
-      console.log("useEffect | userData: ",userData,", selectedUser: ",selectedUser);
-      console.log("useEffect | codecheckerData: ",codecheckerData);
-      if (userData && userData.files.length > 0) {
-        fetchFileContent(userData.files[0],userData.scoreDetails['file1']);
-      }
+      // console.log("useEffect | userData: ",userData,", selectedUser: ",selectedUser); console.log("useEffect | codecheckerData: ",codecheckerData);
+      if (userData && userData.files.length > 0) { fetchFileContent(userData.files[0],userData.scoreDetails[selectedFile]); }
     }
   }, [selectedUser]);
 
@@ -83,36 +76,9 @@ export default function Plagiarism() {
     }
   };
 
-  // const highlightText = (text) => {
-  //   const lines = text.split('\n');
-  //   const highlightedLines = lines.map(line => {
-  //     const words = line.split(' '); 
-  //     const highlightedWords = words.map(word => {
-  //       const random = Math.random();
-  //       let highlightClass = "";
-  //       if (random < 0.1) {
-  //         highlightClass = "plagiarism";
-  //       } else if (random < 0.2) {
-  //         highlightClass = "plagiarism2";
-  //       } else if (random < 0.3) {
-  //         highlightClass = "plagiarism3";
-  //       }
-  //       if (highlightClass) {
-  //         const detail = details.find(d => d.className === highlightClass);
-  //         return `<span class="highlight ${highlightClass}" style="background-color: ${detail.color}">${word}</span>`;
-  //       }
-  //       return word;
-  //     });
-  //     return highlightedWords.join(' ');
-  //   });
-  //   return highlightedLines.join('\n');
-  // };
-
   const highlightText = (text, scoreDetails) => {
     let highlightedText = text;
-
     let sizeOffset = 0;
-
     scoreDetails.forEach(detail => {
       console.log("highlightText | highlightedText: ",highlightedText)
       const { type, range } = detail;
@@ -209,8 +175,18 @@ export default function Plagiarism() {
                   >
                     {item.text}
                   </div>
-                  {selectedDetail === item.className && (
+                  {selectedDetail === item.className && (                    
                     <div className="detail-indications">
+                    {/* TODO set the link to open in a new window? */}
+                    {(selectedUser && codecheckerData.data) && 
+                      <>
+                        <a href={codecheckerData.data.find(user => user.name === selectedUser)
+                          ?.scoreDetails.file1.find(sc => sc.type === item.className).source}>
+                          {codecheckerData.data.find(user => user.name === selectedUser)?.scoreDetails.file1.find(sc => sc.type === item.className).source}
+                        </a>
+                        <hr/>
+                      </>
+                    }
                       {item.indications}
                     </div>
                   )}

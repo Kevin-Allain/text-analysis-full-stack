@@ -1,5 +1,5 @@
 import styles from "@/app/page.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import CodeEditor from "@/components/CodeEditor";
 import Navbar from "@/components/NavBar";
@@ -9,10 +9,20 @@ import withAuth from "@/components/WithAuth";
 import NewCheckWindow from "@/components/NewCheckWindow";
 
 import { FormDataProvider } from "@/components/context/FormDataContext";
+import { FormDataContext } from "@/components/context/FormDataContext";
+
 
 const CodeChecker = () => {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
+
+  // We consider that in this page, we should always have the institution, module, name, etc, set back to null or undefined
+  const { formData, setFormData} = useContext(FormDataContext);
+  // const { institution, module, name, files } = formData;
+
+  // setFormData(undefined);
+  
+
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
@@ -60,7 +70,7 @@ const CodeChecker = () => {
             <Sidebar filesets={[]} />
             <div className="col-md-10">
               <h1 className="heading-section text-center">Code Checker</h1>
-              <NewCheckWindow />
+              <NewCheckWindow product={"codechecker"} />
             </div>
           </div>
         </div>

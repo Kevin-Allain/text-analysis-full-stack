@@ -4,6 +4,8 @@ import { FormDataContext } from '@/components/context/FormDataContext'; // Adjus
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NewCheckWindow(props) {
+  console.log("NewCheckWindow | props: ",props);
+  const product = props.product;
   const { formData, setFormData } = useContext(FormDataContext);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(0);
@@ -42,7 +44,7 @@ export default function NewCheckWindow(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const updatedFormData = { institution, module, name, files };
+      const updatedFormData = { product, institution, module, name, files };
       setFormData(updatedFormData);
       setIsUploading(1);
       // Simulate upload process, then navigate to results

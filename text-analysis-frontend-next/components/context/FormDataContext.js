@@ -1,29 +1,10 @@
-// import React, { createContext, useState } from 'react';
-
-// export const FormDataContext = createContext();
-
-// export const FormDataProvider = ({ children }) => {
-//   const [formData, setFormData] = useState({
-//     institution: '',
-//     module: '',
-//     name: '',
-//     files: []
-//   });
-
-//   return (
-//     <FormDataContext.Provider value={{ formData, setFormData }}>
-//       {children}
-//     </FormDataContext.Provider>
-//   );
-// };
-
-
 import React, { createContext, useState, useEffect } from 'react';
 
 export const FormDataContext = createContext();
 
 export const FormDataProvider = ({ children }) => {
   const [formData, setFormData] = useState({
+    product:'',
     institution: '',
     module: '',
     name: '',
