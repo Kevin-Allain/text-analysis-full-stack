@@ -1,17 +1,365 @@
 {
   "data": [
-    { "name": "Alice", "globalScore": 0.45,"files": ["Addresses.py", "old_PredatorMovement.cs"] },
-    { "name": "Bob", "globalScore": 0.48, "files": ["evaluate.py"] },
-    { "name": "Charlie", "globalScore": 0.85, "files": ["index.vue"] },
-    { "name": "David", "globalScore": 0.65, "files": ["attack_paraphrase.py"] },
-    { "name": "Ethan", "globalScore": 0.95, "files": ["ggplot_tips.R"] },
-    { "name": "Francis", "globalScore": 0.22 , "files": ["attack_control.py"] },
-    { "name": "Gale", "globalScore": 0.42, "files": ["INSTALL.txt"] },
-    { "name": "Hugo", "globalScore": 0.45, "files": ["NLP_LBS1_answers.R"] },
-    { "name": "Ines", "globalScore": 0.15, "files": ["text_basics.R"] },
-    { "name": "Julian", "globalScore": 0.45, "files": ["vectorFunctions.R"] },
-    { "name": "Karim", "globalScore": 0.35, "files": ["CameraFollowPredator.cs"] },
-    { "name": "Leo", "globalScore": 0.41, "files": ["PredatorMovement.cs", "PreyEvading.cs"] },
-    { "name": "Maxim", "globalScore": 0.12, "files": ["cold_decoding.py"] }
+    {
+      "name": "Alice",
+      "globalScore": 0.45,
+      "files": ["Addresses.py", "old_PredatorMovement.cs"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [90, 120],
+            "source": "https://observablehq.com/@d3/world-tour?intent=fork"
+          }
+        ],
+        "file2": [
+          {
+            "type": "plagiarism3",
+            "range": [20, 37],
+            "source": "http://google.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [40, 76],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bob",
+      "globalScore": 0.48,
+      "files": ["evaluate.py"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Charlie",
+      "globalScore": 0.85,
+      "files": ["index.vue"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "David",
+      "globalScore": 0.65,
+      "files": ["attack_paraphrase.py"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ethan",
+      "globalScore": 0.95,
+      "files": ["ggplot_tips.R"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 388],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [688,1222],
+            "source": "http://wikipedia.com"
+          },          
+          {
+            "type": "plagiarism2",
+            "range": [1467, 1588],
+            "source": "http://wikipedia.com"
+          }          
+        ]
+      }
+    },
+    {
+      "name": "Francis",
+      "globalScore": 0.22,
+      "files": ["attack_control.py"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Gale",
+      "globalScore": 0.42,
+      "files": ["INSTALL.txt"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Hugo",
+      "globalScore": 0.45,
+      "files": ["NLP_LBS1_answers.R"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ines",
+      "globalScore": 0.15,
+      "files": ["text_basics.R"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Julian",
+      "globalScore": 0.45,
+      "files": ["vectorFunctions.R"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Karim",
+      "globalScore": 0.35,
+      "files": ["CameraFollowPredator.cs"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 388],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [688,1222],
+            "source": "http://wikipedia.com"
+          },          
+          {
+            "type": "plagiarism2",
+            "range": [1467, 1588],
+            "source": "http://wikipedia.com"
+          }          
+        ]
+      }
+    },
+    {
+      "name": "Leo",
+      "globalScore": 0.41,
+      "files": ["PredatorMovement.cs", "PreyEvading.cs"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 388],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Maxim",
+      "globalScore": 0.12,
+      "files": ["cold_decoding.py"],
+      "scoreDetails": {
+        "file1": [
+          {
+            "type": "plagiarism3",
+            "range": [1, 37],
+            "source": "http://github.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [53, 66],
+            "source": "http://wikipedia.com"
+          },
+          {
+            "type": "plagiarism2",
+            "range": [67, 88],
+            "source": "http://wikipedia.com"
+          }
+        ],
+        "file2": [
+          {
+            "type": "plagiarism3",
+            "range": [20, 37],
+            "source": "http://google.com"
+          },
+          {
+            "type": "plagiarism",
+            "range": [40, 76],
+            "source": "http://wikipedia.com"
+          }
+        ]
+      }
+    }
   ]
 }

@@ -17,17 +17,22 @@ export default function Plagiarism() {
   const textRef = useRef(null);
   const detailsScoreRef = useRef(null);
 
-  // const users = [
-  //   { name: "Alice", globalScore: 0.45 }, { name: "Bob", "globalScore": 0.48 }, { name: "Charlie", "globalScore": 0.85 }, { name: "David", "globalScore": 0.65 }, { name: "Ethan", "globalScore": 0.95 }, { name: "Francis", "globalScore": 0.22 }, { name: "Gale", "globalScore": 0.42 }, { name: "Hugo", "globalScore": 0.45 }, { name: "Ines", "globalScore": 0.15 }, { name: "Julian", "globalScore": 0.45 }, { name: "Karim", "globalScore": 0.35 }, { name: "Leo", "globalScore": 0.41 }, { name: "Maxim", "globalScore": 0.12 }
-  // ].sort((a, b) => b.globalScore - a.globalScore); // Sort users by globalScore
-
   const users = codecheckerData.data
   .sort((a, b) => b.globalScore - a.globalScore);
 
   const details = [
-    { className: "plagiarism", color: "rgb(216,72,72)", text: "Plagiarism", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-    { className: "citations", color: "rgb(72,72,216)", text: "Citations", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { className: "original_content", color: "rgb(76,216,72)", text: "Original Content", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { className: "plagiarism", 
+      color: "rgb(216,72,72)", 
+      text: "Plagiarism 1", 
+      indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+    { className: "plagiarism2", 
+      color: "rgb(72,72,216)", 
+      text: "Plagiarism 2", 
+      indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { className: "plagiarism3", 
+      color: "rgb(76,216,72)", 
+      text: "Plagiarism 3", 
+      indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
   ]; // Example details list
 
   // useEffect(() => { if (users.length > 0) { setSelectedUser(users[0]); }}, []);
@@ -44,7 +49,7 @@ export default function Plagiarism() {
       console.log("useEffect | userData: ",userData,", selectedUser: ",selectedUser);
       console.log("useEffect | codecheckerData: ",codecheckerData);
       if (userData && userData.files.length > 0) {
-        fetchFileContent(userData.files[0]);
+        fetchFileContent(userData.files[0],userData.scoreDetails['file1']);
       }
     }
   }, [selectedUser]);
@@ -54,6 +59,7 @@ export default function Plagiarism() {
       const highlights = textRef.current.querySelectorAll('.highlight');
       highlights.forEach(span => {
         span.addEventListener('click', () => {
+          console.log("useEffect fileContent | span: ",span,", span.className: ",span.className);
           handleHighlightClick(span.className.split(' ')[1]);
         });
       });
@@ -61,12 +67,13 @@ export default function Plagiarism() {
   }, [fileContent]);
 
 
-  const fetchFileContent = async (fileName) => {
+  const fetchFileContent = async (fileName, scoreDetails) => {
     try {
       const response = await fetch(`/data/codechecker_files/${fileName}`);
       if (response.ok) {
         const text = await response.text();
-        setFileContent(highlightText(text));
+        console.log("fetchFileContent | text: ",text);
+        setFileContent(highlightText(text, scoreDetails));
       } else {
         setFileContent("Error loading file content.");
       }
@@ -76,30 +83,60 @@ export default function Plagiarism() {
     }
   };
 
-  const highlightText = (text) => {
-    const lines = text.split('\n');
-    const highlightedLines = lines.map(line => {
-      const words = line.split(' ');
-      const highlightedWords = words.map(word => {
-        const random = Math.random();
-        let highlightClass = "";
-        if (random < 0.1) {
-          highlightClass = "plagiarism";
-        } else if (random < 0.2) {
-          highlightClass = "citations";
-        } else if (random < 0.3) {
-          highlightClass = "original_content";
-        }
-        if (highlightClass) {
-          const detail = details.find(d => d.className === highlightClass);
-          return `<span class="highlight" style="background-color: ${detail.color}">${word}</span>`;
-        }
-        return word;
-      });
-      return highlightedWords.join(' ');
+  // const highlightText = (text) => {
+  //   const lines = text.split('\n');
+  //   const highlightedLines = lines.map(line => {
+  //     const words = line.split(' '); 
+  //     const highlightedWords = words.map(word => {
+  //       const random = Math.random();
+  //       let highlightClass = "";
+  //       if (random < 0.1) {
+  //         highlightClass = "plagiarism";
+  //       } else if (random < 0.2) {
+  //         highlightClass = "plagiarism2";
+  //       } else if (random < 0.3) {
+  //         highlightClass = "plagiarism3";
+  //       }
+  //       if (highlightClass) {
+  //         const detail = details.find(d => d.className === highlightClass);
+  //         return `<span class="highlight ${highlightClass}" style="background-color: ${detail.color}">${word}</span>`;
+  //       }
+  //       return word;
+  //     });
+  //     return highlightedWords.join(' ');
+  //   });
+  //   return highlightedLines.join('\n');
+  // };
+
+  const highlightText = (text, scoreDetails) => {
+    let highlightedText = text;
+
+    let sizeOffset = 0;
+
+    scoreDetails.forEach(detail => {
+      console.log("highlightText | highlightedText: ",highlightedText)
+      const { type, range } = detail;
+      const detailInfo = details.find(d => d.className === type);
+      console.log("highlightText | detailInfo: ", detailInfo);
+      console.log("highlightText | sizeOffset: ",sizeOffset)
+      const highlightStart = `<span class="highlight ${type}" style="background-color: ${detailInfo.color}">`;
+      const highlightEnd = "</span>";
+      const start = range[0];
+      const end = range[1];
+      // switched to text instead of highlightedText... but probably going to mess up and only keep the last one fine?
+      highlightedText =
+        highlightedText.slice(0, start + sizeOffset) +
+        highlightStart +
+        highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
+        highlightEnd +
+        highlightedText.slice(end + sizeOffset + 1);
+      
+      sizeOffset+= highlightStart.length + highlightEnd.length;
     });
-    return highlightedLines.join('\n');
+    return highlightedText;
   };
+
+
 
   const handleUserClick = (user) => {
     console.log("handleUserClick | user: ",user,", selectedUser: ",selectedUser);
@@ -132,6 +169,10 @@ export default function Plagiarism() {
           <div className="col-md-7 text_selec">
             <h1>Plagiarism</h1>
             <Breadcrumb />
+            {/* TODO click to change file */}
+            {selectedUser && 
+            <p>{codecheckerData.data.find(user => user.name === selectedUser).files.toString()}</p>
+            }
             <h4>
               {(selectedUser && codecheckerData.data) && 
                 codecheckerData.data.find(user => user.name === selectedUser)?.files[0]

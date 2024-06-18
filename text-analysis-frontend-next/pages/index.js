@@ -1,5 +1,5 @@
 // pages/index.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import credentials from '../public/credentials.json';
@@ -27,6 +27,10 @@ const IndexPage = () => {
     setTargetPage(page);
     setShowLogin(true);
   };
+
+  useEffect(() => {
+    if (localStorage.formData) { localStorage.formData = null }
+  },);
 
   return (
     <div>
