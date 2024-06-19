@@ -23,25 +23,14 @@ export default function Collusion(){
         {
           "id": 1,
           "name": "Java 23/24",
-          "courseworks": [
-            {
-              "id": 1,
-              "name": "Coursework 1"
-            }
-          ]
+          "courseworks": [ { "id": 1, "name": "Coursework 1" } ]
         }
       ]
-
     }
   ]
 
   let rankings = [
-    {'name': 'Bob', 'score': '99%'},
-    {'name': 'Sam', 'score': '98%'},
-    {'name': 'Dave', 'score': '98%'},
-    {'name': 'Tim', 'score': '97%'},
-    {'name': 'Dan', 'score': '97%'},
-    {'name': 'Megan', 'score': '92%'},
+    {'name': 'Bob', 'score': '99%'}, {'name': 'Sam', 'score': '98%'}, {'name': 'Dave', 'score': '98%'}, {'name': 'Tim', 'score': '97%'}, {'name': 'Dan', 'score': '97%'}, {'name': 'Megan', 'score': '92%'},
   ]
 
   return (

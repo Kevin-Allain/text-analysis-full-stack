@@ -10,12 +10,7 @@ const HorizontalNav = () => {
   let curFeature = router.pathname.replace('/','');
 
   const handleNavigation = (page) => {
-    
-    if (formData.product === 'CodeChecker') {
       router.push(`/${page}`);
-    } else {
-      alert('Product is not CodeChecker');
-    }
   };
 
   return (
@@ -26,6 +21,7 @@ const HorizontalNav = () => {
             type="button" 
             className={`btn ${curFeature==='Collusion'? "btn-secondary" : "btn-primary"}`}
             onClick={() => handleNavigation('Collusion')}
+            disabled = {curFeature==='Collusion'}
           >
             Collusion
           </button>
@@ -33,6 +29,7 @@ const HorizontalNav = () => {
             type="button" 
             className={`btn ${curFeature==='AI_Detection'? "btn-secondary" : "btn-primary"}`}
             onClick={() => handleNavigation('AI_Detection')}
+            disabled = {curFeature==='AI_Detection'}
           >
             AI Detection
           </button>
@@ -40,6 +37,7 @@ const HorizontalNav = () => {
             type="button" 
             className={`btn ${curFeature==='Plagiarism'? "btn-secondary" : "btn-primary"}`}
             onClick={() => handleNavigation('Plagiarism')}
+            disabled = {curFeature==='Plagiarism'}
           >
             Plagiarism
           </button>
