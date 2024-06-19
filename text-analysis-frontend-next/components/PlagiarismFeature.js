@@ -26,7 +26,7 @@ const PlagiarismFeature = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid plagiarismFeature">
       <div className="row">
         <div className="col-md-8 text_selec">
           <div ref={textRef} className="text-content">

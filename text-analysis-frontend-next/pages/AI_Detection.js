@@ -1,14 +1,20 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { useState, useEffect, useRef, useContext } from 'react';
 
 import Head from 'next/head'
 import Navbar from '@/components/NavBar'
 import Sidebar from '@/components/Sidebar'
 import Breadcrumb from '@/components/BreadCrumb'
 import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
+import HorizontalNav from '@/components/HorizontalNav';
+
+import { FormDataContext } from '@/components/context/FormDataContext';
 
 // import '@/Collusion.module.css'
 
 export default function AI_Detection(){
+  const { formData, setFormData } = useContext(FormDataContext);
+
   let checks = [
     {
       "id": 1,
@@ -53,7 +59,8 @@ export default function AI_Detection(){
           <Sidebar checks={checks} />
 
           <div className="col-md-10">
-
+          <HorizontalNav/>          
+            <h1> {formData?.product && formData?.product} AI_Detection - Details</h1>
             <Breadcrumb />
             
             <div className="row">

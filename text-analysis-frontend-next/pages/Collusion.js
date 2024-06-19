@@ -1,14 +1,20 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { useState, useEffect, useRef, useContext } from 'react';
 
 import Head from 'next/head'
 import Navbar from '@/components/NavBar'
 import Sidebar from '@/components/Sidebar'
 import Breadcrumb from '@/components/BreadCrumb'
 import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
+import HorizontalNav from '@/components/HorizontalNav';
+
+import { FormDataContext } from '@/components/context/FormDataContext';
 
 import '@/styles/Collusion.module.css'
 
 export default function Collusion(){
+  const { formData, setFormData } = useContext(FormDataContext);
+
   let checks = [
     {
       "id": 1,
@@ -55,7 +61,8 @@ export default function Collusion(){
           <div className="col-md-10">
 
             <Breadcrumb />
-            
+            <HorizontalNav/>          
+            <h1> {formData?.product && formData?.product} Collusion - Details</h1>            
             <div className="row">
 
               <div className="col-md-9">

@@ -1,9 +1,12 @@
 // pages/index.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import credentials from '../public/credentials.json';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FormDataContext } from '@/components/context/FormDataContext';
+
+
 
 const IndexPage = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -12,11 +15,28 @@ const IndexPage = () => {
   const [targetPage, setTargetPage] = useState('');
   const router = useRouter();
 
+  const { formData, setFormData } = useContext(FormDataContext);
+
   const handleLogin = (event) => {
     event.preventDefault();
     if (username === credentials.username && password === credentials.password) {
       localStorage.setItem('authenticated','true')
       // TODO adapt based on authorizations for user: which product can they access? set more variables to localStorage
+
+      localStorage.setItem("formData", {
+        institution: '',
+        module: '',
+        name: '',
+        files: [],
+        product: `${targetPage}`
+      });
+      setFormData({
+        institution: '',
+        module: '',
+        name: '',
+        files: [],
+        product: `${targetPage}`
+      });
       router.push(`/${targetPage}`);
     } else {
       alert('Invalid login credentials');
@@ -30,6 +50,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (localStorage.formData) { localStorage.formData = null }
+    if (localStorage.product) { localStorage.product = null }
   },);
 
   return (

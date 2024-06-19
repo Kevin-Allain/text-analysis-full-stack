@@ -3,7 +3,7 @@ import { FaWrench } from "react-icons/fa6";
 import Link from 'next/link'
 
 export default function InitialResultsCard(props){
-  // console.log("InitialResultsCard | props: ",props);
+  console.log("InitialResultsCard | props: ",props);
 
   return(
     <div className="col-md-4">
@@ -34,7 +34,6 @@ export default function InitialResultsCard(props){
             <Link 
               className="btn btn-primary"
               style={{ width: "100%" }}
-            //   href={``}
               href={`/${props.redirectLink}`}
             >
               Explore 

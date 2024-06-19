@@ -1,71 +1,66 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/NavBar';
 import Sidebar from '@/components/Sidebar';
 import Breadcrumb from '@/components/BreadCrumb';
-
+import HorizontalNav from '@/components/HorizontalNav';
+import { FormDataContext } from '@/components/context/FormDataContext';
 // import '@/Collusion.module.css';
 import '@/styles/PlagiarismFeature.css';
 import codecheckerData from '@/public/data/codechecker_plagiarism_example.json';
+
 
 export default function Plagiarism() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedDetail, setSelectedDetail] = useState(null);
   const [fileContent, setFileContent] = useState("");
+  const [indexFile, setIndexFile] = useState(0);
+  const [fileList, setFileList] = useState([]);
 
-  const [selectedFile,setSelectedfile] = useState('file1');
+  const { formData, setFormData } = useContext(FormDataContext);
 
   const textRef = useRef(null);
   const detailsScoreRef = useRef(null);
-
-  const users = codecheckerData.data
-  .sort((a, b) => b.globalScore - a.globalScore);
-
+  const users = codecheckerData.data.sort((a, b) => b.globalScore - a.globalScore);
   const details = [
-    { className: "plagiarism", 
-      color: "rgb(216,72,72)", 
-      text: "Plagiarism 1", 
-      indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-    { className: "plagiarism2", 
-      color: "rgb(72,72,216)", 
-      text: "Plagiarism 2", 
-      indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { className: "plagiarism3", 
-      color: "rgb(76,216,72)", 
-      text: "Plagiarism 3", 
-      indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { className: "plagiarism", color: "rgb(216,72,72)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+    { className: "plagiarism2", color: "rgb(72,72,216)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { className: "plagiarism3", color: "rgb(76,216,72)", text: "Plagiarism 3", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
   ]; // Example details list
 
-  useEffect(() => { if (users.length > 0) { setSelectedUser(users[0].name); } }, [users]);
+  useEffect(() => {
+    if (users.length > 0) {
+      setSelectedUser(users[0].name);
+    }
+  }, [users]);
 
   useEffect(() => {
     if (selectedUser) {
       const userData = codecheckerData.data.find(user => user.name === selectedUser);
-      // console.log("useEffect | userData: ",userData,", selectedUser: ",selectedUser); console.log("useEffect | codecheckerData: ",codecheckerData);
-      if (userData && userData.files.length > 0) { fetchFileContent(userData.files[0],userData.scoreDetails[selectedFile]); }
+      if (userData && userData.files.length > 0) {
+        setFileList(userData.files);
+        fetchFileContent(userData.files[indexFile], userData.scoreDetails[indexFile]);
+      }
     }
-  }, [selectedUser]);
+  }, [selectedUser, indexFile]);
 
   useEffect(() => {
     if (textRef.current) {
       const highlights = textRef.current.querySelectorAll('.highlight');
       highlights.forEach(span => {
         span.addEventListener('click', () => {
-          console.log("useEffect fileContent | span: ",span,", span.className: ",span.className);
           handleHighlightClick(span.className.split(' ')[1]);
         });
       });
     }
   }, [fileContent]);
 
-
   const fetchFileContent = async (fileName, scoreDetails) => {
     try {
       const response = await fetch(`/data/codechecker_files/${fileName}`);
       if (response.ok) {
         const text = await response.text();
-        console.log("fetchFileContent | text: ",text);
         setFileContent(highlightText(text, scoreDetails));
       } else {
         setFileContent("Error loading file content.");
@@ -80,40 +75,34 @@ export default function Plagiarism() {
     let highlightedText = text;
     let sizeOffset = 0;
     scoreDetails.forEach(detail => {
-      console.log("highlightText | highlightedText: ",highlightedText)
       const { type, range } = detail;
       const detailInfo = details.find(d => d.className === type);
-      console.log("highlightText | detailInfo: ", detailInfo);
-      console.log("highlightText | sizeOffset: ",sizeOffset)
       const highlightStart = `<span class="highlight ${type}" style="background-color: ${detailInfo.color}">`;
       const highlightEnd = "</span>";
       const start = range[0];
       const end = range[1];
-      // switched to text instead of highlightedText... but probably going to mess up and only keep the last one fine?
       highlightedText =
         highlightedText.slice(0, start + sizeOffset) +
         highlightStart +
         highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
         highlightEnd +
         highlightedText.slice(end + sizeOffset + 1);
-      
-      sizeOffset+= highlightStart.length + highlightEnd.length;
+      sizeOffset += highlightStart.length + highlightEnd.length;
     });
     return highlightedText;
   };
 
-
-
   const handleUserClick = (user) => {
-    console.log("handleUserClick | user: ",user,", selectedUser: ",selectedUser);
     setSelectedUser(user.name);
-    // Update the text or fetch the new content based on the user selection
+    setIndexFile(0); // Reset to the first file
+  };
+
+  const handleFileClick = (index) => {
+    setIndexFile(index);
   };
 
   const handleHighlightClick = (className) => {
-    console.log("handleHighlightClick | className: ",className);
-    const element =
-      detailsScoreRef.current.querySelector(`.${className}`);
+    const element = detailsScoreRef.current.querySelector(`.${className}`);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -133,21 +122,23 @@ export default function Plagiarism() {
         <div className="row">
           <Sidebar />
           <div className="col-md-7 text_selec">
-            <h1>Plagiarism</h1>
+            <HorizontalNav/>          
+            <h1> {formData?.product && formData?.product} Plagiarism - Details</h1>
             <Breadcrumb />
-            {/* TODO click to change file */}
             {selectedUser && 
-            <p>{codecheckerData.data.find(user => user.name === selectedUser).files.toString()}</p>
+              fileList.map((file, index) => (
+                <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
+                  {file}
+                </button>
+              ))
             }
             <h4>
-              {(selectedUser && codecheckerData.data) && 
-                codecheckerData.data.find(user => user.name === selectedUser)?.files[0]
+              {(selectedUser && codecheckerData.data) &&
+                codecheckerData.data.find(user => user.name === selectedUser)?.files[indexFile]
               }
             </h4>
             <div ref={textRef} className="text-content">
-              <div ref={textRef} className="text-content">
-                <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
-              </div>
+              <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
             </div>
           </div>
           <div className="col-md-3 right_side">
@@ -175,18 +166,19 @@ export default function Plagiarism() {
                   >
                     {item.text}
                   </div>
-                  {selectedDetail === item.className && (                    
+                  {selectedDetail === item.className && (
                     <div className="detail-indications">
-                    {/* TODO set the link to open in a new window? */}
-                    {(selectedUser && codecheckerData.data) && 
-                      <>
-                        <a href={codecheckerData.data.find(user => user.name === selectedUser)
-                          ?.scoreDetails.file1.find(sc => sc.type === item.className).source}>
-                          {codecheckerData.data.find(user => user.name === selectedUser)?.scoreDetails.file1.find(sc => sc.type === item.className).source}
-                        </a>
-                        <hr/>
-                      </>
-                    }
+                      {(selectedUser && codecheckerData.data) && 
+                        <>
+                          <a href={codecheckerData.data.find(user => user.name === selectedUser)
+                            ?.scoreDetails[indexFile].find(sc => sc.type === item.className).source} target="_blank" rel="noopener noreferrer">
+                              {codecheckerData.data
+                                .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
+                                  .find(sc => sc.type === item.className).source}
+                          </a>
+                          <hr/>
+                        </>
+                      }
                       {item.indications}
                     </div>
                   )}

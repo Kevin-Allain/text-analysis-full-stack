@@ -7,8 +7,6 @@ import Footer from "@/components/Footer";
 import Sidebar from "@/components/Sidebar";
 import withAuth from "@/components/WithAuth";
 import NewCheckWindow from "@/components/NewCheckWindow";
-
-import { FormDataProvider } from "@/components/context/FormDataContext";
 import { FormDataContext } from "@/components/context/FormDataContext";
 
 
@@ -16,13 +14,8 @@ const CodeChecker = () => {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
 
-  // We consider that in this page, we should always have the institution, module, name, etc, set back to null or undefined
+  // We consider that in this page, we should always have the institution, module, name, etc, set back to ''
   const { formData, setFormData} = useContext(FormDataContext);
-  // const { institution, module, name, files } = formData;
-
-  // setFormData(undefined);
-  
-
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
@@ -67,10 +60,10 @@ const CodeChecker = () => {
         <div className="container-fluid d-flex flex-column min-vh-100">
           <Navbar />
           <div className="row">
-            <Sidebar filesets={[]} />
+            <Sidebar/>
             <div className="col-md-10">
               <h1 className="heading-section text-center">Code Checker</h1>
-              <NewCheckWindow product={"codechecker"} />
+              <NewCheckWindow product={"CodeChecker"} />
             </div>
           </div>
         </div>

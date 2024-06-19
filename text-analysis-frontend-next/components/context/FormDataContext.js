@@ -16,7 +16,7 @@ export const FormDataProvider = ({ children }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedData = localStorage.getItem('formData');
-      if (savedData) {
+      if (savedData && typeof savedData === "string") {
         setFormData(JSON.parse(savedData));
       }
       setIsLoaded(true);
