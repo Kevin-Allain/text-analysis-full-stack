@@ -24,9 +24,9 @@ export default function Plagiarism() {
   const detailsScoreRef = useRef(null);
   const users = codecheckerData.data.sort((a, b) => b.globalScore - a.globalScore);
   const details = [
-    { className: "plagiarism", color: "rgb(216,72,72)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-    { className: "plagiarism2", color: "rgb(72,72,216)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { className: "plagiarism3", color: "rgb(76,216,72)", text: "Plagiarism 3", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { className: "plagiarism", color: "rgba(216,72,72,0.5)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+    { className: "plagiarism2", color: "rgba(72,72,216,0.5)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { className: "plagiarism3", color: "rgba(76,216,72,0.5)", text: "Plagiarism 3", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
   ]; // Example details list
 
   useEffect(() => {
@@ -125,13 +125,21 @@ export default function Plagiarism() {
             <HorizontalNav/>          
             <h1> {formData?.product && formData?.product} Plagiarism - Details</h1>
             <Breadcrumb />
-            {selectedUser && 
-              fileList.map((file, index) => (
-                <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
-                  {file}
-                </button>
-              ))
-            }
+            <>
+            <div>
+              Submission from {selectedUser} with a score of {codecheckerData.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData.data.find(user => user.name === selectedUser)?.numSubmissions}.
+            </div>
+            <div>
+              <u>Files</u>
+              {selectedUser && 
+                fileList.map((file, index) => (
+                  <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
+                    {file}
+                  </button>
+                ))
+              }
+            </div>
+            </>
             <h4>
               {(selectedUser && codecheckerData.data) &&
                 codecheckerData.data.find(user => user.name === selectedUser)?.files[indexFile]

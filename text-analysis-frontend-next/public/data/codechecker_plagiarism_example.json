@@ -3,6 +3,7 @@
     {
       "name": "Alice",
       "globalScore": 0.45,
+      "numSubmissions": 2,
       "files": ["Addresses.py", "old_PredatorMovement.cs"],
       "scoreDetails": [ 
         [
@@ -43,6 +44,7 @@
     {
       "name": "Bob",
       "globalScore": 0.48,
+      "numSubmissions": 1,
       "files": ["evaluate.py"],
       "scoreDetails": [
         [
@@ -67,6 +69,7 @@
     {
       "name": "Charlie",
       "globalScore": 0.85,
+      "numSubmissions": 4,
       "files": ["index.vue"],
       "scoreDetails": [
       [
@@ -91,6 +94,7 @@
     {
       "name": "David",
       "globalScore": 0.65,
+      "numSubmissions": 3,
       "files": ["attack_paraphrase.py"],
       "scoreDetails": [
       [
@@ -115,6 +119,7 @@
     {
       "name": "Ethan",
       "globalScore": 0.95,
+      "numSubmissions": 5,
       "files": ["ggplot_tips.R", "PreyEvading.cs"],
       "scoreDetails": [
        [
@@ -161,6 +166,7 @@
     {
       "name": "Francis",
       "globalScore": 0.22,
+      "numSubmissions": 7,
       "files": ["attack_control.py"],
       "scoreDetails": [
       [
@@ -185,6 +191,7 @@
     {
       "name": "Gale",
       "globalScore": 0.42,
+      "numSubmissions": 1,
       "files": ["INSTALL.txt"],
       "scoreDetails":  [
       [
@@ -209,6 +216,7 @@
     {
       "name": "Hugo",
       "globalScore": 0.45,
+      "numSubmissions": 3,
       "files": ["NLP_LBS1_answers.R"],
       "scoreDetails":  [
       [
@@ -233,6 +241,7 @@
     {
       "name": "Ines",
       "globalScore": 0.15,
+      "numSubmissions": 1,
       "files": ["text_basics.R"],
       "scoreDetails": [
       [
@@ -257,6 +266,7 @@
     {
       "name": "Julian",
       "globalScore": 0.45,
+      "numSubmissions": 4,
       "files": ["vectorFunctions.R", "PreyEvading.cs"],
       "scoreDetails": [
       [
@@ -293,6 +303,7 @@
     {
       "name": "Karim",
       "globalScore": 0.35,
+      "numSubmissions": 6,
       "files": ["CameraFollowPredator.cs"],
       "scoreDetails": [
       [
@@ -327,6 +338,7 @@
     {
       "name": "Leo",
       "globalScore": 0.41,
+      "numSubmissions": 7,
       "files": ["PredatorMovement.cs", "PreyEvading.cs"],
       "scoreDetails": [
       [
@@ -363,6 +375,7 @@
     {
       "name": "Maxim",
       "globalScore": 0.12,
+      "numSubmissions": 9,
       "files": ["cold_decoding.py", "PreyEvading.cs"],
       "scoreDetails": [
       [

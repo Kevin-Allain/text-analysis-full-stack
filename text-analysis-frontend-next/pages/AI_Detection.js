@@ -9,102 +9,220 @@ import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
 import HorizontalNav from '@/components/HorizontalNav';
 
 import { FormDataContext } from '@/components/context/FormDataContext';
+import codecheckerData from '@/public/data/codechecker_plagiarism_example.json';
 
-// import '@/Collusion.module.css'
 
 export default function AI_Detection(){
+  // ---- useState
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedDetail, setSelectedDetail] = useState(null);
+  const [fileContent, setFileContent] = useState("");
+  const [indexFile, setIndexFile] = useState(0);
+  const [fileList, setFileList] = useState([]);
+
   const { formData, setFormData } = useContext(FormDataContext);
 
-  let checks = [
-    {
-      "id": 1,
-      "institution": "City, University of London",
-      "modules": [
-        {
-          "id": 1,
-          "name": "Java 23/24",
-          "courseworks": [
-            {
-              "id": 1,
-              "name": "Coursework 1"
-            }
-          ]
-        }
-      ]
+  const users = codecheckerData.data.sort((a, b) => b.globalScore - a.globalScore);
+  const details = [
+    { className: "plagiarism", color: "rgba(216,72,72,0.5)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+    { className: "plagiarism2", color: "rgba(72,72,216,0.5)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { className: "plagiarism3", color: "rgba(76,216,72,0.5)", text: "Plagiarism 3", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+  ]; // Example details list
 
+  // ---- functions
+  const fetchFileContent = async (fileName, scoreDetails) => {
+    try {
+      const response = await fetch(`/data/codechecker_files/${fileName}`);
+      if (response.ok) {
+        const text = await response.text();
+        setFileContent(highlightText(text, scoreDetails));
+      } else {
+        setFileContent("Error loading file content.");
+      }
+    } catch (error) {
+      console.error("Error fetching file content:", error);
+      setFileContent("Error loading file content.");
     }
-  ]
+  };
 
-  let rankings = [
-    {'name': 'Bob', 'score': '99%'},
-    {'name': 'Sam', 'score': '98%'},
-    {'name': 'Dave', 'score': '98%'},
-    {'name': 'Tim', 'score': '97%'},
-    {'name': 'Dan', 'score': '97%'},
-    {'name': 'Megan', 'score': '92%'},
-  ]
+  const loadAIText = async () => {
+    console.log("loadAIText");
+    setOutputAI([]);
+    setIsLoadingAI(true);
+    try {
+      console.log("window.location.href loadAIText: ", window.location.href);
+      const is_localhost = window.location.href.indexOf("localhost");
+      const is_127_0_0_1 = window.location.href.indexOf("127.0.0.1");
+      const strAnalyze = is_localhost
+        ? window.location.href.replace("TextAnalysis",'').replace("3000", "5000") + "api/analyze_t_b"
+        : window.location.replace("TextAnalysis",'').href + "api/analyze_t_b";
+      console.log("strAnalyze AI Text: ", strAnalyze);
+      // Flask runs on port 5000 by default
+      const response = await fetch(strAnalyze, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text }),
+      });
+      if (!response.ok) throw new Error("Network response was not ok.");
+      const data = await response.json();
+      console.log("data loadAIText: ", data);
+      setOutputAI(data);
+      // setOutputAI(JSON.stringify(data, null, 2)); // Update your state or UI accordingly
+      console.log("odd structure type: ", typeof JSON.stringify(data, null, 2));
+    } catch (error) {
+      console.error("Error during API call:", error);
+    } finally {
+      setIsLoadingAI(false); // Stop loading regardless of the outcome
+    }
+  };
+  // Map word length to hue (0-360)
+  const mapLengthToHue = (length, minLength, maxLength) => {
+    const range = maxLength - minLength;
+    const scale = length - minLength;
+    // Assuming a hue range from 240 (blue) to 0 (red)
+    return 240 - (scale / range) * 240;
+  };
+  const getBackgroundColor = (length) => {
+    const hue = mapLengthToHue(length, minLength, maxLength); // Map length to hue
+    const saturation = 70;
+    const lightness = 50;
+    const alpha = 0.85;
+    return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
+  };
+  const getBackgroundColorAI = (outputAI, index) => {
+    const curScore = outputAI.details[index].value,
+      maxScore = Math.max(...outputAI.details.map((a) => a.value)),
+      minScore = Math.min(...outputAI.details.map((a) => a.value));
+    const hue = mapLengthToHue(curScore, minScore, maxScore); // Map length to hue
+    const saturation = 70;
+    const lightness = 50;
+    const alpha = 0.85;
+    return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
+  };
+
+  const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); // Reset to the first file
+  };
+
+
+  // ---- useEffect
+  const textRef = useRef(null);
+  const detailsScoreRef = useRef(null);
+  useEffect(() => {
+    if (users.length > 0) {
+      setSelectedUser(users[0].name);
+    }
+  }, [users]);
+
+  useEffect(() => {
+    if (selectedUser) {
+      const userData = codecheckerData.data.find(user => user.name === selectedUser);
+      if (userData && userData.files.length > 0) {
+        setFileList(userData.files);
+        fetchFileContent(userData.files[indexFile], userData.scoreDetails[indexFile]);
+      }
+    }
+  }, [selectedUser, indexFile]);
+
+  useEffect(() => {
+    if (textRef.current) {
+      const highlights = textRef.current.querySelectorAll('.highlight');
+      highlights.forEach(span => {
+        span.addEventListener('click', () => {
+          handleHighlightClick(span.className.split(' ')[1]);
+        });
+      });
+    }
+  }, [fileContent]);
+
+
 
   return (
     <>
       <Head>
         <title>Code Checker - Check Results</title>
       </Head>
-
       <div className="container-fluid">
-
         <Navbar />
-
         <div className="row">
-
-          <Sidebar checks={checks} />
-
+          <Sidebar/>
           <div className="col-md-10">
           <HorizontalNav/>          
             <h1> {formData?.product && formData?.product} AI_Detection - Details</h1>
-            <Breadcrumb />
-            
             <div className="row">
-
-              <div className="col-md-9">
-                {/* <CollusionNetworkGraph /> */}
+              <div className="col-md-7">
+               <Breadcrumb />
+               <>
+                <div>
+                  Submission from {selectedUser} with a score of {codecheckerData.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData.data.find(user => user.name === selectedUser)?.numSubmissions}.
+                </div>
+                <div>
+                  <u>Files</u>
+                  {selectedUser && 
+                    fileList.map((file, index) => (
+                      <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
+                        {file}
+                      </button>
+                    ))
+                  }
+                </div>
+                </>
+               {/* <CollusionNetworkGraph /> */}
+               {/* TODO make call for AI here */}
                 <div className="card" style={{ 'height': '28vh' }}>
                   <div className="card-body">
                     <p>Score distribution here</p>
                   </div>
                 </div>
               </div>
-
-              <div className="col-md-3">
-
-                <h4 style={{ textAlign: "center"}}>Rankings</h4>
-
-                <ul className="list-group">
-
-                  {rankings.map((ranking, index) => (
-                    <li 
-                      key={index} 
-                      className="list-group-item"
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between"
-                      }}
-                    >
-                      <span>{ranking.name}</span>
-                      <span>{ranking.score}</span>
-                    </li>
-                    )
-                  )}
-                  
-                </ul>
-
+              <div className="col-md-3 right_side">
+                <div className="user_listing">
+                  <ul className="list-group">
+                    {users.map((user, index) => (
+                      <li
+                        key={index}
+                        className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`}
+                        onClick={() => handleUserClick(user)}
+                      >
+                        <span>{user.name}</span>
+                        <span>{(user.globalScore * 100).toFixed(2)}%</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/* TODO maybe put some sort of legend here... */}
+                {/* <div className="details_score" ref={detailsScoreRef}>
+                  {details.map((item, index) => (
+                    <div key={index}>
+                      <div
+                        className={`detail-item ${item.className}`}
+                        style={{ backgroundColor: item.color }}
+                        onClick={() => handleDetailClick(item)}
+                      >
+                        {item.text}
+                      </div>
+                      {selectedDetail === item.className && (
+                        <div className="detail-indications">
+                          {(selectedUser && codecheckerData.data) && 
+                            <>
+                              <a href={codecheckerData.data.find(user => user.name === selectedUser)
+                                ?.scoreDetails[indexFile].find(sc => sc.type === item.className).source} target="_blank" rel="noopener noreferrer">
+                                  {codecheckerData.data
+                                    .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
+                                      .find(sc => sc.type === item.className).source}
+                              </a>
+                              <hr/>
+                            </>
+                          }
+                          {item.indications}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div> */}
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
     </>
   )

@@ -30,11 +30,6 @@ const TextAnalysis = () => {
     "Here is a simple example where each word will have a background color based on its length and some will have borders."
   );
 
-  // If you plan on having the frontend communicate with the backend, you should update the frontend code to use http://backend:5000 when making requests to the backend. This leverages Docker's internal networking.
-  const addressBackEnd = "127.0.0.1";
-  // const addressBackEnd = "backend";
-  console.log("addressBackEnd: ", addressBackEnd);
-
   // Style to prevent word splitting
   const containerStyle = {
     overflowWrap: "break-word",
@@ -119,7 +114,6 @@ const TextAnalysis = () => {
       setIsLoadingAI(false); // Stop loading regardless of the outcome
     }
   };
-
   // Map word length to hue (0-360)
   const mapLengthToHue = (length, minLength, maxLength) => {
     const range = maxLength - minLength;
