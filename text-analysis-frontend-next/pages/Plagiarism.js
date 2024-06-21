@@ -8,7 +8,7 @@ import HorizontalNav from '@/components/HorizontalNav';
 import { FormDataContext } from '@/components/context/FormDataContext';
 // import '@/Collusion.module.css';
 import '@/styles/PlagiarismFeature.css';
-import codecheckerData from '@/public/data/codechecker_plagiarism_example.json';
+import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 
 
 export default function Plagiarism() {
@@ -22,7 +22,7 @@ export default function Plagiarism() {
 
   const textRef = useRef(null);
   const detailsScoreRef = useRef(null);
-  const users = codecheckerData.data.sort((a, b) => b.globalScore - a.globalScore);
+  const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
   const details = [
     { className: "plagiarism", color: "rgba(216,72,72,0.5)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
     { className: "plagiarism2", color: "rgba(72,72,216,0.5)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
@@ -37,7 +37,7 @@ export default function Plagiarism() {
 
   useEffect(() => {
     if (selectedUser) {
-      const userData = codecheckerData.data.find(user => user.name === selectedUser);
+      const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
       if (userData && userData.files.length > 0) {
         setFileList(userData.files);
         fetchFileContent(userData.files[indexFile], userData.scoreDetails[indexFile]);
@@ -127,7 +127,7 @@ export default function Plagiarism() {
             <Breadcrumb />
             <>
             <div>
-              Submission from {selectedUser} with a score of {codecheckerData.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData.data.find(user => user.name === selectedUser)?.numSubmissions}.
+              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
             </div>
             <div>
               <u>Files</u>
@@ -141,8 +141,8 @@ export default function Plagiarism() {
             </div>
             </>
             <h4>
-              {(selectedUser && codecheckerData.data) &&
-                codecheckerData.data.find(user => user.name === selectedUser)?.files[indexFile]
+              {(selectedUser && codecheckerData_plagiarism.data) &&
+                codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
               }
             </h4>
             <div ref={textRef} className="text-content">
@@ -176,13 +176,13 @@ export default function Plagiarism() {
                   </div>
                   {selectedDetail === item.className && (
                     <div className="detail-indications">
-                      {(selectedUser && codecheckerData.data) && 
+                      {(selectedUser && codecheckerData_plagiarism.data) && 
                         <>
-                          <a href={codecheckerData.data.find(user => user.name === selectedUser)
-                            ?.scoreDetails[indexFile].find(sc => sc.type === item.className).source} target="_blank" rel="noopener noreferrer">
-                              {codecheckerData.data
+                          <a href={codecheckerData_plagiarism.data.find(user => user.name === selectedUser)
+                            ?.scoreDetails[indexFile].find(sc => sc.type === item.className)?.source} target="_blank" rel="noopener noreferrer">
+                              {codecheckerData_plagiarism.data
                                 .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
-                                  .find(sc => sc.type === item.className).source}
+                                  .find(sc => sc.type === item.className)?.source}
                           </a>
                           <hr/>
                         </>

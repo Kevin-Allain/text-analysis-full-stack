@@ -9,7 +9,7 @@ import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
 import HorizontalNav from '@/components/HorizontalNav';
 
 import { FormDataContext } from '@/components/context/FormDataContext';
-import codecheckerData from '@/public/data/codechecker_plagiarism_example.json';
+import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 
 
 export default function AI_Detection(){
@@ -20,9 +20,12 @@ export default function AI_Detection(){
   const [indexFile, setIndexFile] = useState(0);
   const [fileList, setFileList] = useState([]);
 
+  const [outputAI, setOutputAI] = useState([]);
+  const [isLoadingAI, setIsLoadingAI] = useState(false);
+
   const { formData, setFormData } = useContext(FormDataContext);
 
-  const users = codecheckerData.data.sort((a, b) => b.globalScore - a.globalScore);
+  const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
   const details = [
     { className: "plagiarism", color: "rgba(216,72,72,0.5)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
     { className: "plagiarism2", color: "rgba(72,72,216,0.5)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
@@ -34,8 +37,16 @@ export default function AI_Detection(){
     try {
       const response = await fetch(`/data/codechecker_files/${fileName}`);
       if (response.ok) {
-        const text = await response.text();
-        setFileContent(highlightText(text, scoreDetails));
+        // first, load the file
+        const textFile = await response.text();
+        // second, call the AI
+        loadAIText(textFile);
+
+        // TODO third, make transposition so that output can be highlighted
+        let detailsAI = null;
+        // fourth, apply highlight
+        // setFileContent(highlightText(text, detailsAI));
+        setFileContent(textFile); // TODO Will have to be updated
       } else {
         setFileContent("Error loading file content.");
       }
@@ -45,7 +56,7 @@ export default function AI_Detection(){
     }
   };
 
-  const loadAIText = async () => {
+  const loadAIText = async (textFile) => {
     console.log("loadAIText");
     setOutputAI([]);
     setIsLoadingAI(true);
@@ -54,14 +65,21 @@ export default function AI_Detection(){
       const is_localhost = window.location.href.indexOf("localhost");
       const is_127_0_0_1 = window.location.href.indexOf("127.0.0.1");
       const strAnalyze = is_localhost
-        ? window.location.href.replace("TextAnalysis",'').replace("3000", "5000") + "api/analyze_t_b"
-        : window.location.replace("TextAnalysis",'').href + "api/analyze_t_b";
+        ? window.location.href
+          .replace("TextAnalysis",'')
+          .replace("AI_Detection",'')
+          .replace("3000", "5000") 
+          + "api/analyze_t_b"
+        : window.location
+          .replace("TextAnalysis",'')
+          .replace("AI_Detection",'').href 
+          + "api/analyze_t_b";
       console.log("strAnalyze AI Text: ", strAnalyze);
       // Flask runs on port 5000 by default
       const response = await fetch(strAnalyze, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text }),
+        body: JSON.stringify({ text: textFile }),
       });
       if (!response.ok) throw new Error("Network response was not ok.");
       const data = await response.json();
@@ -103,6 +121,10 @@ export default function AI_Detection(){
   const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); // Reset to the first file
   };
 
+  const handleFileClick = (index) => {
+    setIndexFile(index);
+  };
+  
 
   // ---- useEffect
   const textRef = useRef(null);
@@ -115,7 +137,7 @@ export default function AI_Detection(){
 
   useEffect(() => {
     if (selectedUser) {
-      const userData = codecheckerData.data.find(user => user.name === selectedUser);
+      const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
       if (userData && userData.files.length > 0) {
         setFileList(userData.files);
         fetchFileContent(userData.files[indexFile], userData.scoreDetails[indexFile]);
@@ -153,7 +175,7 @@ export default function AI_Detection(){
                <Breadcrumb />
                <>
                 <div>
-                  Submission from {selectedUser} with a score of {codecheckerData.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData.data.find(user => user.name === selectedUser)?.numSubmissions}.
+                  Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
                 </div>
                 <div>
                   <u>Files</u>
@@ -165,12 +187,60 @@ export default function AI_Detection(){
                     ))
                   }
                 </div>
+                <h4>
+                  {(selectedUser && codecheckerData_plagiarism.data) &&
+                    codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
+                  }
+                </h4>
                 </>
                {/* <CollusionNetworkGraph /> */}
                {/* TODO make call for AI here */}
-                <div className="card" style={{ 'height': '28vh' }}>
+               {/* style={{ 'height': '28vh' }} */}
+               {isLoadingAI ? (
+                <>
+                  <h3 className="heading-section text-center">
+                    Generated Text Probability{" "}
+                  </h3>
+                  <div className="text-center">
+                    {" "}
+                    <div className="spinner-border text-primary" role="status" />
+                  </div>
+                </>
+                ) : (
+                  outputAI.details && (
+                <>
+                  <h3 className="heading-section text-center">
+                    Generated Text Probability
+                  </h3>
+                  <h2>Average score: {outputAI.average} </h2>
+                  Details:
+                  <br />
+                  {outputAI.details &&
+                    outputAI.details.map((oAI, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          backgroundColor: getBackgroundColorAI(
+                            outputAI,
+                            index
+                          ),
+                          color: "#fff",
+                          padding: "2px 4px",
+                          margin: "2px",
+                          display: "inline-block",
+                        }}
+                      >
+                        {oAI.text}{" "}
+                      </span>
+                    ))}
+                </>
+                ))}
+                <div className="card">
                   <div className="card-body">
-                    <p>Score distribution here</p>
+                    {/* <p>Score distribution here</p> */}
+                    <div ref={textRef} className="text-content">
+                      <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
+                    </div>
                   </div>
                 </div>
               </div>
