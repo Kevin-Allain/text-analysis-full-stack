@@ -39,14 +39,31 @@ export default function AI_Detection(){
       if (response.ok) {
         // first, load the file
         const textFile = await response.text();
+
+        // TODO verify if we put the details already in scoreDetails
+
         // second, call the AI
         loadAIText(textFile);
 
+        console.log("fetchFileContent |scoreDetails: ",scoreDetails);
+
         // TODO third, make transposition so that output can be highlighted
+        // TODO ---- incorporate this code so that we make the transition from data.details to scoreDetails (we'll do highlighting after)     
+        // Example usage
+        const name = "Leo";
+        const numSubmissions = 7;
+        const files = ["PredatorMovement.cs", "PreyEvading.cs"];
+        // dataTest is supposed to be like outputAI
+        const dataTest = { average: 0.599, details: [ { text: "Ċ", value: 0.79 }, { text: 'st', value: 0.76 }, { text: 'ories', value: 0.36 }, { text: "Ġof", value: 0.02 }, { text: "Ġfairy", value: 0.02 }, { text: "Ġtales", value: 0.02 }, { text: "Ġlike", value: 0.72 }, { text: "Ġthis", value: 0.02 }, { text: "Ġare", value: 0.02 }, { text: "Ġnice", value: 0.02 }, { text: "Ċ", value: 0.79 }, { text: "Ċ", value: 0.79 }, { text: 'Right?', value: 0.76 }, ] };
+        // originalText is supposed to be like the content of the file
+        const originalText = "\nStories of fairy tales like this are nice\n\nRight?.";      
+        const result = transformDataToScoreDetails(name, numSubmissions, files, dataTest, originalText);
+        console.log("result transformDataToScoreDetails: ",result);
+
         let detailsAI = null;
         // fourth, apply highlight
         // setFileContent(highlightText(text, detailsAI));
-        setFileContent(textFile); // TODO Will have to be updated
+        setFileContent(textFile); // TODO Will have to be updated... maybe with result
       } else {
         setFileContent("Error loading file content.");
       }
@@ -55,6 +72,39 @@ export default function AI_Detection(){
       setFileContent("Error loading file content.");
     }
   };
+
+
+  function transformDataToScoreDetails(name, numSubmissions, files, data, originalText) {
+    // Helper function to replace special characters
+    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n'); };  
+    // Initialize the start of the range
+    let previousEndIndex = -1;
+  
+    // Transform the details array with range calculation
+    const transformedDetails = data.details.map((detail, index) => {
+      const modifiedText = replaceSpecialCharacters(detail.text);
+      let startIndex;
+      if (modifiedText === '\n') {
+        startIndex = previousEndIndex + 1;
+      } else {
+        startIndex = originalText.indexOf(modifiedText, previousEndIndex + 1);
+        if (startIndex === -1) {
+          console.warn(`Text fragment "${modifiedText}" not found in the original text.`);
+          startIndex = previousEndIndex + 1;
+        }
+      }
+      const endIndex = startIndex + modifiedText.length - 1;
+      previousEndIndex = endIndex;  
+      return {
+        type: 'ai_detection', range: [startIndex, endIndex], score: detail.value, text: modifiedText
+      };
+    });
+    // Construct the new object
+    const scoreDetails = {
+      name: name, globalScore: data.average, numSubmissions: numSubmissions, files: files, scoreDetails: transformedDetails
+    };  
+    return scoreDetails;
+  } 
 
   const loadAIText = async (textFile) => {
     console.log("loadAIText");
@@ -66,13 +116,10 @@ export default function AI_Detection(){
       const is_127_0_0_1 = window.location.href.indexOf("127.0.0.1");
       const strAnalyze = is_localhost
         ? window.location.href
-          .replace("TextAnalysis",'')
-          .replace("AI_Detection",'')
-          .replace("3000", "5000") 
+          .replace("TextAnalysis",'').replace("AI_Detection",'').replace("3000", "5000") 
           + "api/analyze_t_b"
         : window.location
-          .replace("TextAnalysis",'')
-          .replace("AI_Detection",'').href 
+          .replace("TextAnalysis",'').replace("AI_Detection",'').href 
           + "api/analyze_t_b";
       console.log("strAnalyze AI Text: ", strAnalyze);
       // Flask runs on port 5000 by default
@@ -193,9 +240,6 @@ export default function AI_Detection(){
                   }
                 </h4>
                 </>
-               {/* <CollusionNetworkGraph /> */}
-               {/* TODO make call for AI here */}
-               {/* style={{ 'height': '28vh' }} */}
                {isLoadingAI ? (
                 <>
                   <h3 className="heading-section text-center">

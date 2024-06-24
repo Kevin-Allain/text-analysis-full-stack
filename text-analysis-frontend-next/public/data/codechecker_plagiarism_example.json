@@ -130,7 +130,7 @@
           },
           {
             "type": "plagiarism",
-            "range": [53, 66],
+            "range": [54, 54],
             "source": "http://wikipedia.com"
           },
           {
@@ -349,7 +349,7 @@
           },
           {
             "type": "plagiarism",
-            "range": [53, 66],
+            "range": [53, 54],
             "source": "http://wikipedia.com"
           },
           {

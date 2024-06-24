@@ -74,9 +74,11 @@ export default function Plagiarism() {
   const highlightText = (text, scoreDetails) => {
     let highlightedText = text;
     let sizeOffset = 0;
+    console.log("Plagiarism / highlightText | scoreDetails: ",scoreDetails);    
     scoreDetails.forEach(detail => {
       const { type, range } = detail;
       const detailInfo = details.find(d => d.className === type);
+      // console.log("Plagiarism / highlightText | detailInfo: ",detailInfo);
       const highlightStart = `<span class="highlight ${type}" style="background-color: ${detailInfo.color}">`;
       const highlightEnd = "</span>";
       const start = range[0];
