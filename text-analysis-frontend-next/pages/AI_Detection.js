@@ -156,12 +156,23 @@ export default function AI_Detection(){
   const highlightText_quant = (text, scoreDetails) => {
     let highlightedText = text;
     let sizeOffset = 0;
-    console.log("Plagiarism / highlightText_quant | text: ",text,", scoreDetails: ",scoreDetails);    
+    console.log("Plagiarism / highlightText_quant | scoreDetails: ",scoreDetails);
+    let allScores = scoreDetails.map(a => a.score);
+    let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
+
+    // Function to calculate opacity based on score
+    const calculateOpacity = (score, min, max) => {
+      if (min === max) return 0.65; // Handle the case where all scores are the same
+      return ((score - min) / (max - min)) * 0.65;
+    };
+
+
     scoreDetails.forEach(detail => {
-      const { type, range } = detail;
+      const { type, range, score } = detail;
+      const opacity = calculateOpacity(score, minScore, maxScore);
       const detailInfo = details.find(d => d.className === type);
       // TODO find how to compute color here... reuse previous function?
-      const highlightStart = `<span class="highlight ${type}" >`; // style="background-color: ${detailInfo.color}"
+      const highlightStart = `<span class="highlight ${type}" style="background-color: rgba(255, 0, 0, ${opacity});" >`; // style="background-color: ${detailInfo.color}"
       const highlightEnd = "</span>";
       const start = range[0];
       const end = range[1];
