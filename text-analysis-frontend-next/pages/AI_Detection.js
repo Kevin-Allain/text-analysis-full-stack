@@ -9,8 +9,9 @@ import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
 import HorizontalNav from '@/components/HorizontalNav';
 
 import { FormDataContext } from '@/components/context/FormDataContext';
+// TODO update this to use codecheckerData_ai_detection
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
-
+import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
 
 export default function AI_Detection(){
   // ---- useState
@@ -39,31 +40,9 @@ export default function AI_Detection(){
       if (response.ok) {
         // first, load the file
         const textFile = await response.text();
-
-        // TODO verify if we put the details already in scoreDetails
-
+        console.log("textFile: ",textFile);
         // second, call the AI
         loadAIText(textFile);
-
-        console.log("fetchFileContent |scoreDetails: ",scoreDetails);
-
-        // TODO third, make transposition so that output can be highlighted
-        // TODO ---- incorporate this code so that we make the transition from data.details to scoreDetails (we'll do highlighting after)     
-        // Example usage
-        const name = "Leo";
-        const numSubmissions = 7;
-        const files = ["PredatorMovement.cs", "PreyEvading.cs"];
-        // dataTest is supposed to be like outputAI
-        const dataTest = { average: 0.599, details: [ { text: "Ċ", value: 0.79 }, { text: 'st', value: 0.76 }, { text: 'ories', value: 0.36 }, { text: "Ġof", value: 0.02 }, { text: "Ġfairy", value: 0.02 }, { text: "Ġtales", value: 0.02 }, { text: "Ġlike", value: 0.72 }, { text: "Ġthis", value: 0.02 }, { text: "Ġare", value: 0.02 }, { text: "Ġnice", value: 0.02 }, { text: "Ċ", value: 0.79 }, { text: "Ċ", value: 0.79 }, { text: 'Right?', value: 0.76 }, ] };
-        // originalText is supposed to be like the content of the file
-        const originalText = "\nStories of fairy tales like this are nice\n\nRight?.";      
-        const result = transformDataToScoreDetails(name, numSubmissions, files, dataTest, originalText);
-        console.log("result transformDataToScoreDetails: ",result);
-
-        let detailsAI = null;
-        // fourth, apply highlight
-        // setFileContent(highlightText(text, detailsAI));
-        setFileContent(textFile); // TODO Will have to be updated... maybe with result
       } else {
         setFileContent("Error loading file content.");
       }
@@ -73,6 +52,15 @@ export default function AI_Detection(){
     }
   };
 
+  function contentFromAI(array) {
+    console.log("contentFromAI(array :",array);
+    // Helper function to replace special characters
+    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n'); };
+    let resultString = '';
+    array.forEach(item => { resultString += replaceSpecialCharacters(item.text); });
+    return resultString;
+  }
+  
 
   function transformDataToScoreDetails(name, numSubmissions, files, data, originalText) {
     // Helper function to replace special characters
@@ -101,7 +89,7 @@ export default function AI_Detection(){
     });
     // Construct the new object
     const scoreDetails = {
-      name: name, globalScore: data.average, numSubmissions: numSubmissions, files: files, scoreDetails: transformedDetails
+      name: name, globalScore: data.average, numSubmissions: numSubmissions, files: [files], scoreDetails: transformedDetails
     };  
     return scoreDetails;
   } 
@@ -165,8 +153,39 @@ export default function AI_Detection(){
     return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
   };
 
+  const highlightText_quant = (text, scoreDetails) => {
+    let highlightedText = text;
+    let sizeOffset = 0;
+    console.log("Plagiarism / highlightText_quant | text: ",text,", scoreDetails: ",scoreDetails);    
+    scoreDetails.forEach(detail => {
+      const { type, range } = detail;
+      const detailInfo = details.find(d => d.className === type);
+      // TODO find how to compute color here... reuse previous function?
+      const highlightStart = `<span class="highlight ${type}" >`; // style="background-color: ${detailInfo.color}"
+      const highlightEnd = "</span>";
+      const start = range[0];
+      const end = range[1];
+      highlightedText =
+        highlightedText.slice(0, start + sizeOffset) +
+        highlightStart +
+        highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
+        highlightEnd +
+        highlightedText.slice(end + sizeOffset + 1);
+      sizeOffset += highlightStart.length + highlightEnd.length;
+    });
+    return highlightedText;
+
+  }
+
   const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); // Reset to the first file
   };
+
+  const handleHighlightClick = (className) => {
+    console.log("handleHighlightClick | className: ",className);
+    // const element = detailsScoreRef.current.querySelector(`.${className}`);
+    // if (element) { element.scrollIntoView({ behavior: "smooth" }); }
+  };
+
 
   const handleFileClick = (index) => {
     setIndexFile(index);
@@ -203,6 +222,35 @@ export default function AI_Detection(){
     }
   }, [fileContent]);
 
+
+  useEffect(() => {
+    // fetchContent gets content, but then it's once the AI is loaded that we load fileContent with highlights and everything.
+    console.log("-- useEffect outputAI --");
+    if (selectedUser && outputAI && outputAI.details) {
+      const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
+      const fileName = userData.files[indexFile], scoreDetails = userData.scoreDetails[indexFile];
+      console.log("fetchFileContent |scoreDetails: ",scoreDetails);
+
+      // TODO third, make transposition so that output can be highlighted
+      // TODO ---- incorporate this code so that we make the transition from data.details to scoreDetails (we'll do highlighting after)     
+      // Example usage
+      const name = selectedUser;
+      const numSubmissions = codecheckerData_ai_detection.data.find(a => a.name===selectedUser).numSubmissions ;
+      const files = userData.files;
+      // dataTest is supposed to be like outputAI
+      // const dataTest = { average: 0.599, details: [ { text: "Ċ", value: 0.79 }, { text: 'St', value: 0.76 }, { text: 'ories', value: 0.36 }, { text: "Ġof", value: 0.02 }, { text: "Ġfairy", value: 0.02 }, { text: "Ġtales", value: 0.02 }, { text: "Ġlike", value: 0.72 }, { text: "Ġthis", value: 0.02 }, { text: "Ġare", value: 0.02 }, { text: "Ġnice", value: 0.02 }, { text: "Ċ", value: 0.79 }, { text: "Ċ", value: 0.79 }, { text: 'Right?', value: 0.76 }, ] };
+      // originalText is supposed to be like the content of the file
+      const originalText = contentFromAI(outputAI.details)
+      const resultScore = transformDataToScoreDetails(name, numSubmissions, files, outputAI, originalText);
+      console.log("transformDataToScoreDetails resultScore: ",resultScore,
+        ", ¬ outputAI: ",outputAI);
+      // fourth, apply highlight
+      setFileContent(highlightText_quant(originalText, resultScore.scoreDetails));
+      // setFileContent(originalText); // TODO Will have to be updated... maybe with result    
+    } else {
+      console.log("Check | selectedUser: ",selectedUser,", outputAI: ",outputAI,", outputAI.scoreDetails: ",outputAI.scoreDetails);
+    }
+  },[outputAI])
 
 
   return (
@@ -259,7 +307,7 @@ export default function AI_Detection(){
                   <h2>Average score: {outputAI.average} </h2>
                   Details:
                   <br />
-                  {outputAI.details &&
+                  {/* {outputAI.details &&
                     outputAI.details.map((oAI, index) => (
                       <span
                         key={index}
@@ -276,17 +324,17 @@ export default function AI_Detection(){
                       >
                         {oAI.text}{" "}
                       </span>
-                    ))}
-                </>
-                ))}
-                <div className="card">
-                  <div className="card-body">
-                    {/* <p>Score distribution here</p> */}
-                    <div ref={textRef} className="text-content">
-                      <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
+                    ))} */}
+                  <div className="card">
+                    <div className="card-body">
+                      {/* <p>Score distribution here</p> */}
+                      <div ref={textRef} className="text-content">
+                        <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
+                      </div>
                     </div>
                   </div>
-                </div>
+                </>
+                ))}
               </div>
               <div className="col-md-3 right_side">
                 <div className="user_listing">

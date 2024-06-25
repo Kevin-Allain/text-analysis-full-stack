@@ -80,7 +80,7 @@
     {
       "name": "Leo",
       "globalScore": null,
-      "numSubmissions": 7,
+      "numSubmissions": 9,
       "files": ["PredatorMovement.cs", "PreyEvading.cs"],
       "scoreDetails": null
     },

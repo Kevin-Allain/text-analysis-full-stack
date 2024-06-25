@@ -74,7 +74,7 @@ export default function Plagiarism() {
   const highlightText = (text, scoreDetails) => {
     let highlightedText = text;
     let sizeOffset = 0;
-    console.log("Plagiarism / highlightText | scoreDetails: ",scoreDetails);    
+    console.log("Plagiarism / highlightText | text: ",text,", scoreDetails: ",scoreDetails);    
     scoreDetails.forEach(detail => {
       const { type, range } = detail;
       const detailInfo = details.find(d => d.className === type);
