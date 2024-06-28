@@ -26,12 +26,15 @@ export default function AI_Detection(){
 
   const { formData, setFormData } = useContext(FormDataContext);
 
-  const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
+
+  // const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
+  const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
   const details = [
     { className: "plagiarism", color: "rgba(216,72,72,0.5)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
     { className: "plagiarism2", color: "rgba(72,72,216,0.5)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
     { className: "plagiarism3", color: "rgba(76,216,72,0.5)", text: "Plagiarism 3", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
   ]; // Example details list
+  const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ';
 
   // ---- functions
   const fetchFileContent = async (fileName, scoreDetails) => {
@@ -55,7 +58,7 @@ export default function AI_Detection(){
   function contentFromAI(array) {
     console.log("contentFromAI(array :",array);
     // Helper function to replace special characters
-    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n'); };
+    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n').replace(/ĉ/g, '\t'); };
     let resultString = '';
     array.forEach(item => { resultString += replaceSpecialCharacters(item.text); });
     return resultString;
@@ -64,7 +67,7 @@ export default function AI_Detection(){
 
   function transformDataToScoreDetails(name, numSubmissions, files, data, originalText) {
     // Helper function to replace special characters
-    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n'); };  
+    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n').replace(/ĉ/g, '\t'); };  
     // Initialize the start of the range
     let previousEndIndex = -1;
   
@@ -162,8 +165,8 @@ export default function AI_Detection(){
 
     // Function to calculate opacity based on score
     const calculateOpacity = (score, min, max) => {
-      if (min === max) return 0.65; // Handle the case where all scores are the same
-      return ((score - min) / (max - min)) * 0.65;
+      if (min === max) return 0.90; // Handle the case where all scores are the same
+      return 0.05 + ((score - min) / (max - min)) * 0.85;
     };
 
 
@@ -277,17 +280,27 @@ export default function AI_Detection(){
           <HorizontalNav/>          
             <h1> {formData?.product && formData?.product} AI_Detection - Details</h1>
             <div className="row">
-              <div className="col-md-7">
+              {/* <div className="col-md-7"> */}
+              <div className="col-md-9">
                <Breadcrumb />
                <>
                 <div>
-                  Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
+                  Submission from {selectedUser}.  
+                  {/* TODO update this... codecheckerData_ai_detection has null on globalScore for now... */}
+                   {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
+                   Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
+                   
                 </div>
                 <div>
                   <u>Files</u>
                   {selectedUser && 
                     fileList.map((file, index) => (
-                      <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
+                      <button 
+                        key={index} 
+                        className={`btn btn-link ${(indexFile === index) ? 'active' : ''}`} 
+                        onClick={() => handleFileClick(index)}
+                        disabled={isLoadingAI}
+                      >
                         {file}
                       </button>
                     ))
@@ -318,24 +331,7 @@ export default function AI_Detection(){
                   <h2>Average score: {outputAI.average} </h2>
                   Details:
                   <br />
-                  {/* {outputAI.details &&
-                    outputAI.details.map((oAI, index) => (
-                      <span
-                        key={index}
-                        style={{
-                          backgroundColor: getBackgroundColorAI(
-                            outputAI,
-                            index
-                          ),
-                          color: "#fff",
-                          padding: "2px 4px",
-                          margin: "2px",
-                          display: "inline-block",
-                        }}
-                      >
-                        {oAI.text}{" "}
-                      </span>
-                    ))} */}
+                  {/* {outputAI.details && outputAI.details.map((oAI, index) => ( <span key={index} style={{ backgroundColor: getBackgroundColorAI( outputAI, index ), color: "#fff", padding: "2px 4px", margin: "2px", display: "inline-block", }} > {oAI.text}{" "} </span> ))} */}
                   <div className="card">
                     <div className="card-body">
                       {/* <p>Score distribution here</p> */}
@@ -357,41 +353,15 @@ export default function AI_Detection(){
                         onClick={() => handleUserClick(user)}
                       >
                         <span>{user.name}</span>
-                        <span>{(user.globalScore * 100).toFixed(2)}%</span>
+                        {user.globalScore !== null && 
+                          <span>{(user.globalScore * 100).toFixed(2)}%</span>
+                        }
                       </li>
                     ))}
                   </ul>
                 </div>
                 {/* TODO maybe put some sort of legend here... */}
-                {/* <div className="details_score" ref={detailsScoreRef}>
-                  {details.map((item, index) => (
-                    <div key={index}>
-                      <div
-                        className={`detail-item ${item.className}`}
-                        style={{ backgroundColor: item.color }}
-                        onClick={() => handleDetailClick(item)}
-                      >
-                        {item.text}
-                      </div>
-                      {selectedDetail === item.className && (
-                        <div className="detail-indications">
-                          {(selectedUser && codecheckerData.data) && 
-                            <>
-                              <a href={codecheckerData.data.find(user => user.name === selectedUser)
-                                ?.scoreDetails[indexFile].find(sc => sc.type === item.className).source} target="_blank" rel="noopener noreferrer">
-                                  {codecheckerData.data
-                                    .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
-                                      .find(sc => sc.type === item.className).source}
-                              </a>
-                              <hr/>
-                            </>
-                          }
-                          {item.indications}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div> */}
+                <div className='legend'></div>
               </div>
             </div>
           </div>

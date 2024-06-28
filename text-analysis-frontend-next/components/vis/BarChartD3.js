@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
 const BarChartD3 = ({ data }) => {
+
+  console.log("BarChartD3 | data: ",data);
+
   const svgRef = useRef();
   const tooltipRef = useRef();
   const margin = { top: 20, right: 30, bottom: 45, left: 45 };

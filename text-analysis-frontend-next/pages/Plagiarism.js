@@ -23,7 +23,7 @@ export default function Plagiarism() {
   const textRef = useRef(null);
   const detailsScoreRef = useRef(null);
   const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
-  const details = [
+  const detailsPlagiarism = [
     { className: "plagiarism", color: "rgba(216,72,72,0.5)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
     { className: "plagiarism2", color: "rgba(72,72,216,0.5)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
     { className: "plagiarism3", color: "rgba(76,216,72,0.5)", text: "Plagiarism 3", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
@@ -77,7 +77,7 @@ export default function Plagiarism() {
     console.log("Plagiarism / highlightText | text: ",text,", scoreDetails: ",scoreDetails);    
     scoreDetails.forEach(detail => {
       const { type, range } = detail;
-      const detailInfo = details.find(d => d.className === type);
+      const detailInfo = detailsPlagiarism.find(d => d.className === type);
       // console.log("Plagiarism / highlightText | detailInfo: ",detailInfo);
       const highlightStart = `<span class="highlight ${type}" style="background-color: ${detailInfo.color}">`;
       const highlightEnd = "</span>";
@@ -167,7 +167,7 @@ export default function Plagiarism() {
               </ul>
             </div>
             <div className="details_score" ref={detailsScoreRef}>
-              {details.map((item, index) => (
+              {detailsPlagiarism.map((item, index) => (
                 <div key={index}>
                   <div
                     className={`detail-item ${item.className}`}

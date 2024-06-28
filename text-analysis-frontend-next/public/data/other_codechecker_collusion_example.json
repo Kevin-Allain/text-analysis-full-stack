@@ -1,0 +1,845 @@
+{
+    "data": [
+      {
+        "name": "Alice",
+        "worstScore": 0.95,
+        "numSubmissions": 1,
+        "files": [
+          "NLP_LBS1_answers.R"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.58",
+          "relations": [
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|index.vue": 0.12
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|CameraFollowPredator.cs": 0.44
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|Addresses.py": 0.94,
+                "NLP_LBS1_answers.R|evaluate.py": 0.03
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|evaluate.py": 0.77,
+                "NLP_LBS1_answers.R|attack_control.py": 0.82,
+                "NLP_LBS1_answers.R|cold_decoding.py": 0.03
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|evaluate.py": 0.52,
+                "NLP_LBS1_answers.R|old_PredatorMovement.cs": 0.47
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|INSTALL.txt": 0.47,
+                "NLP_LBS1_answers.R|cold_decoding.py": 0.93
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|ggplot_tips.R": 0.88
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|old_PredatorMovement.cs": 0.32,
+                "NLP_LBS1_answers.R|PredatorMovement.cs": 0.67,
+                "NLP_LBS1_answers.R|evaluate.py": 0.95
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "NLP_LBS1_answers.R|vectorFunctions.R": 0.26
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Bob",
+        "worstScore": 0.94,
+        "numSubmissions": 1,
+        "files": [
+          "index.vue"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.79",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "index.vue|NLP_LBS1_answers.R": 0.12
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "index.vue|CameraFollowPredator.cs": 0.54
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "index.vue|Addresses.py": 0.94,
+                "index.vue|evaluate.py": 0.22
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "index.vue|evaluate.py": 0.41,
+                "index.vue|attack_control.py": 0.39,
+                "index.vue|cold_decoding.py": 0.66
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "index.vue|evaluate.py": 0.47,
+                "index.vue|old_PredatorMovement.cs": 0.79
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "index.vue|INSTALL.txt": 0.89,
+                "index.vue|cold_decoding.py": 0.59
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "index.vue|ggplot_tips.R": 0.61
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "index.vue|old_PredatorMovement.cs": 0.28,
+                "index.vue|PredatorMovement.cs": 0.51,
+                "index.vue|evaluate.py": 0.25
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "index.vue|vectorFunctions.R": 0.56
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Charlie",
+        "worstScore": 0.98,
+        "numSubmissions": 1,
+        "files": [
+          "CameraFollowPredator.cs"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.82",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "CameraFollowPredator.cs|NLP_LBS1_answers.R": 0.44
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "CameraFollowPredator.cs|index.vue": 0.54
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "CameraFollowPredator.cs|Addresses.py": 0.54,
+                "CameraFollowPredator.cs|evaluate.py": 0.32
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "CameraFollowPredator.cs|evaluate.py": 0.43,
+                "CameraFollowPredator.cs|attack_control.py": 0.6,
+                "CameraFollowPredator.cs|cold_decoding.py": 0.41
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "CameraFollowPredator.cs|evaluate.py": 0.69,
+                "CameraFollowPredator.cs|old_PredatorMovement.cs": 0.68
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "CameraFollowPredator.cs|INSTALL.txt": 0.77,
+                "CameraFollowPredator.cs|cold_decoding.py": 0.06
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "CameraFollowPredator.cs|ggplot_tips.R": 0.98
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "CameraFollowPredator.cs|old_PredatorMovement.cs": 0.64,
+                "CameraFollowPredator.cs|PredatorMovement.cs": 0.79,
+                "CameraFollowPredator.cs|evaluate.py": 0.1
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "CameraFollowPredator.cs|vectorFunctions.R": 0.21
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Dave",
+        "worstScore": 0.94,
+        "numSubmissions": 2,
+        "files": [
+          "Addresses.py",
+          "evaluate.py"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.67",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Addresses.py|NLP_LBS1_answers.R": 0.94,
+                "evaluate.py|NLP_LBS1_answers.R": 0.03
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Addresses.py|index.vue": 0.94,
+                "evaluate.py|index.vue": 0.22
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Addresses.py|CameraFollowPredator.cs": 0.54,
+                "evaluate.py|CameraFollowPredator.cs": 0.32
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Addresses.py|evaluate.py": 0.39,
+                "Addresses.py|attack_control.py": 0.67,
+                "Addresses.py|cold_decoding.py": 0.83,
+                "evaluate.py|evaluate.py": 0.89,
+                "evaluate.py|attack_control.py": 0.59,
+                "evaluate.py|cold_decoding.py": 0.74
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Addresses.py|evaluate.py": 0.15,
+                "Addresses.py|old_PredatorMovement.cs": 0.04,
+                "evaluate.py|evaluate.py": 0.73,
+                "evaluate.py|old_PredatorMovement.cs": 0.58
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Addresses.py|INSTALL.txt": 0.65,
+                "Addresses.py|cold_decoding.py": 0.37,
+                "evaluate.py|INSTALL.txt": 0.54,
+                "evaluate.py|cold_decoding.py": 0.19
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Addresses.py|ggplot_tips.R": 0.06,
+                "evaluate.py|ggplot_tips.R": 0.86
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Addresses.py|old_PredatorMovement.cs": 0.48,
+                "Addresses.py|PredatorMovement.cs": 0.86,
+                "Addresses.py|evaluate.py": 0.9,
+                "evaluate.py|old_PredatorMovement.cs": 0.01,
+                "evaluate.py|PredatorMovement.cs": 0.64,
+                "evaluate.py|evaluate.py": 0.83
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Addresses.py|vectorFunctions.R": 0.07,
+                "evaluate.py|vectorFunctions.R": 0.79
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Eve",
+        "worstScore": 0.96,
+        "numSubmissions": 3,
+        "files": [
+          "evaluate.py",
+          "attack_control.py",
+          "cold_decoding.py"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.40",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "evaluate.py|NLP_LBS1_answers.R": 0.77,
+                "attack_control.py|NLP_LBS1_answers.R": 0.82,
+                "cold_decoding.py|NLP_LBS1_answers.R": 0.03
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "evaluate.py|index.vue": 0.41,
+                "attack_control.py|index.vue": 0.39,
+                "cold_decoding.py|index.vue": 0.66
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "evaluate.py|CameraFollowPredator.cs": 0.43,
+                "attack_control.py|CameraFollowPredator.cs": 0.6,
+                "cold_decoding.py|CameraFollowPredator.cs": 0.41
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "evaluate.py|Addresses.py": 0.39,
+                "evaluate.py|evaluate.py": 0.89,
+                "attack_control.py|Addresses.py": 0.67,
+                "attack_control.py|evaluate.py": 0.59,
+                "cold_decoding.py|Addresses.py": 0.83,
+                "cold_decoding.py|evaluate.py": 0.74
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "evaluate.py|evaluate.py": 0.16,
+                "evaluate.py|old_PredatorMovement.cs": 0.93,
+                "attack_control.py|evaluate.py": 0.05,
+                "attack_control.py|old_PredatorMovement.cs": 0.86,
+                "cold_decoding.py|evaluate.py": 0.96,
+                "cold_decoding.py|old_PredatorMovement.cs": 0.82
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "evaluate.py|INSTALL.txt": 0.06,
+                "evaluate.py|cold_decoding.py": 0.53,
+                "attack_control.py|INSTALL.txt": 0.24,
+                "attack_control.py|cold_decoding.py": 0.12,
+                "cold_decoding.py|INSTALL.txt": 0.57,
+                "cold_decoding.py|cold_decoding.py": 0.56
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "evaluate.py|ggplot_tips.R": 0.94,
+                "attack_control.py|ggplot_tips.R": 0.48,
+                "cold_decoding.py|ggplot_tips.R": 0.58
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "evaluate.py|old_PredatorMovement.cs": 0.22,
+                "evaluate.py|PredatorMovement.cs": 0.79,
+                "evaluate.py|evaluate.py": 0.91,
+                "attack_control.py|old_PredatorMovement.cs": 0.59,
+                "attack_control.py|PredatorMovement.cs": 0.46,
+                "attack_control.py|evaluate.py": 0.07,
+                "cold_decoding.py|old_PredatorMovement.cs": 0.81,
+                "cold_decoding.py|PredatorMovement.cs": 0.68,
+                "cold_decoding.py|evaluate.py": 0.1
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "evaluate.py|vectorFunctions.R": 0.36,
+                "attack_control.py|vectorFunctions.R": 0.8,
+                "cold_decoding.py|vectorFunctions.R": 0.43
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Frank",
+        "worstScore": 0.96,
+        "numSubmissions": 2,
+        "files": [
+          "evaluate.py",
+          "old_PredatorMovement.cs"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.92",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "evaluate.py|NLP_LBS1_answers.R": 0.52,
+                "old_PredatorMovement.cs|NLP_LBS1_answers.R": 0.47
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "evaluate.py|index.vue": 0.47,
+                "old_PredatorMovement.cs|index.vue": 0.79
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "evaluate.py|CameraFollowPredator.cs": 0.69,
+                "old_PredatorMovement.cs|CameraFollowPredator.cs": 0.68
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "evaluate.py|Addresses.py": 0.15,
+                "evaluate.py|evaluate.py": 0.73,
+                "old_PredatorMovement.cs|Addresses.py": 0.04,
+                "old_PredatorMovement.cs|evaluate.py": 0.58
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "evaluate.py|evaluate.py": 0.16,
+                "evaluate.py|attack_control.py": 0.05,
+                "evaluate.py|cold_decoding.py": 0.96,
+                "old_PredatorMovement.cs|evaluate.py": 0.93,
+                "old_PredatorMovement.cs|attack_control.py": 0.86,
+                "old_PredatorMovement.cs|cold_decoding.py": 0.82
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "evaluate.py|INSTALL.txt": 0.06,
+                "evaluate.py|cold_decoding.py": 0.68,
+                "old_PredatorMovement.cs|INSTALL.txt": 0.28,
+                "old_PredatorMovement.cs|cold_decoding.py": 0.51
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "evaluate.py|ggplot_tips.R": 0.78,
+                "old_PredatorMovement.cs|ggplot_tips.R": 0.84
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "evaluate.py|old_PredatorMovement.cs": 0.81,
+                "evaluate.py|PredatorMovement.cs": 0.52,
+                "evaluate.py|evaluate.py": 0.14,
+                "old_PredatorMovement.cs|old_PredatorMovement.cs": 0.51,
+                "old_PredatorMovement.cs|PredatorMovement.cs": 0.19,
+                "old_PredatorMovement.cs|evaluate.py": 0.61
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "evaluate.py|vectorFunctions.R": 0.46,
+                "old_PredatorMovement.cs|vectorFunctions.R": 0.88
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Grace",
+        "worstScore": 0.93,
+        "numSubmissions": 2,
+        "files": [
+          "INSTALL.txt",
+          "cold_decoding.py"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.03",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "INSTALL.txt|NLP_LBS1_answers.R": 0.47,
+                "cold_decoding.py|NLP_LBS1_answers.R": 0.93
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "INSTALL.txt|index.vue": 0.89,
+                "cold_decoding.py|index.vue": 0.59
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "INSTALL.txt|CameraFollowPredator.cs": 0.77,
+                "cold_decoding.py|CameraFollowPredator.cs": 0.06
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "INSTALL.txt|Addresses.py": 0.65,
+                "INSTALL.txt|evaluate.py": 0.54,
+                "cold_decoding.py|Addresses.py": 0.37,
+                "cold_decoding.py|evaluate.py": 0.19
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "INSTALL.txt|evaluate.py": 0.06,
+                "INSTALL.txt|attack_control.py": 0.24,
+                "INSTALL.txt|cold_decoding.py": 0.57,
+                "cold_decoding.py|evaluate.py": 0.53,
+                "cold_decoding.py|attack_control.py": 0.12,
+                "cold_decoding.py|cold_decoding.py": 0.56
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "INSTALL.txt|evaluate.py": 0.06,
+                "INSTALL.txt|old_PredatorMovement.cs": 0.28,
+                "cold_decoding.py|evaluate.py": 0.68,
+                "cold_decoding.py|old_PredatorMovement.cs": 0.51
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "INSTALL.txt|ggplot_tips.R": 0.64,
+                "cold_decoding.py|ggplot_tips.R": 0.73
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "INSTALL.txt|old_PredatorMovement.cs": 0.36,
+                "INSTALL.txt|PredatorMovement.cs": 0.05,
+                "INSTALL.txt|evaluate.py": 0.35,
+                "cold_decoding.py|old_PredatorMovement.cs": 0.57,
+                "cold_decoding.py|PredatorMovement.cs": 0.39,
+                "cold_decoding.py|evaluate.py": 0.37
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "INSTALL.txt|vectorFunctions.R": 0.19,
+                "cold_decoding.py|vectorFunctions.R": 0.82
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Hank",
+        "worstScore": 0.98,
+        "numSubmissions": 1,
+        "files": [
+          "ggplot_tips.R"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.53",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "ggplot_tips.R|NLP_LBS1_answers.R": 0.88
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "ggplot_tips.R|index.vue": 0.61
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "ggplot_tips.R|CameraFollowPredator.cs": 0.98
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "ggplot_tips.R|Addresses.py": 0.06,
+                "ggplot_tips.R|evaluate.py": 0.86
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "ggplot_tips.R|evaluate.py": 0.94,
+                "ggplot_tips.R|attack_control.py": 0.48,
+                "ggplot_tips.R|cold_decoding.py": 0.58
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "ggplot_tips.R|evaluate.py": 0.78,
+                "ggplot_tips.R|old_PredatorMovement.cs": 0.84
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "ggplot_tips.R|INSTALL.txt": 0.64,
+                "ggplot_tips.R|cold_decoding.py": 0.73
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "ggplot_tips.R|old_PredatorMovement.cs": 0.8,
+                "ggplot_tips.R|PredatorMovement.cs": 0.97,
+                "ggplot_tips.R|evaluate.py": 0.48
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "ggplot_tips.R|vectorFunctions.R": 0.62
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Ivy",
+        "worstScore": 0.97,
+        "numSubmissions": 3,
+        "files": [
+          "old_PredatorMovement.cs",
+          "PredatorMovement.cs",
+          "evaluate.py"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.57",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "old_PredatorMovement.cs|NLP_LBS1_answers.R": 0.32,
+                "PredatorMovement.cs|NLP_LBS1_answers.R": 0.67,
+                "evaluate.py|NLP_LBS1_answers.R": 0.95
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "old_PredatorMovement.cs|index.vue": 0.28,
+                "PredatorMovement.cs|index.vue": 0.51,
+                "evaluate.py|index.vue": 0.25
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "old_PredatorMovement.cs|CameraFollowPredator.cs": 0.64,
+                "PredatorMovement.cs|CameraFollowPredator.cs": 0.79,
+                "evaluate.py|CameraFollowPredator.cs": 0.1
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "old_PredatorMovement.cs|Addresses.py": 0.48,
+                "old_PredatorMovement.cs|evaluate.py": 0.01,
+                "PredatorMovement.cs|Addresses.py": 0.86,
+                "PredatorMovement.cs|evaluate.py": 0.64,
+                "evaluate.py|Addresses.py": 0.9,
+                "evaluate.py|evaluate.py": 0.83
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "old_PredatorMovement.cs|evaluate.py": 0.22,
+                "old_PredatorMovement.cs|attack_control.py": 0.59,
+                "old_PredatorMovement.cs|cold_decoding.py": 0.81,
+                "PredatorMovement.cs|evaluate.py": 0.79,
+                "PredatorMovement.cs|attack_control.py": 0.46,
+                "PredatorMovement.cs|cold_decoding.py": 0.68,
+                "evaluate.py|evaluate.py": 0.91,
+                "evaluate.py|attack_control.py": 0.07,
+                "evaluate.py|cold_decoding.py": 0.1
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "old_PredatorMovement.cs|evaluate.py": 0.81,
+                "old_PredatorMovement.cs|old_PredatorMovement.cs": 0.51,
+                "PredatorMovement.cs|evaluate.py": 0.52,
+                "PredatorMovement.cs|old_PredatorMovement.cs": 0.19,
+                "evaluate.py|evaluate.py": 0.14,
+                "evaluate.py|old_PredatorMovement.cs": 0.61
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "old_PredatorMovement.cs|INSTALL.txt": 0.36,
+                "old_PredatorMovement.cs|cold_decoding.py": 0.57,
+                "PredatorMovement.cs|INSTALL.txt": 0.05,
+                "PredatorMovement.cs|cold_decoding.py": 0.39,
+                "evaluate.py|INSTALL.txt": 0.35,
+                "evaluate.py|cold_decoding.py": 0.37
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "old_PredatorMovement.cs|ggplot_tips.R": 0.8,
+                "PredatorMovement.cs|ggplot_tips.R": 0.97,
+                "evaluate.py|ggplot_tips.R": 0.48
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "old_PredatorMovement.cs|vectorFunctions.R": 0.34,
+                "PredatorMovement.cs|vectorFunctions.R": 0.38,
+                "evaluate.py|vectorFunctions.R": 0.57
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Jack",
+        "worstScore": 0.88,
+        "numSubmissions": 1,
+        "files": [
+          "vectorFunctions.R"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.80",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "vectorFunctions.R|NLP_LBS1_answers.R": 0.26
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "vectorFunctions.R|index.vue": 0.56
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "vectorFunctions.R|CameraFollowPredator.cs": 0.21
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "vectorFunctions.R|Addresses.py": 0.07,
+                "vectorFunctions.R|evaluate.py": 0.79
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "vectorFunctions.R|evaluate.py": 0.36,
+                "vectorFunctions.R|attack_control.py": 0.8,
+                "vectorFunctions.R|cold_decoding.py": 0.43
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "vectorFunctions.R|evaluate.py": 0.46,
+                "vectorFunctions.R|old_PredatorMovement.cs": 0.88
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "vectorFunctions.R|INSTALL.txt": 0.19,
+                "vectorFunctions.R|cold_decoding.py": 0.82
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "vectorFunctions.R|ggplot_tips.R": 0.62
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "vectorFunctions.R|old_PredatorMovement.cs": 0.34,
+                "vectorFunctions.R|PredatorMovement.cs": 0.38,
+                "vectorFunctions.R|evaluate.py": 0.57
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
