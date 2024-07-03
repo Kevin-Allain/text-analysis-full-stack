@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Navbar from '@/components/NavBar'
 import Sidebar from '@/components/Sidebar'
 import Breadcrumb from '@/components/BreadCrumb'
-import CollusionNetworkGraph from '@/components/vis/CollusionNetworkGraph'
+import CollusionSelectionGraph from '@/components/vis/CollusionNetworkGraph'
 import HorizontalNav from '@/components/HorizontalNav';
 
 import { FormDataContext } from '@/components/context/FormDataContext';

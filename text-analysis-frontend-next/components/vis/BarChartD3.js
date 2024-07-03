@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const BarChartD3 = ({ data }) => {
+const BarChartD3 = ({ data, selectBar }) => {
 
-  console.log("BarChartD3 | data: ",data);
+  console.log("BarChartD3 | data: ",data,", selectBar: ",selectBar);
 
   const svgRef = useRef();
   const tooltipRef = useRef();
@@ -14,6 +14,10 @@ const BarChartD3 = ({ data }) => {
     const svg = d3.select(svgRef.current);
     const width = svg.node().parentElement.clientWidth;
     const tooltip = d3.select(tooltipRef.current);
+
+    // var coordinates = d3.pointer(this);
+    // var xMouse = coordinates[0];
+    // var yMouse = coordinates[1];  
 
     // Create scales
     const x = d3
@@ -91,7 +95,8 @@ const BarChartD3 = ({ data }) => {
         if (d.value < 0.4) return "green";
         if (d.value < 0.8) return "orange";
         return "red";
-      });
+      })
+      ;
 
     // Add invisible tracking zones over each bar
     g.selectAll(".hover-rect")
@@ -107,18 +112,22 @@ const BarChartD3 = ({ data }) => {
       .attr("pointer-events", "all")
       .on("mousemove", (event, d) => {
         tooltip
-          .style("left", `${event.pageX + 10}px`)
-          .style("top", `${event.pageY + 10}px`)
-          .style("opacity", 1)
-          .html(
-            `<strong>${d.name}</strong><br/>Value: ${d.value}<br/>Description: ${d.description}`
-          );
+          .style("left", `${ 2.5}%`) // event.screenX +
+          .style("top", `${ 2.5}%`) // event.screenY +
+          .style("opacity", 0.8)
+          .style("width", `${95}%`)
+          .html(`<strong>${d.name}</strong><br/>Value: ${d.value}<br/>Description: ${d.description}`);
         d3.select(event.target).attr("fill", "rgba(200, 200, 200, 0.3)");
       })
       .on("mouseout", (event) => {
         tooltip.style("opacity", 0);
         d3.select(event.target).attr("fill", "transparent");
-      });
+      })
+      .on("mousedown", (event,d) => {
+        console.log("mousedown rect | d: ",d);
+        selectBar(d.name)
+      })
+      ;
   });
   // }, [data]);
 
