@@ -9,6 +9,7 @@ import { FormDataContext } from '@/components/context/FormDataContext';
 // import '@/Collusion.module.css';
 import '@/styles/PlagiarismFeature.css';
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
+import { fetchFileContent } from '@/utils/FileLoader';
 
 
 export default function Plagiarism() {
@@ -40,7 +41,12 @@ export default function Plagiarism() {
       const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
       if (userData && userData.files.length > 0) {
         setFileList(userData.files);
-        fetchFileContent(userData.files[indexFile], userData.scoreDetails[indexFile]);
+        fetchFileContent(
+          userData.files[indexFile], 
+          userData.scoreDetails[indexFile], 
+          setFileContent,
+          highlightText
+        );
       }
     }
   }, [selectedUser, indexFile]);
@@ -56,20 +62,24 @@ export default function Plagiarism() {
     }
   }, [fileContent]);
 
-  const fetchFileContent = async (fileName, scoreDetails) => {
-    try {
-      const response = await fetch(`/data/codechecker_files/${fileName}`);
-      if (response.ok) {
-        const text = await response.text();
-        setFileContent(highlightText(text, scoreDetails));
-      } else {
-        setFileContent("Error loading file content.");
-      }
-    } catch (error) {
-      console.error("Error fetching file content:", error);
-      setFileContent("Error loading file content.");
-    }
-  };
+  // const fetchFileContent = async (fileName, scoreDetails, setter, highlight= null) => {
+  //   try {
+  //     const response = await fetch(`/data/codechecker_files/${fileName}`);
+  //     if (response.ok) {
+  //       const text = await response.text();
+  //       if (highlight) {
+  //         setter(highlight(text,scoreDetails))
+  //       } else {
+  //         setter(text,scoreDetails)
+  //       }
+  //     } else {
+  //       setter("Error loading file content.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching file content:", error);
+  //     setter("Error loading file content");
+  //   }
+  // };
 
   const highlightText = (text, scoreDetails) => {
     let highlightedText = text;
@@ -78,7 +88,6 @@ export default function Plagiarism() {
     scoreDetails.forEach(detail => {
       const { type, range } = detail;
       const detailInfo = detailsPlagiarism.find(d => d.className === type);
-      // console.log("Plagiarism / highlightText | detailInfo: ",detailInfo);
       const highlightStart = `<span class="highlight ${type}" style="background-color: ${detailInfo.color}">`;
       const highlightEnd = "</span>";
       const start = range[0];

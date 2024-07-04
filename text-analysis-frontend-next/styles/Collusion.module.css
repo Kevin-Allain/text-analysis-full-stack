@@ -1,0 +1,7 @@
+.vertical-separator {
+    width: 1px;
+    background-color: #000;
+    height: 100%; /* Adjust the height as needed */
+    margin: 0 10px; /* Adjust the margin as needed */
+  }
+  
