@@ -9,7 +9,7 @@ import CollusionSelectionGraph from '@/components/vis/CollusionSelectionGraph'
 import HorizontalNav from '@/components/HorizontalNav';
 import { FormDataContext } from '@/components/context/FormDataContext';
 import '@/styles/Collusion.module.css'
-import { fetchFileContent } from '@/utils/FileLoader';
+import { fetchFileContent, fetchFileContentToDivs } from '@/utils/FileLoader';
 
 import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
 
@@ -115,13 +115,15 @@ export default function Collusion(){
       let indexFile1 = 0;
       let indexFile2 = 0;
 
-      fetchFileContent(
+      // fetchFileContent(
+      fetchFileContentToDivs(
         fileCollusion1, 
         userData1.scoreDetails[indexFile1], 
         setContentCollusion1,
         // highlightText
       );
-      fetchFileContent(
+      // fetchFileContent(
+      fetchFileContentToDivs(
         fileCollusion2, 
         userData2.scoreDetails[indexFile2], 
         setContentCollusion2,
@@ -177,18 +179,18 @@ export default function Collusion(){
                         {/* <div dangerouslySetInnerHTML={parseAndGenerateHTMLTable(JSON.stringify(codecheckerData_collusion.data.find(user => user.name === selectedUser).scoreDetails.relations.filter(a => a.name === otherUser)[0].collusionScores))} /> */}
                         { (fileCollusion1 && fileCollusion2) &&
                           <div className="d-flex justify-content-between mx-3">
-                            <div className="w-100">
+                            <div className="w-50">
                               {fileCollusion1}<hr/>
                               {(contentCollusion1 !== null) && 
                                 contentCollusion1
                               }
                             </div>
                             <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
-                            <div className="w-100">
+                            <div className="w-50">
                               {fileCollusion2}<hr/>
                               {(contentCollusion2 !== null) && 
                                 contentCollusion2
-                              }                              
+                              }
                             </div>
                           </div>
                         }
