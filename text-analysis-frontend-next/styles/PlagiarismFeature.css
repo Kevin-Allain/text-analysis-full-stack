@@ -23,8 +23,8 @@
 
 .text-content .highlight {
     cursor: pointer;
-    padding: 2px 4px;
-    border-radius: 4px;
+    /* padding: 2px 4px; */
+    border-radius: 1px;
     /* color: #fff; */
 }
 

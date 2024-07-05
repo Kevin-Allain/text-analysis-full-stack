@@ -83,7 +83,7 @@ export default function Collusion(){
     const tableHTML = `<table class="table table-striped">
         <thead><tr><th>User 1</th><th>File 1</th><th>User 2</th><th>File 2</th><th>Collusion Score</th></tr></thead>
         <tbody>
-          ${rows.map((row, index) => `<tr class="clickable-row" data-file1="${row.file1}" data-file2="${row.file2}">
+          ${rows.map((row, index) => `<tr class="clickable-row" data-file1="${row.file1}" data-file2="${row.file2}" style="cursor: pointer;">
               <td>${row.name1}</td><td>${row.file1}</td><td>${row.name2}</td><td>${row.file2}</td><td>${row.score}</td></tr>`).join('')}
         </tbody>
       </table>`;

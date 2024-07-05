@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Navbar from '@/components/NavBar'
 import Sidebar from '@/components/Sidebar'
 import Breadcrumb from '@/components/BreadCrumb'
-import CollusionSelectionGraph from '@/components/vis/CollusionNetworkGraph'
+import CollusionSelectionGraph from '@/components/vis/CollusionSelectionGraph'
 import HorizontalNav from '@/components/HorizontalNav';
 
 import { FormDataContext } from '@/components/context/FormDataContext';
@@ -29,11 +29,6 @@ export default function AI_Detection(){
 
   // const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
   const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
-  const details = [
-    { className: "plagiarism", color: "rgba(216,72,72,0.5)", text: "Plagiarism 1", indications: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-    { className: "plagiarism2", color: "rgba(72,72,216,0.5)", text: "Plagiarism 2", indications: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { className: "plagiarism3", color: "rgba(76,216,72,0.5)", text: "Plagiarism 3", indications: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-  ]; // Example details list
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ';
 
   // ---- functions
@@ -173,7 +168,6 @@ export default function AI_Detection(){
     scoreDetails.forEach(detail => {
       const { type, range, score } = detail;
       const opacity = calculateOpacity(score, minScore, maxScore);
-      const detailInfo = details.find(d => d.className === type);
       // TODO find how to compute color here... reuse previous function?
       const highlightStart = `<span class="highlight ${type}" style="background-color: rgba(255, 0, 0, ${opacity});" >`; // style="background-color: ${detailInfo.color}"
       const highlightEnd = "</span>";

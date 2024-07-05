@@ -16,8 +16,8 @@ aspiring scientists but also proved that intellect and innovation can be found i
 
 #  -- FUNCTIONS TO EXPORT
 def analyze_binoculars(string=sample_string):
-    print("analyze_binoculars | string: ",string)
+    # print("analyze_binoculars | string: ",string)
     output = bino.compute_score(string)
-    print("~~ output: ")
-    print(output)
+    # print("~~ output: ")
+    # print(output)
     return output
