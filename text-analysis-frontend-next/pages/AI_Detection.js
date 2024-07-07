@@ -12,6 +12,7 @@ import { FormDataContext } from '@/components/context/FormDataContext';
 // TODO update this to use codecheckerData_ai_detection
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
+import LegendQuant from '@/components/vis/LegendQuant';
 
 export default function AI_Detection(){
   // ---- useState
@@ -20,9 +21,11 @@ export default function AI_Detection(){
   const [fileContent, setFileContent] = useState("");
   const [indexFile, setIndexFile] = useState(0);
   const [fileList, setFileList] = useState([]);
-
   const [outputAI, setOutputAI] = useState([]);
   const [isLoadingAI, setIsLoadingAI] = useState(false);
+
+  const [minScoreAI,setMinScoreAI] = useState(null)
+  const [maxScoreAI,setMaxScoreAI] = useState(null)
 
   const { formData, setFormData } = useContext(FormDataContext);
 
@@ -182,7 +185,6 @@ export default function AI_Detection(){
       sizeOffset += highlightStart.length + highlightEnd.length;
     });
     return highlightedText;
-
   }
 
   const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); // Reset to the first file
@@ -211,6 +213,7 @@ export default function AI_Detection(){
 
   useEffect(() => {
     if (selectedUser) {
+      // TODO check why can't be changed to codecheckerData_ai_detection without an error
       const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
       if (userData && userData.files.length > 0) {
         setFileList(userData.files);
@@ -235,6 +238,7 @@ export default function AI_Detection(){
     // fetchContent gets content, but then it's once the AI is loaded that we load fileContent with highlights and everything.
     console.log("-- useEffect outputAI --");
     if (selectedUser && outputAI && outputAI.details) {
+      // TODO check why can't be changed to codecheckerData_ai_detection without an error
       const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
       const fileName = userData.files[indexFile], scoreDetails = userData.scoreDetails[indexFile];
       console.log("fetchFileContent |scoreDetails: ",scoreDetails);
@@ -254,6 +258,11 @@ export default function AI_Detection(){
         ", ¬ outputAI: ",outputAI);
       // fourth, apply highlight
       setFileContent(highlightText_quant(originalText, resultScore.scoreDetails));
+      let allScores = resultScore.scoreDetails.map(a => a.score);
+      let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);  
+      setMinScoreAI(minScore); 
+      setMaxScoreAI(maxScore);
+      console.log("useEffect | minScore: ", minScore,", maxScore: ",maxScore)
       // setFileContent(originalText); // TODO Will have to be updated... maybe with result    
     } else {
       console.log("Check | selectedUser: ",selectedUser,", outputAI: ",outputAI,", outputAI.scoreDetails: ",outputAI.scoreDetails);
@@ -301,8 +310,8 @@ export default function AI_Detection(){
                   }
                 </div>
                 <h4>
-                  {(selectedUser && codecheckerData_plagiarism.data) &&
-                    codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
+                  {(selectedUser && codecheckerData_ai_detection.data) &&
+                    codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]
                   }
                 </h4>
                 </>
@@ -323,8 +332,9 @@ export default function AI_Detection(){
                     Generated Text Probability
                   </h3>
                   <h2>Average score: {outputAI.average} </h2>
-                  Details:
-                  <br />
+                  {(minScoreAI && maxScoreAI) &&
+                    <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} />
+                  }
                   {/* {outputAI.details && outputAI.details.map((oAI, index) => ( <span key={index} style={{ backgroundColor: getBackgroundColorAI( outputAI, index ), color: "#fff", padding: "2px 4px", margin: "2px", display: "inline-block", }} > {oAI.text}{" "} </span> ))} */}
                   <div className="card">
                     <div className="card-body">

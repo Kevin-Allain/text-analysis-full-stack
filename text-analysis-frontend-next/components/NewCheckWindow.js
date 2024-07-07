@@ -50,7 +50,26 @@ export default function NewCheckWindow(props) {
       // Simulate upload process, then navigate to results
       setTimeout(() => {
         setIsUploading(0);
+        // TODO set the values in localStorage? In progress
         console.log("handleSubmit NewCheckWindow | formData ", updatedFormData);
+        const filesUploaded = updatedFormData.files;
+        console.log("filesUploaded: ", filesUploaded,", typeof filesUploaded: ", typeof(filesUploaded),`, filesUploaded.length: ${filesUploaded.length}, filesUploaded[0]: ${filesUploaded[0]}, filesUploaded.item(0): ${filesUploaded.item(0)}, filesUploaded.item(0).name: ${filesUploaded.item(0).name}, Object.keys(filesUploaded.item(0)): ${Object.keys(filesUploaded.item(0))}`);
+        
+        let arrObjFile = [];
+        for(let i =0; i < filesUploaded.length; i++){
+          arrObjFile.push({
+            "name": filesUploaded.item(i).name,
+            "lastModified": filesUploaded.item(i).lastModified,
+            "lastModifiedDate": filesUploaded.item(i).lastModifiedDate,
+            "size": filesUploaded.item(i).size,
+            "type": filesUploaded.item(i).type,
+            "webkitRelativePath": filesUploaded.item(i).webkitRelativePath,
+          })
+        }
+        console.log("¬¬ arrObjFile: ", arrObjFile);
+
+        localStorage.setItem("files", JSON.stringify(arrObjFile));
+        console.log(" handleSubmit NewCheckWindow | localStorage: ", localStorage);
         router.push("/InitialResults");
       }, 3000); // Simulate upload time
     }
@@ -76,6 +95,7 @@ export default function NewCheckWindow(props) {
           let newValue = prevProgress + randomIncrement;
           if (newValue > 100) newValue = 100;
           if (newValue >= 100) {
+            console.log("useEffect NewCheckWindow | localStorage: ", localStorage);
             clearInterval(interval);
             router.push("/InitialResults");
           }

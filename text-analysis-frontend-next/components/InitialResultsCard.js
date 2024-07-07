@@ -9,7 +9,7 @@ export default function InitialResultsCard(props){
     <div className="col-md-4">
         <div 
           className="card"
-          style={{ height: "89vh" }}
+          style={{ height: "69vh" }}
         >
           <div className="card-header">
             <h5>{props.cardTitle}</h5>
