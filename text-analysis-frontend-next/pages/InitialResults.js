@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Navbar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
 import InitialResultsWindow from "@/components/InitialResultsWindow";
@@ -14,9 +14,9 @@ export default function InitialResults(props) {
   console.log("InitialResults | useContext(FormDataContext): ",useContext(FormDataContext));
 
   // let checks = [ { "id": 1, "institution": "City, University of London", "modules": [ { "id": 1, "name": "Java 23/24", "courseworks": [ { "id": 1, "name": "Coursework 1" } ] } ]  } ]
-
   const { formData, setFormData} = useContext(FormDataContext);
-
+  // For some reason, this is not working... 
+  // const {loadedFiles, setLoadedFiles} = useState(typeof localStorage.files === "string"? JSON.parse(localStorage.files):localStorage.files);
 
   return (
     <>

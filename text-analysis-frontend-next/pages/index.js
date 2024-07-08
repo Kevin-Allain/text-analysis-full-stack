@@ -72,7 +72,8 @@ const IndexPage = () => {
       </Head>
       <div className="container mt-5">
         <div className="d-flex justify-content-center flex-column align-items-center">
-          <h1 className="mb-4">Welcome to the Checker App</h1>
+          <h1 className="mb-4">Welcome to the HappyAI App</h1>
+          <p>Select the product</p>
           <div className="button-container">
             <button className="btn btn-primary custom-button" onClick={() => openLogin('TextAnalysis')}>
               Text Analysis
