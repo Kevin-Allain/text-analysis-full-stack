@@ -91,9 +91,8 @@ def analyze_text_t_b():
         data = request.json
         text = data.get('text')
         response = analyze_binoculars(text)
-        print("___ response")
-        print(response)
-        print(type(response))
+        # print("___ response: ",response)
+        # print(type(response))
         # Convert the response to a JSON-serializable format
         response_dict = {
             "average": response[0],
