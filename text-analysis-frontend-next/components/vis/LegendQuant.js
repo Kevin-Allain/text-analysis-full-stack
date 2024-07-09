@@ -21,7 +21,7 @@ const LegendQuant = ({ minScore, maxScore }) => {
     <div className="container mt-4">
       <h5>Legend</h5>
       <div className="d-flex align-items-center">
-        <span>{minScore}</span>
+        <span>{minScore.toFixed(2)}</span>
         <div
           className="flex-grow-1 mx-2"
           style={{
@@ -29,7 +29,7 @@ const LegendQuant = ({ minScore, maxScore }) => {
             background: gradient,
           }}
         ></div>
-        <span>{maxScore}</span>
+        <span>{maxScore.toFixed(2)}</span>
       </div>
     </div>
   );

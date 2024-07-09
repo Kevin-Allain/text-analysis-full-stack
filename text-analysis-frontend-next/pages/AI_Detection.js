@@ -331,7 +331,7 @@ export default function AI_Detection(){
                   <h3 className="heading-section text-center">
                     Generated Text Probability
                   </h3>
-                  <h2>Average score: {outputAI.average} </h2>
+                  <h2>Average score: {outputAI.average.toFixed(2)} </h2>
                   {(minScoreAI && maxScoreAI) &&
                     <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} />
                   }
