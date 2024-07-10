@@ -15,6 +15,8 @@ import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
 
+import { calculateOpacity, getBinFromScore } from '@/utils/UtilsMath';
+
 export default function AI_Detection(){
   // ---- useState
   const [selectedUser, setSelectedUser] = useState(null);
@@ -27,15 +29,14 @@ export default function AI_Detection(){
 
   const [minScoreAI,setMinScoreAI] = useState(null)
   const [maxScoreAI,setMaxScoreAI] = useState(null)
-  const [maxBin, setMaxBin] = useState(20);
-  const [selectedBin, setSelectedBin] = useState(null);
+  const [maxBin, setMaxBin] = useState(10);
+  const [selectedBinIndex, setSelectedBinIndex] = useState(null);
 
   const { formData, setFormData } = useContext(FormDataContext);
 
-
   // const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
   const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
-  const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ';
+  const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
 
   // ---- functions
   const fetchFileContent = async (fileName, scoreDetails) => {
@@ -44,7 +45,7 @@ export default function AI_Detection(){
       if (response.ok) {
         // first, load the file
         const textFile = await response.text();
-        console.log("textFile: ",textFile);
+        // console.log("textFile: ",textFile);
         // second, call the AI
         loadAIText(textFile);
       } else {
@@ -132,50 +133,62 @@ export default function AI_Detection(){
       setIsLoadingAI(false); // Stop loading regardless of the outcome
     }
   };
-  // Map word length to hue (0-360)
-  const mapLengthToHue = (length, minLength, maxLength) => {
-    const range = maxLength - minLength;
-    const scale = length - minLength;
-    // Assuming a hue range from 240 (blue) to 0 (red)
-    return 240 - (scale / range) * 240;
-  };
-  const getBackgroundColor = (length) => {
-    const hue = mapLengthToHue(length, minLength, maxLength); // Map length to hue
-    const saturation = 70;
-    const lightness = 50;
-    const alpha = 0.85;
-    return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
-  };
-  const getBackgroundColorAI = (outputAI, index) => {
-    const curScore = outputAI.details[index].value,
-      maxScore = Math.max(...outputAI.details.map((a) => a.value)),
-      minScore = Math.min(...outputAI.details.map((a) => a.value));
-    const hue = mapLengthToHue(curScore, minScore, maxScore); // Map length to hue
-    const saturation = 70;
-    const lightness = 50;
-    const alpha = 0.85;
-    return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
-  };
 
-  const highlightText_quant = (text, scoreDetails) => {
+  // const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
+  //   let highlightedText = text;
+  //   let sizeOffset = 0;
+  //   console.log("Plagiarism / highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
+  //   let allScores = scoreDetails.map(a => a.score);
+  //   let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
+  //   const minOpacity = 0.05, maxOpacity = 0.85;
+  //   // Function to calculate opacity based on score
+  //   const calculateOpacity = (score, min, max, binning, numBin) => {
+  //     if (min === max) return 0.90; // Handle the case where all scores are the same
+  //     if (binning) {
+  //       const binSize = (max - min) / numBin;
+  //       const binIndex = Math.floor((score - min) / binSize);
+  //       return minOpacity + (binIndex / (numBin - 1)) * (maxOpacity - minOpacity);
+  //     } else {
+  //       return minOpacity + ((score - min) / (max - min)) * maxOpacity;
+  //     }
+  //   };
+  //   const getBinFromScore = (score, min, max, numBin) => {
+  //     const binSize = (max - min) / numBin;
+  //     return Math.floor((score - min) / binSize);
+  //   };
+  //   scoreDetails.forEach(detail => {
+  //     const { type, range, score } = detail;
+  //     const opacity = calculateOpacity(score, minScore, maxScore, binning, numBin);
+  //     const binIndex = binning ? getBinFromScore(score, minScore, maxScore, numBin) : 0;
+  //     const binClass = "bin_"+binIndex;
+  //     const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} style="background-color: rgba(255, 0, 0, ${opacity});">`;
+  //     const highlightEnd = "</span>";
+  //     const start = range[0];
+  //     const end = range[1];
+  //     highlightedText =
+  //       highlightedText.slice(0, start + sizeOffset) +
+  //       highlightStart +
+  //       highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
+  //       highlightEnd +
+  //       highlightedText.slice(end + sizeOffset + 1);
+  //     sizeOffset += highlightStart.length + highlightEnd.length;
+  //   });
+  //   return highlightedText;
+  // };
+
+  const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
     let highlightedText = text;
     let sizeOffset = 0;
-    console.log("Plagiarism / highlightText_quant | scoreDetails: ",scoreDetails);
+    console.log("Plagiarism / highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
     let allScores = scoreDetails.map(a => a.score);
     let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
-
-    // Function to calculate opacity based on score
-    const calculateOpacity = (score, min, max) => {
-      if (min === max) return 0.90; // Handle the case where all scores are the same
-      return 0.05 + ((score - min) / (max - min)) * 0.85;
-    };
-
-
+  
     scoreDetails.forEach(detail => {
       const { type, range, score } = detail;
-      const opacity = calculateOpacity(score, minScore, maxScore);
-      // TODO find how to compute color here... reuse previous function?
-      const highlightStart = `<span class="highlight ${type}" style="background-color: rgba(255, 0, 0, ${opacity});" >`; // style="background-color: ${detailInfo.color}"
+      const opacity = calculateOpacity(score.toFixed(2), minScore, maxScore, binning, numBin);
+      const binIndex = binning ? getBinFromScore(score.toFixed(2), minScore, maxScore, numBin) : 0;
+      const binClass = "bin_" + binIndex;
+      const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} style="background-color: rgba(255, 0, 0, ${opacity});">`;
       const highlightEnd = "</span>";
       const start = range[0];
       const end = range[1];
@@ -188,27 +201,28 @@ export default function AI_Detection(){
       sizeOffset += highlightStart.length + highlightEnd.length;
     });
     return highlightedText;
-  }
+  };
+    
 
-  const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); // Reset to the first file
+
+  const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); };
+  
+  const handleHighlightClick = (e,className) => { 
+    console.log("handleHighlightClick | e: ",e,"className: ",className); 
   };
 
-  const handleHighlightClick = (className) => {
-    console.log("handleHighlightClick | className: ",className);
-    // const element = detailsScoreRef.current.querySelector(`.${className}`);
-    // if (element) { element.scrollIntoView({ behavior: "smooth" }); }
+  const handleFileClick = (index) => { setIndexFile(index); };
+
+  const handleSelectBin = (binIndex) => {
+    console.log("handleSelectBin | binIndex: ",binIndex);
+    setSelectedBinIndex(binIndex);
+    // Remove borders from all highlighted spans
+    const allSpans = textRef.current.querySelectorAll('.highlight');
+    allSpans.forEach(span => { span.style.border = 'none'; });
+    // Add a solid border to the selected bin's spans
+    const selectedSpans = textRef.current.querySelectorAll(`.bin_${binIndex}`);
+    selectedSpans.forEach(span => { span.style.border = '2px solid black'; });
   };
-
-
-  const handleFileClick = (index) => {
-    setIndexFile(index);
-  };
-
-  const handleSelectBin = (binIndex, binStart, binEnd) => {
-    console.log("handleSelectBin: ",{binIndex, binStart, binEnd});
-    setSelectedBin(binIndex);
-  };  
-
 
   // ---- useEffect
   const textRef = useRef(null);
@@ -230,16 +244,18 @@ export default function AI_Detection(){
     }
   }, [selectedUser, indexFile]);
 
+  // TODO assess whether we need to keep. Seems not to work sometimes
   useEffect(() => {
+    console.log("textRef.current: ", textRef.current);
     if (textRef.current) {
       const highlights = textRef.current.querySelectorAll('.highlight');
       highlights.forEach(span => {
-        span.addEventListener('click', () => {
-          handleHighlightClick(span.className.split(' ')[1]);
+        span.addEventListener('click', (e) => {
+          handleHighlightClick(e,span.className.split(' ')[1]);
         });
       });
     }
-  }, [fileContent]);
+  }, [fileContent, maxScoreAI, textRef.current]); // seems like it is the textRef.current that needs to be called for the querySelector to work
 
 
   useEffect(() => {
@@ -262,16 +278,16 @@ export default function AI_Detection(){
       // originalText is supposed to be like the content of the file
       const originalText = contentFromAI(outputAI.details)
       const resultScore = transformDataToScoreDetails(name, numSubmissions, files, outputAI, originalText);
-      console.log("transformDataToScoreDetails resultScore: ",resultScore,
-        ", ¬ outputAI: ",outputAI);
+      console.log("transformDataToScoreDetails resultScore: ",resultScore,", ¬ outputAI: ",outputAI);
       // fourth, apply highlight
-      setFileContent(highlightText_quant(originalText, resultScore.scoreDetails));
+      setFileContent(
+        highlightText_quant(originalText, resultScore.scoreDetails, true, maxBin)
+      );
       let allScores = resultScore.scoreDetails.map(a => a.score);
       let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);  
       setMinScoreAI(minScore); 
       setMaxScoreAI(maxScore);
       console.log("useEffect | minScore: ", minScore,", maxScore: ",maxScore)
-      // setFileContent(originalText); // TODO Will have to be updated... maybe with result    
     } else {
       console.log("Check | selectedUser: ",selectedUser,", outputAI: ",outputAI,", outputAI.scoreDetails: ",outputAI.scoreDetails);
     }
@@ -346,16 +362,16 @@ export default function AI_Detection(){
                     <LegendBinned 
                       minScore={minScoreAI} 
                       maxScore={maxScoreAI} 
-                      bins={maxBin} 
+                      numBins={maxBin}
                       onSelectBin={handleSelectBin} 
-                      selectedBin={selectedBin}/>
+                      selectedBin={selectedBinIndex}/>
                   }
-                  {selectedBin !== null && (
+                  {selectedBinIndex !== null && (
                     <div className="mt-3">
                       <h5>Selected Bin</h5>
                       <p>
-                        Bin {selectedBin + 1}: {(minScoreAI + selectedBin * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
-                        {(minScoreAI + (selectedBin + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
+                        Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
+                        {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
                       </p>
                     </div>
                   )}                  
