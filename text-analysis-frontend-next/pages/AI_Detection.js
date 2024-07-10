@@ -205,7 +205,8 @@ export default function AI_Detection(){
   };
 
   const handleSelectBin = (binIndex, binStart, binEnd) => {
-    setSelectedBin({ binIndex, binStart, binEnd });
+    console.log("handleSelectBin: ",{binIndex, binStart, binEnd});
+    setSelectedBin(binIndex);
   };  
 
 
@@ -340,18 +341,21 @@ export default function AI_Detection(){
                     Average score: {outputAI.average.toFixed(2)}
                   </h4>
                   {/* <h2>Average score: {outputAI.average.toFixed(2)} </h2> */}
-                  {(minScoreAI && maxScoreAI) &&
-                    <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} />
-                  }
+                  {/* {(minScoreAI && maxScoreAI) && <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} /> } */}
                   {(minScoreAI && maxScoreAI) && 
-                    <LegendBinned minScore={minScoreAI} maxScore={maxScoreAI} bins={maxBin} onSelectBin={handleSelectBin} selectedBin={selectedBin} />                  
+                    <LegendBinned 
+                      minScore={minScoreAI} 
+                      maxScore={maxScoreAI} 
+                      bins={maxBin} 
+                      onSelectBin={handleSelectBin} 
+                      selectedBin={selectedBin}/>
                   }
                   {selectedBin !== null && (
                     <div className="mt-3">
                       <h5>Selected Bin</h5>
                       <p>
-                        Bin {selectedBin + 1}: {minScoreAI + selectedBin * (maxScoreAI - minScoreAI) / maxBin} -{' '}
-                        {minScoreAI + (selectedBin + 1) * (maxScoreAI - minScoreAI) / maxBin}
+                        Bin {selectedBin + 1}: {(minScoreAI + selectedBin * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
+                        {(minScoreAI + (selectedBin + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
                       </p>
                     </div>
                   )}                  
