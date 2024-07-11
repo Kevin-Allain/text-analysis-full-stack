@@ -6,6 +6,7 @@ import Navbar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
 import InitialResultsWindow from "@/components/InitialResultsWindow";
 import { FormDataContext } from "@/components/context/FormDataContext";
+import InitialResultsWindow_UserFocus from "@/components/InitialResultsWindow_UserFocus";
 
 // TODO get the values from inputs of form in NewCheckWindow!
 export default function InitialResults(props) {
@@ -29,7 +30,8 @@ export default function InitialResults(props) {
           <Sidebar />
           <div className="col-md-10">
             <h3>{formData?.product && formData?.product} - Initial Results</h3>
-            <InitialResultsWindow />
+            {/* <InitialResultsWindow /> */}
+            <InitialResultsWindow_UserFocus />
           </div>
         </div>
       </div>

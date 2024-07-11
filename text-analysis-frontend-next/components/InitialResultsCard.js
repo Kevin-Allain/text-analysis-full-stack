@@ -31,7 +31,7 @@ export default function InitialResultsCard(props){
             height: "calc(100% - 80px)"
           }}
         >
-          <ol className="list-group list-group-flush" style={{ height: "calc(100% - 100px)", width:"100%", overflowY: "auto" }}>
+          <ol className="list-group list-group-flush" style={{ height: "calc(100% - 60px)", width:"100%", overflowY: "auto" }}>
             {scores.map((item, index) => {
               return (
                 <li key={index} className="list-group-item">

@@ -159,7 +159,7 @@ export default function Collusion(){
                 <h4>Files details</h4><h3>{(selectedUser && codecheckerData_collusion.data) && codecheckerData_collusion.data.find(user => user.name === selectedUser)?.files[indexFile]}</h3>
                 <div><u>Files</u>{selectedUser && fileList.map((file, index) => (<button  key={index} className={`btn btn-link ${(indexFile === index) ? 'active' : ''}`} onClick={() => handleFileClick(index)}>{file}</button>))}</div> */}
 
-                <div className="card" style={{ 'height': 'auto' }}>
+                <div className="card my-{10px}" >
                   <div className="card-body">
                   <p>Details about collusion scores for each files combination here.</p>
                     {otherUser && 

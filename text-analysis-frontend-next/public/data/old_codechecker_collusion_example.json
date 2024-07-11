@@ -1,0 +1,876 @@
+{
+    "data": [
+      {
+        "name": "Alice",
+        "worstScore": 0.99,
+        "numSubmissions": 2,
+        "files": [
+          "PredatorMovement.cs",
+          "cold_decoding.py"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.32",
+          "relations": [
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Bob(attack_paraphrase.py)": 0.31,
+                "Alice(PredatorMovement.cs)|Bob(vectorFunctions.R)": 0.27,
+                "Alice(PredatorMovement.cs)|Bob(INSTALL.txt)": 0.9,
+                "Alice(cold_decoding.py)|Bob(attack_paraphrase.py)": 0.19,
+                "Alice(cold_decoding.py)|Bob(vectorFunctions.R)": 0.21,
+                "Alice(cold_decoding.py)|Bob(INSTALL.txt)": 0.56
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Charlie(NLP_LBS1_answers.R)": 0.72,
+                "Alice(cold_decoding.py)|Charlie(NLP_LBS1_answers.R)": 0.42
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Dave(attack_control.py)": 0.99,
+                "Alice(cold_decoding.py)|Dave(attack_control.py)": 0.66
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Eve(Addresses.py)": 0.2,
+                "Alice(PredatorMovement.cs)|Eve(attack_control.py)": 0.43,
+                "Alice(PredatorMovement.cs)|Eve(ggplot_tips.R)": 0.04,
+                "Alice(cold_decoding.py)|Eve(Addresses.py)": 0.29,
+                "Alice(cold_decoding.py)|Eve(attack_control.py)": 0.58,
+                "Alice(cold_decoding.py)|Eve(ggplot_tips.R)": 0.8
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Frank(evaluate.py)": 0.53,
+                "Alice(PredatorMovement.cs)|Frank(CameraFollowPredator.cs)": 0.48,
+                "Alice(cold_decoding.py)|Frank(evaluate.py)": 0.39,
+                "Alice(cold_decoding.py)|Frank(CameraFollowPredator.cs)": 0.58
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Grace(PredatorMovement.cs)": 0.7,
+                "Alice(cold_decoding.py)|Grace(PredatorMovement.cs)": 0.4
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Hank(INSTALL.txt)": 0.89,
+                "Alice(cold_decoding.py)|Hank(INSTALL.txt)": 0.3
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Ivy(evaluate.py)": 0.92,
+                "Alice(PredatorMovement.cs)|Ivy(text_basics.R)": 0.27,
+                "Alice(PredatorMovement.cs)|Ivy(ggplot_tips.R)": 0.86,
+                "Alice(cold_decoding.py)|Ivy(evaluate.py)": 0.87,
+                "Alice(cold_decoding.py)|Ivy(text_basics.R)": 0.49,
+                "Alice(cold_decoding.py)|Ivy(ggplot_tips.R)": 0.87
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Alice(PredatorMovement.cs)|Jack(vectorFunctions.R)": 0.93,
+                "Alice(cold_decoding.py)|Jack(vectorFunctions.R)": 0.73
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Bob",
+        "worstScore": 0.97,
+        "numSubmissions": 3,
+        "files": [
+          "attack_paraphrase.py",
+          "vectorFunctions.R",
+          "INSTALL.txt"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.54",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Alice(PredatorMovement.cs)": 0.31,
+                "Bob(attack_paraphrase.py)|Alice(cold_decoding.py)": 0.19,
+                "Bob(vectorFunctions.R)|Alice(PredatorMovement.cs)": 0.27,
+                "Bob(vectorFunctions.R)|Alice(cold_decoding.py)": 0.21,
+                "Bob(INSTALL.txt)|Alice(PredatorMovement.cs)": 0.9,
+                "Bob(INSTALL.txt)|Alice(cold_decoding.py)": 0.56
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Charlie(NLP_LBS1_answers.R)": 0.04,
+                "Bob(vectorFunctions.R)|Charlie(NLP_LBS1_answers.R)": 0.11,
+                "Bob(INSTALL.txt)|Charlie(NLP_LBS1_answers.R)": 0.42
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Dave(attack_control.py)": 0.69,
+                "Bob(vectorFunctions.R)|Dave(attack_control.py)": 0.97,
+                "Bob(INSTALL.txt)|Dave(attack_control.py)": 0.58
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Eve(Addresses.py)": 0.89,
+                "Bob(attack_paraphrase.py)|Eve(attack_control.py)": 0.48,
+                "Bob(attack_paraphrase.py)|Eve(ggplot_tips.R)": 0.68,
+                "Bob(vectorFunctions.R)|Eve(Addresses.py)": 0.96,
+                "Bob(vectorFunctions.R)|Eve(attack_control.py)": 0,
+                "Bob(vectorFunctions.R)|Eve(ggplot_tips.R)": 0.42,
+                "Bob(INSTALL.txt)|Eve(Addresses.py)": 0.05,
+                "Bob(INSTALL.txt)|Eve(attack_control.py)": 0.58,
+                "Bob(INSTALL.txt)|Eve(ggplot_tips.R)": 0.96
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Frank(evaluate.py)": 0.58,
+                "Bob(attack_paraphrase.py)|Frank(CameraFollowPredator.cs)": 0.6,
+                "Bob(vectorFunctions.R)|Frank(evaluate.py)": 0.66,
+                "Bob(vectorFunctions.R)|Frank(CameraFollowPredator.cs)": 0.47,
+                "Bob(INSTALL.txt)|Frank(evaluate.py)": 0.97,
+                "Bob(INSTALL.txt)|Frank(CameraFollowPredator.cs)": 0.17
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Grace(PredatorMovement.cs)": 0.17,
+                "Bob(vectorFunctions.R)|Grace(PredatorMovement.cs)": 0,
+                "Bob(INSTALL.txt)|Grace(PredatorMovement.cs)": 0.92
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Hank(INSTALL.txt)": 0.58,
+                "Bob(vectorFunctions.R)|Hank(INSTALL.txt)": 0.75,
+                "Bob(INSTALL.txt)|Hank(INSTALL.txt)": 0.35
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Ivy(evaluate.py)": 0.92,
+                "Bob(attack_paraphrase.py)|Ivy(text_basics.R)": 0.8,
+                "Bob(attack_paraphrase.py)|Ivy(ggplot_tips.R)": 0.1,
+                "Bob(vectorFunctions.R)|Ivy(evaluate.py)": 0.93,
+                "Bob(vectorFunctions.R)|Ivy(text_basics.R)": 0.54,
+                "Bob(vectorFunctions.R)|Ivy(ggplot_tips.R)": 0.05,
+                "Bob(INSTALL.txt)|Ivy(evaluate.py)": 0.57,
+                "Bob(INSTALL.txt)|Ivy(text_basics.R)": 0.1,
+                "Bob(INSTALL.txt)|Ivy(ggplot_tips.R)": 0.13
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Bob(attack_paraphrase.py)|Jack(vectorFunctions.R)": 0,
+                "Bob(vectorFunctions.R)|Jack(vectorFunctions.R)": 0.26,
+                "Bob(INSTALL.txt)|Jack(vectorFunctions.R)": 0.4
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Charlie",
+        "worstScore": 0.96,
+        "numSubmissions": 1,
+        "files": [
+          "NLP_LBS1_answers.R"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.74",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Alice(PredatorMovement.cs)": 0.72,
+                "Charlie(NLP_LBS1_answers.R)|Alice(cold_decoding.py)": 0.42
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Bob(attack_paraphrase.py)": 0.04,
+                "Charlie(NLP_LBS1_answers.R)|Bob(vectorFunctions.R)": 0.11,
+                "Charlie(NLP_LBS1_answers.R)|Bob(INSTALL.txt)": 0.42
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Dave(attack_control.py)": 0.17
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Eve(Addresses.py)": 0.96,
+                "Charlie(NLP_LBS1_answers.R)|Eve(attack_control.py)": 0.64,
+                "Charlie(NLP_LBS1_answers.R)|Eve(ggplot_tips.R)": 0.81
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Frank(evaluate.py)": 0.47,
+                "Charlie(NLP_LBS1_answers.R)|Frank(CameraFollowPredator.cs)": 0.67
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Grace(PredatorMovement.cs)": 0.16
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Hank(INSTALL.txt)": 0.09
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Ivy(evaluate.py)": 0.36,
+                "Charlie(NLP_LBS1_answers.R)|Ivy(text_basics.R)": 0.53,
+                "Charlie(NLP_LBS1_answers.R)|Ivy(ggplot_tips.R)": 0.75
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Charlie(NLP_LBS1_answers.R)|Jack(vectorFunctions.R)": 0.27
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Dave",
+        "worstScore": 0.99,
+        "numSubmissions": 1,
+        "files": [
+          "attack_control.py"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.85",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Dave(attack_control.py)|Alice(PredatorMovement.cs)": 0.99,
+                "Dave(attack_control.py)|Alice(cold_decoding.py)": 0.66
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Dave(attack_control.py)|Bob(attack_paraphrase.py)": 0.69,
+                "Dave(attack_control.py)|Bob(vectorFunctions.R)": 0.97,
+                "Dave(attack_control.py)|Bob(INSTALL.txt)": 0.58
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Dave(attack_control.py)|Charlie(NLP_LBS1_answers.R)": 0.17
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Dave(attack_control.py)|Eve(Addresses.py)": 0.48,
+                "Dave(attack_control.py)|Eve(attack_control.py)": 0.77,
+                "Dave(attack_control.py)|Eve(ggplot_tips.R)": 0.28
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Dave(attack_control.py)|Frank(evaluate.py)": 0.91,
+                "Dave(attack_control.py)|Frank(CameraFollowPredator.cs)": 0.1
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Dave(attack_control.py)|Grace(PredatorMovement.cs)": 0.22
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Dave(attack_control.py)|Hank(INSTALL.txt)": 0.99
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Dave(attack_control.py)|Ivy(evaluate.py)": 0.44,
+                "Dave(attack_control.py)|Ivy(text_basics.R)": 0.86,
+                "Dave(attack_control.py)|Ivy(ggplot_tips.R)": 0.04
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Dave(attack_control.py)|Jack(vectorFunctions.R)": 0.61
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Eve",
+        "worstScore": 0.97,
+        "numSubmissions": 3,
+        "files": [
+          "Addresses.py",
+          "attack_control.py",
+          "ggplot_tips.R"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.07",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Eve(Addresses.py)|Alice(PredatorMovement.cs)": 0.2,
+                "Eve(Addresses.py)|Alice(cold_decoding.py)": 0.29,
+                "Eve(attack_control.py)|Alice(PredatorMovement.cs)": 0.43,
+                "Eve(attack_control.py)|Alice(cold_decoding.py)": 0.58,
+                "Eve(ggplot_tips.R)|Alice(PredatorMovement.cs)": 0.04,
+                "Eve(ggplot_tips.R)|Alice(cold_decoding.py)": 0.8
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Eve(Addresses.py)|Bob(attack_paraphrase.py)": 0.89,
+                "Eve(Addresses.py)|Bob(vectorFunctions.R)": 0.96,
+                "Eve(Addresses.py)|Bob(INSTALL.txt)": 0.05,
+                "Eve(attack_control.py)|Bob(attack_paraphrase.py)": 0.48,
+                "Eve(attack_control.py)|Bob(vectorFunctions.R)": 0,
+                "Eve(attack_control.py)|Bob(INSTALL.txt)": 0.58,
+                "Eve(ggplot_tips.R)|Bob(attack_paraphrase.py)": 0.68,
+                "Eve(ggplot_tips.R)|Bob(vectorFunctions.R)": 0.42,
+                "Eve(ggplot_tips.R)|Bob(INSTALL.txt)": 0.96
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Eve(Addresses.py)|Charlie(NLP_LBS1_answers.R)": 0.96,
+                "Eve(attack_control.py)|Charlie(NLP_LBS1_answers.R)": 0.64,
+                "Eve(ggplot_tips.R)|Charlie(NLP_LBS1_answers.R)": 0.81
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Eve(Addresses.py)|Dave(attack_control.py)": 0.48,
+                "Eve(attack_control.py)|Dave(attack_control.py)": 0.77,
+                "Eve(ggplot_tips.R)|Dave(attack_control.py)": 0.28
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Eve(Addresses.py)|Frank(evaluate.py)": 0.92,
+                "Eve(Addresses.py)|Frank(CameraFollowPredator.cs)": 0.15,
+                "Eve(attack_control.py)|Frank(evaluate.py)": 0.13,
+                "Eve(attack_control.py)|Frank(CameraFollowPredator.cs)": 0.81,
+                "Eve(ggplot_tips.R)|Frank(evaluate.py)": 0.43,
+                "Eve(ggplot_tips.R)|Frank(CameraFollowPredator.cs)": 0.22
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Eve(Addresses.py)|Grace(PredatorMovement.cs)": 0.93,
+                "Eve(attack_control.py)|Grace(PredatorMovement.cs)": 0.59,
+                "Eve(ggplot_tips.R)|Grace(PredatorMovement.cs)": 0.97
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Eve(Addresses.py)|Hank(INSTALL.txt)": 0.02,
+                "Eve(attack_control.py)|Hank(INSTALL.txt)": 0.86,
+                "Eve(ggplot_tips.R)|Hank(INSTALL.txt)": 0.52
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Eve(Addresses.py)|Ivy(evaluate.py)": 0.32,
+                "Eve(Addresses.py)|Ivy(text_basics.R)": 0.71,
+                "Eve(Addresses.py)|Ivy(ggplot_tips.R)": 0.65,
+                "Eve(attack_control.py)|Ivy(evaluate.py)": 0.91,
+                "Eve(attack_control.py)|Ivy(text_basics.R)": 0.8,
+                "Eve(attack_control.py)|Ivy(ggplot_tips.R)": 0.31,
+                "Eve(ggplot_tips.R)|Ivy(evaluate.py)": 0.9,
+                "Eve(ggplot_tips.R)|Ivy(text_basics.R)": 0.87,
+                "Eve(ggplot_tips.R)|Ivy(ggplot_tips.R)": 0.83
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Eve(Addresses.py)|Jack(vectorFunctions.R)": 0.09,
+                "Eve(attack_control.py)|Jack(vectorFunctions.R)": 0.85,
+                "Eve(ggplot_tips.R)|Jack(vectorFunctions.R)": 0.81
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Frank",
+        "worstScore": 0.97,
+        "numSubmissions": 2,
+        "files": [
+          "evaluate.py",
+          "CameraFollowPredator.cs"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.16",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Frank(evaluate.py)|Alice(PredatorMovement.cs)": 0.53,
+                "Frank(evaluate.py)|Alice(cold_decoding.py)": 0.39,
+                "Frank(CameraFollowPredator.cs)|Alice(PredatorMovement.cs)": 0.48,
+                "Frank(CameraFollowPredator.cs)|Alice(cold_decoding.py)": 0.58
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Frank(evaluate.py)|Bob(attack_paraphrase.py)": 0.58,
+                "Frank(evaluate.py)|Bob(vectorFunctions.R)": 0.66,
+                "Frank(evaluate.py)|Bob(INSTALL.txt)": 0.97,
+                "Frank(CameraFollowPredator.cs)|Bob(attack_paraphrase.py)": 0.6,
+                "Frank(CameraFollowPredator.cs)|Bob(vectorFunctions.R)": 0.47,
+                "Frank(CameraFollowPredator.cs)|Bob(INSTALL.txt)": 0.17
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Frank(evaluate.py)|Charlie(NLP_LBS1_answers.R)": 0.47,
+                "Frank(CameraFollowPredator.cs)|Charlie(NLP_LBS1_answers.R)": 0.67
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Frank(evaluate.py)|Dave(attack_control.py)": 0.91,
+                "Frank(CameraFollowPredator.cs)|Dave(attack_control.py)": 0.1
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Frank(evaluate.py)|Eve(Addresses.py)": 0.92,
+                "Frank(evaluate.py)|Eve(attack_control.py)": 0.13,
+                "Frank(evaluate.py)|Eve(ggplot_tips.R)": 0.43,
+                "Frank(CameraFollowPredator.cs)|Eve(Addresses.py)": 0.15,
+                "Frank(CameraFollowPredator.cs)|Eve(attack_control.py)": 0.81,
+                "Frank(CameraFollowPredator.cs)|Eve(ggplot_tips.R)": 0.22
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Frank(evaluate.py)|Grace(PredatorMovement.cs)": 0.74,
+                "Frank(CameraFollowPredator.cs)|Grace(PredatorMovement.cs)": 0.9
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Frank(evaluate.py)|Hank(INSTALL.txt)": 0.29,
+                "Frank(CameraFollowPredator.cs)|Hank(INSTALL.txt)": 0
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Frank(evaluate.py)|Ivy(evaluate.py)": 0.7,
+                "Frank(evaluate.py)|Ivy(text_basics.R)": 0.55,
+                "Frank(evaluate.py)|Ivy(ggplot_tips.R)": 0.94,
+                "Frank(CameraFollowPredator.cs)|Ivy(evaluate.py)": 0.36,
+                "Frank(CameraFollowPredator.cs)|Ivy(text_basics.R)": 0.06,
+                "Frank(CameraFollowPredator.cs)|Ivy(ggplot_tips.R)": 0.28
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Frank(evaluate.py)|Jack(vectorFunctions.R)": 0.92,
+                "Frank(CameraFollowPredator.cs)|Jack(vectorFunctions.R)": 0.27
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Grace",
+        "worstScore": 0.97,
+        "numSubmissions": 1,
+        "files": [
+          "PredatorMovement.cs"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.96",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Alice(PredatorMovement.cs)": 0.7,
+                "Grace(PredatorMovement.cs)|Alice(cold_decoding.py)": 0.4
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Bob(attack_paraphrase.py)": 0.17,
+                "Grace(PredatorMovement.cs)|Bob(vectorFunctions.R)": 0,
+                "Grace(PredatorMovement.cs)|Bob(INSTALL.txt)": 0.92
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Charlie(NLP_LBS1_answers.R)": 0.16
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Dave(attack_control.py)": 0.22
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Eve(Addresses.py)": 0.93,
+                "Grace(PredatorMovement.cs)|Eve(attack_control.py)": 0.59,
+                "Grace(PredatorMovement.cs)|Eve(ggplot_tips.R)": 0.97
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Frank(evaluate.py)": 0.74,
+                "Grace(PredatorMovement.cs)|Frank(CameraFollowPredator.cs)": 0.9
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Hank(INSTALL.txt)": 0.31
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Ivy(evaluate.py)": 0.21,
+                "Grace(PredatorMovement.cs)|Ivy(text_basics.R)": 0.79,
+                "Grace(PredatorMovement.cs)|Ivy(ggplot_tips.R)": 0.82
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Grace(PredatorMovement.cs)|Jack(vectorFunctions.R)": 0.9
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Hank",
+        "worstScore": 0.99,
+        "numSubmissions": 1,
+        "files": [
+          "INSTALL.txt"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.46",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Alice(PredatorMovement.cs)": 0.89,
+                "Hank(INSTALL.txt)|Alice(cold_decoding.py)": 0.3
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Bob(attack_paraphrase.py)": 0.58,
+                "Hank(INSTALL.txt)|Bob(vectorFunctions.R)": 0.75,
+                "Hank(INSTALL.txt)|Bob(INSTALL.txt)": 0.35
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Charlie(NLP_LBS1_answers.R)": 0.09
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Dave(attack_control.py)": 0.99
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Eve(Addresses.py)": 0.02,
+                "Hank(INSTALL.txt)|Eve(attack_control.py)": 0.86,
+                "Hank(INSTALL.txt)|Eve(ggplot_tips.R)": 0.52
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Frank(evaluate.py)": 0.29,
+                "Hank(INSTALL.txt)|Frank(CameraFollowPredator.cs)": 0
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Grace(PredatorMovement.cs)": 0.31
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Ivy(evaluate.py)": 0.15,
+                "Hank(INSTALL.txt)|Ivy(text_basics.R)": 0.66,
+                "Hank(INSTALL.txt)|Ivy(ggplot_tips.R)": 0.22
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Hank(INSTALL.txt)|Jack(vectorFunctions.R)": 0.76
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Ivy",
+        "worstScore": 0.94,
+        "numSubmissions": 3,
+        "files": [
+          "evaluate.py",
+          "text_basics.R",
+          "ggplot_tips.R"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.84",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Alice(PredatorMovement.cs)": 0.92,
+                "Ivy(evaluate.py)|Alice(cold_decoding.py)": 0.87,
+                "Ivy(text_basics.R)|Alice(PredatorMovement.cs)": 0.27,
+                "Ivy(text_basics.R)|Alice(cold_decoding.py)": 0.49,
+                "Ivy(ggplot_tips.R)|Alice(PredatorMovement.cs)": 0.86,
+                "Ivy(ggplot_tips.R)|Alice(cold_decoding.py)": 0.87
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Bob(attack_paraphrase.py)": 0.92,
+                "Ivy(evaluate.py)|Bob(vectorFunctions.R)": 0.93,
+                "Ivy(evaluate.py)|Bob(INSTALL.txt)": 0.57,
+                "Ivy(text_basics.R)|Bob(attack_paraphrase.py)": 0.8,
+                "Ivy(text_basics.R)|Bob(vectorFunctions.R)": 0.54,
+                "Ivy(text_basics.R)|Bob(INSTALL.txt)": 0.1,
+                "Ivy(ggplot_tips.R)|Bob(attack_paraphrase.py)": 0.1,
+                "Ivy(ggplot_tips.R)|Bob(vectorFunctions.R)": 0.05,
+                "Ivy(ggplot_tips.R)|Bob(INSTALL.txt)": 0.13
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Charlie(NLP_LBS1_answers.R)": 0.36,
+                "Ivy(text_basics.R)|Charlie(NLP_LBS1_answers.R)": 0.53,
+                "Ivy(ggplot_tips.R)|Charlie(NLP_LBS1_answers.R)": 0.75
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Dave(attack_control.py)": 0.44,
+                "Ivy(text_basics.R)|Dave(attack_control.py)": 0.86,
+                "Ivy(ggplot_tips.R)|Dave(attack_control.py)": 0.04
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Eve(Addresses.py)": 0.32,
+                "Ivy(evaluate.py)|Eve(attack_control.py)": 0.91,
+                "Ivy(evaluate.py)|Eve(ggplot_tips.R)": 0.9,
+                "Ivy(text_basics.R)|Eve(Addresses.py)": 0.71,
+                "Ivy(text_basics.R)|Eve(attack_control.py)": 0.8,
+                "Ivy(text_basics.R)|Eve(ggplot_tips.R)": 0.87,
+                "Ivy(ggplot_tips.R)|Eve(Addresses.py)": 0.65,
+                "Ivy(ggplot_tips.R)|Eve(attack_control.py)": 0.31,
+                "Ivy(ggplot_tips.R)|Eve(ggplot_tips.R)": 0.83
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Frank(evaluate.py)": 0.7,
+                "Ivy(evaluate.py)|Frank(CameraFollowPredator.cs)": 0.36,
+                "Ivy(text_basics.R)|Frank(evaluate.py)": 0.55,
+                "Ivy(text_basics.R)|Frank(CameraFollowPredator.cs)": 0.06,
+                "Ivy(ggplot_tips.R)|Frank(evaluate.py)": 0.94,
+                "Ivy(ggplot_tips.R)|Frank(CameraFollowPredator.cs)": 0.28
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Grace(PredatorMovement.cs)": 0.21,
+                "Ivy(text_basics.R)|Grace(PredatorMovement.cs)": 0.79,
+                "Ivy(ggplot_tips.R)|Grace(PredatorMovement.cs)": 0.82
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Hank(INSTALL.txt)": 0.15,
+                "Ivy(text_basics.R)|Hank(INSTALL.txt)": 0.66,
+                "Ivy(ggplot_tips.R)|Hank(INSTALL.txt)": 0.22
+              }
+            },
+            {
+              "name": "Jack",
+              "collusionScores": {
+                "Ivy(evaluate.py)|Jack(vectorFunctions.R)": 0.53,
+                "Ivy(text_basics.R)|Jack(vectorFunctions.R)": 0.26,
+                "Ivy(ggplot_tips.R)|Jack(vectorFunctions.R)": 0.76
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Jack",
+        "worstScore": 0.93,
+        "numSubmissions": 1,
+        "files": [
+          "vectorFunctions.R"
+        ],
+        "scoreDetails": {
+          "globalScore": "0.27",
+          "relations": [
+            {
+              "name": "Alice",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Alice(PredatorMovement.cs)": 0.93,
+                "Jack(vectorFunctions.R)|Alice(cold_decoding.py)": 0.73
+              }
+            },
+            {
+              "name": "Bob",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Bob(attack_paraphrase.py)": 0,
+                "Jack(vectorFunctions.R)|Bob(vectorFunctions.R)": 0.26,
+                "Jack(vectorFunctions.R)|Bob(INSTALL.txt)": 0.4
+              }
+            },
+            {
+              "name": "Charlie",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Charlie(NLP_LBS1_answers.R)": 0.27
+              }
+            },
+            {
+              "name": "Dave",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Dave(attack_control.py)": 0.61
+              }
+            },
+            {
+              "name": "Eve",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Eve(Addresses.py)": 0.09,
+                "Jack(vectorFunctions.R)|Eve(attack_control.py)": 0.85,
+                "Jack(vectorFunctions.R)|Eve(ggplot_tips.R)": 0.81
+              }
+            },
+            {
+              "name": "Frank",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Frank(evaluate.py)": 0.92,
+                "Jack(vectorFunctions.R)|Frank(CameraFollowPredator.cs)": 0.27
+              }
+            },
+            {
+              "name": "Grace",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Grace(PredatorMovement.cs)": 0.9
+              }
+            },
+            {
+              "name": "Hank",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Hank(INSTALL.txt)": 0.76
+              }
+            },
+            {
+              "name": "Ivy",
+              "collusionScores": {
+                "Jack(vectorFunctions.R)|Ivy(evaluate.py)": 0.53,
+                "Jack(vectorFunctions.R)|Ivy(text_basics.R)": 0.26,
+                "Jack(vectorFunctions.R)|Ivy(ggplot_tips.R)": 0.76
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
