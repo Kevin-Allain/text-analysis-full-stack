@@ -2,16 +2,16 @@
     /* border: 1px solid #ccc; */
     padding: 20px;
     /* overflow-y: scroll; */
-    height: 85vh;
     /* height: 100vh; */
+    height: 85vh;
     position: relative;
 }
 
 .right_side {
     border-left: 1px solid #ccc;
-    /* overflow-y: auto; */
     height: 85vh;
     /* height: 100vh; */
+    /* overflow-y: auto; */
 }
 
 .user_listing {
@@ -23,8 +23,8 @@
 
 .text-content .highlight {
     cursor: pointer;
-    /* padding: 2px 4px; */
     border-radius: 1px;
+    /* padding: 2px 4px; */
     /* color: #fff; */
 }
 

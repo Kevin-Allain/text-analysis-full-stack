@@ -27,14 +27,12 @@ export default function Collusion(){
   console.log("worstScore of first: ", codecheckerData_collusion.data[0].worstScore)
   console.log("typeof worstScore of first: ", typeof(codecheckerData_collusion.data[0].worstScore))
 
-
   const [fileCollusion1, setFileCollusion1] = useState(null);
   const [fileCollusion2, setFileCollusion2] = useState(null);
   const [contentCollusion1, setContentCollusion1] = useState(null);
   const [contentCollusion2, setContentCollusion2] = useState(null);
 
-
-  // ----- functions 
+  // ----- functions
   const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); // Reset to the first file
   };
   const handleFileClick = (index) => { setIndexFile(index); };
@@ -51,7 +49,9 @@ export default function Collusion(){
         });
       });
     }, [tableHTML]);  
-    return ( <div className="container"> <div dangerouslySetInnerHTML={tableHTML} /> </div> );
+    return ( <div className="container"> 
+      <div dangerouslySetInnerHTML={tableHTML} /> 
+    </div> );
   };
   const parseAndGenerateHTMLTable = (inputString) => {
     const data = JSON.parse(inputString);
@@ -92,28 +92,30 @@ export default function Collusion(){
 
   // ---- useEffect
   const textRef = useRef(null);
-  const detailsScoreRef = useRef(null);  
+  const detailsScoreRef = useRef(null);
   useEffect(() => {
     if (users.length > 0) { setSelectedUser(users[0].name); }
   }, [users]);
+
+
 
   useEffect(() => {
     if (selectedUser) {
       const userData = codecheckerData_collusion.data.find(user => user.name === selectedUser);
       if (userData && userData.files.length > 0) {setFileList(userData.files);} }
   }, [selectedUser, indexFile]);
-  useEffect(() => { if (otherUser) {console.log("otherUser: ",otherUser);} }, [otherUser]);
-
-  // useEffect(() => { if (textRef.current) { const highlights = textRef.current.querySelectorAll('.highlight'); highlights.forEach(span => { span.addEventListener('click', () => { handleHighlightClick(span.className.split(' ')[1]); }); }); } }, [fileContent]);
+  useEffect(() => { 
+    if (otherUser) {console.log("otherUser: ",otherUser);}
+    setFileCollusion1(null);
+    setFileCollusion2(null);
+ }, [otherUser]);
 
   useEffect(() => {
     if (fileCollusion1 && fileCollusion2 ){
       let userData1 = codecheckerData_collusion.data.find(user => user.name === selectedUser);
       let userData2 = codecheckerData_collusion.data.find(user => user.name === otherUser);
       console.log("useEffect [fileCollusion1,filecollusion2] | userData1: ",userData1," userData2: ",userData2);
-      // TODO
-      let indexFile1 = 0;
-      let indexFile2 = 0;
+      let indexFile1 = 0; let indexFile2 = 0;
 
       // fetchFileContent(
       fetchFileContentToDivs(
@@ -159,7 +161,7 @@ export default function Collusion(){
                 <h4>Files details</h4><h3>{(selectedUser && codecheckerData_collusion.data) && codecheckerData_collusion.data.find(user => user.name === selectedUser)?.files[indexFile]}</h3>
                 <div><u>Files</u>{selectedUser && fileList.map((file, index) => (<button  key={index} className={`btn btn-link ${(indexFile === index) ? 'active' : ''}`} onClick={() => handleFileClick(index)}>{file}</button>))}</div> */}
 
-                <div className="card my-{10px}" >
+                <div className="card" >
                   <div className="card-body">
                   <p>Details about collusion scores for each files combination here.</p>
                     {otherUser && 
@@ -180,14 +182,14 @@ export default function Collusion(){
                         { (fileCollusion1 && fileCollusion2) &&
                           <div className="d-flex justify-content-between mx-3">
                             <div className="w-50">
-                              {fileCollusion1}<hr/>
+                              <b>{fileCollusion1}</b><hr/>
                               {(contentCollusion1 !== null) && 
                                 contentCollusion1
                               }
                             </div>
                             <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
                             <div className="w-50">
-                              {fileCollusion2}<hr/>
+                              <b>{fileCollusion2}</b><hr/>
                               {(contentCollusion2 !== null) && 
                                 contentCollusion2
                               }

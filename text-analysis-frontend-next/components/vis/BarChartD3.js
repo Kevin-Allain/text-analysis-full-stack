@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const BarChartD3 = ({ data, selectBar }) => {
+const BarChartD3 = ({ data, selectBar, hasYaxis=true, activeSelection=null, setActiveSelection=null }) => {
 
   console.log("BarChartD3 | data: ",data,", selectBar: ",selectBar);
 
@@ -52,17 +52,18 @@ const BarChartD3 = ({ data, selectBar }) => {
     // .style("fill", "#69a3b2");
 
     // Draw Y axis with custom labels
-    const yAxis = d3
-      .axisLeft(y)
-      .ticks(10)
-      .tickFormat((d) => {
-        if (d === 0) return "Low";
-        if (d === 0.4) return "Medium";
-        if (d === 0.8) return "High";
-        return "";
-      });
-    g.append("g").call(yAxis).style("font-size", 10);
-
+    if (hasYaxis){
+      const yAxis = d3
+        .axisLeft(y)
+        .ticks(10)
+        .tickFormat((d) => {
+          if (d === 0) return "Low";
+          if (d === 0.4) return "Medium";
+          if (d === 0.8) return "High";
+          return "";
+        });
+      g.append("g").call(yAxis).style("font-size", 10);
+    }
     // Draw horizontal dashed lines at 0.4 and 0.8
     g.append("line")
       .attr("x1", 0)

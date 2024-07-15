@@ -12,7 +12,7 @@ export default function CollusionSelectionGraph({ user, setOtherUser }){
     return u.scoreDetails.relations.map(r => ({
         name: r.name,
         value: Math.max(... Object.values(r.collusionScores)),
-        description: JSON.stringify(r.collusionScores)
+        description: JSON.stringify(r.collusionScores) // TODO make this better...
     }))
     .sort((a,b) => b.value-a.value)    
     ;
@@ -22,7 +22,8 @@ export default function CollusionSelectionGraph({ user, setOtherUser }){
 
   return(
     <>
-      <div className="card" style={{"margin": "0 0 1vh 0", "height": "30vh", "width": "100%" }}>
+    {/* "height": "45vh", */}
+      <div className="card" style={{"margin": "0 0 1vh 0",  "width": "100%" }}>
         <div className="card-body" style={{"margin": "-2vh 0 0 0"}}>
           <BarChartD3 data={processedData} selectBar={setOtherUser}/>
         </div>
