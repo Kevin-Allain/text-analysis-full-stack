@@ -66,13 +66,7 @@ export default function InitialResultsWindow(props){
         <Breadcrumb breadcrumbLinks={breadcrumbLinks}/>
       }      
       {/* Works but not sure we want to show it this way... */}
-      {/* {localStorage.files && 
-              JSON.parse( localStorage.files).map( f =>
-                <>
-                  <span>{f.name}</span>
-                  <br/>
-                </>)
-      } */}
+      {/* {localStorage.files && JSON.parse( localStorage.files).map( f => <> <span>{f.name}</span> <br/> </>) } */}
 
       <div className="row">
         <InitialResultsCard 

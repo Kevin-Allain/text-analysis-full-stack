@@ -35,7 +35,12 @@ export default function InitialResultsCard(props){
             {scores.map((item, index) => {
               return (
                 <li key={index} className="list-group-item">
-                  <ScoreCard text={item.fileName.name} color={item.color} score={item.color === props.colorWorking ? "X" : Math.round(100 * item.score)} />
+                  <ScoreCard 
+                    text={item.fileName.name} 
+                    color={item.color} 
+                    score={item.color === props.colorWorking ? "X" : Math.round(100 * item.score)} 
+                    
+                  />
                 </li>
               );
             })}

@@ -28,6 +28,7 @@ const IndexPage = () => {
         module: '',
         name: '',
         files: [],
+        users:[],
         product: `${targetPage}`
       });
       setFormData({
@@ -35,6 +36,7 @@ const IndexPage = () => {
         module: '',
         name: '',
         files: [],
+        users:[],
         product: `${targetPage}`
       });
       router.push(`/${targetPage}`);
@@ -57,17 +59,9 @@ const IndexPage = () => {
     <div>
       <Head>
         <style>{`
-          .custom-button {
-            transition: background-color 0.3s, color 0.3s;
-          }
-          .custom-button:hover {
-            background-color: #0056b3;
-            color: white;
-          }
-          .button-container button {
-            font-family: 'Arial', sans-serif;
-            margin: 10px;
-          }
+          .custom-button { transition: background-color 0.3s, color 0.3s; }
+          .custom-button:hover { background-color: #0056b3; color: white; }
+          .button-container button { font-family: 'Arial', sans-serif; margin: 10px; }
         `}</style>
       </Head>
       <div className="container mt-5">

@@ -5,6 +5,7 @@ import "@/styles/ScoreCard.css";
 const ScoreCardPlural = ({ 
     name, color_ai, score_ai, color_plagiarism, score_plagiarism, color_collusion, score_collusion 
 }) => {
+
   const circleStyle = (color) => ({
     backgroundColor: color,
     borderRadius: '50%',
@@ -18,6 +19,7 @@ const ScoreCardPlural = ({
     alignItems: 'center',
     color: 'white',
     fontWeight: 'bold',
+    cursor: 'pointer',    
   });
 
   const containerStyle = {
@@ -39,27 +41,34 @@ const ScoreCardPlural = ({
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
+    cursor: 'pointer',    
   };
+
+  const handleClickNavigation = (where) => {
+    console.log("handleClickNavigation | where: ",where,", name: ", name);
+    window.location.href = where; // Navigate to the specified URL 
+  }
+
 
   return (
     <div style={containerStyle}>
       <span>{name}</span>
       <div style={scoresContainerStyle}>
-        <div style={scoreItemStyle}>
+        <div style={scoreItemStyle} onClick={() => handleClickNavigation("AI_Detection")}>
           <span>AI Detection</span>
-          <div style={circleStyle(color_ai)}>
-            {score_ai === "X" ? <LuLoader className="loader-icon" /> : <>{score_ai}</>}
+          <div style={circleStyle(color_ai)} >
+            {score_ai === "X" ? <LuLoader className="loader-icon"/> : <>{score_ai}</>}
           </div>
         </div>
-        <div style={scoreItemStyle}>
+        <div style={scoreItemStyle} onClick={() => handleClickNavigation("Plagiarism")}>
           <span>Plagiarism</span>
-          <div style={circleStyle(color_plagiarism)}>
+          <div style={circleStyle(color_plagiarism)} >
             {score_plagiarism === "X" ? <LuLoader className="loader-icon" /> : <>{score_plagiarism}</>}
           </div>
         </div>
-        <div style={scoreItemStyle}>
+        <div style={scoreItemStyle} onClick={() => handleClickNavigation("Collusion")}>
           <span>Collusion</span>
-          <div style={circleStyle(color_collusion)}>
+          <div style={circleStyle(color_collusion)} >
             {score_collusion === "X" ? <LuLoader className="loader-icon" /> : <>{score_collusion}</>}
           </div>
         </div>
