@@ -1,9 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const BarChartD3 = ({ data, selectBar, hasYaxis=true, activeSelection=null, setActiveSelection=null }) => {
+const BarChartD3 = ({ 
+  data, 
+  selectBar, 
+  hasYaxis=true, 
+  activeSelection=null, 
+  }) => {
 
-  console.log("BarChartD3 | data: ",data,", selectBar: ",selectBar);
+  console.log("BarChartD3 | data: ",data,", selectBar: ",selectBar, ", activeSelection: ",activeSelection);
 
   const svgRef = useRef();
   const tooltipRef = useRef();
@@ -48,8 +53,9 @@ const BarChartD3 = ({ data, selectBar, hasYaxis=true, activeSelection=null, setA
       .selectAll("text")
       .attr("transform", "translate(-10,0)rotate(-20)")
       .style("text-anchor", "end")
-      .style("font-size", 10);
-    // .style("fill", "#69a3b2");
+      .style("font-size", d => d === activeSelection ? "20px" : "10px");
+      // .style("font-size", 10);
+      // .style("fill", "#69a3b2");
 
     // Draw Y axis with custom labels
     if (hasYaxis){

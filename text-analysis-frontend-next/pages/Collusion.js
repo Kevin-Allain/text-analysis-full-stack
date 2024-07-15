@@ -33,7 +33,10 @@ export default function Collusion(){
   const [contentCollusion2, setContentCollusion2] = useState(null);
 
   // ----- functions
-  const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); // Reset to the first file
+  const handleUserClick = (user) => { 
+    setSelectedUser(user.name); 
+    setOtherUser(null);
+    setIndexFile(0); // Reset to the first file
   };
   const handleFileClick = (index) => { setIndexFile(index); };
   const TableComponent = ({ inputString, setFileCollusion1, setFileCollusion2 }) => {
@@ -101,11 +104,16 @@ export default function Collusion(){
 
   useEffect(() => {
     if (selectedUser) {
-      const userData = codecheckerData_collusion.data.find(user => user.name === selectedUser);
-      if (userData && userData.files.length > 0) {setFileList(userData.files);} }
+      const userData = codecheckerData_collusion.data
+        .find(user => user.name === selectedUser);
+      if (userData && userData.files.length > 0)
+        {setFileList(userData.files);} 
+      setOtherUser(null);
+    }
   }, [selectedUser, indexFile]);
+
   useEffect(() => { 
-    if (otherUser) {console.log("otherUser: ",otherUser);}
+    if (otherUser) {console.log("useEffect Collusion | otherUser: ",otherUser);}
     setFileCollusion1(null);
     setFileCollusion2(null);
  }, [otherUser]);
@@ -155,6 +163,7 @@ export default function Collusion(){
                     <CollusionSelectionGraph 
                       user={codecheckerData_collusion.data.find(user => user.name === selectedUser)} 
                       setOtherUser = {setOtherUser}
+                      otherUser = {otherUser}
                     />
                   }
                 {/* <hr/>
@@ -205,7 +214,9 @@ export default function Collusion(){
               <div className="col-md-3 right_side">
                 <div className="user_listing">
                   <ul className="list-group">
-                    {users.map((user, index) => (
+                    {users
+                      .filter(a => a!== selectedUser)
+                      .map((user, index) => (
                       <li
                         key={index}
                         className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`}
