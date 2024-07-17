@@ -1,35 +1,35 @@
 {
   "data": [
     {
-      "name": "Alice",
+      "name": "Alice Black",
       "globalScore": null,
       "numSubmissions": 2,
       "files": ["Addresses.py", "old_PredatorMovement.cs"],
       "scoreDetails": null
     },
     {
-      "name": "Bob",
+      "name": "Bob Vance",
       "globalScore": null,
       "numSubmissions": 1,
       "files": ["evaluate.py"],
       "scoreDetails": null
     },
     {
-      "name": "Charlie",
+      "name": "Charlie Meyers",
       "globalScore": null,
       "numSubmissions": 4,
       "files": ["index.vue"],
       "scoreDetails": null
     },
     {
-      "name": "David",
+      "name": "David Wallace",
       "globalScore": null,
       "numSubmissions": 3,
       "files": ["attack_paraphrase.py"],
       "scoreDetails": null
     },
     {
-      "name": "Ethan",
+      "name": "Ethan Drake",
       "globalScore": null,
       "numSubmissions": 5,
       "files": ["ggplot_tips.R", "PreyEvading.cs"],
@@ -43,49 +43,49 @@
       "scoreDetails": null
     },
     {
-      "name": "Gale",
+      "name": "Gale Grimm",
       "globalScore": null,
       "numSubmissions": 1,
       "files": ["INSTALL.txt"],
       "scoreDetails":  null
     },
     {
-      "name": "Hugo",
+      "name": "Hugo Martin",
       "globalScore": null,
       "numSubmissions": 3,
       "files": ["NLP_LBS1_answers.R"],
       "scoreDetails":  null
     },
     {
-      "name": "Ines",
+      "name": "Ines Arabelle",
       "globalScore": null,
       "numSubmissions": 1,
       "files": ["text_basics.R"],
       "scoreDetails": null
     },
     {
-      "name": "Julian",
+      "name": "Julian Johnson",
       "globalScore": null,
       "numSubmissions": 4,
       "files": ["vectorFunctions.R", "PreyEvading.cs"],
       "scoreDetails": null
     },
     {
-      "name": "Karim",
+      "name": "Karim Smith",
       "globalScore": null,
       "numSubmissions": 6,
       "files": ["CameraFollowPredator.cs"],
       "scoreDetails": null
     },
     {
-      "name": "Leo",
+      "name": "Leo Lionel",
       "globalScore": null,
       "numSubmissions": 9,
       "files": ["PredatorMovement.cs", "PreyEvading.cs"],
       "scoreDetails": null
     },
     {
-      "name": "Maxim",
+      "name": "Maxim Romero",
       "globalScore": null,
       "numSubmissions": 9,
       "files": ["cold_decoding.py", "PreyEvading.cs"],

@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "name": "Alice",
+      "name": "Alice Black",
       "globalScore": 0.45,
       "numSubmissions": 2,
       "files": ["Addresses.py", "old_PredatorMovement.cs"],
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "name": "Bob",
+      "name": "Bob Vance",
       "globalScore": 0.48,
       "numSubmissions": 1,
       "files": ["evaluate.py"],
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "name": "Charlie",
+      "name": "Charlie Meyers",
       "globalScore": 0.85,
       "numSubmissions": 4,
       "files": ["index.vue"],
@@ -92,7 +92,7 @@
       ]
     },
     {
-      "name": "David",
+      "name": "David Wallace",
       "globalScore": 0.65,
       "numSubmissions": 3,
       "files": ["attack_paraphrase.py"],
@@ -117,7 +117,7 @@
       ]
     },
     {
-      "name": "Ethan",
+      "name": "Ethan Drake",
       "globalScore": 0.95,
       "numSubmissions": 5,
       "files": ["ggplot_tips.R", "PreyEvading.cs"],
@@ -164,7 +164,7 @@
       ]
     },
     {
-      "name": "Francis",
+      "name": "Francis Croshaw",
       "globalScore": 0.22,
       "numSubmissions": 7,
       "files": ["attack_control.py"],
@@ -189,7 +189,7 @@
       ]
     },
     {
-      "name": "Gale",
+      "name": "Gale Grimm",
       "globalScore": 0.42,
       "numSubmissions": 1,
       "files": ["INSTALL.txt"],
@@ -214,7 +214,7 @@
       ]
     },
     {
-      "name": "Hugo",
+      "name": "Hugo Martin",
       "globalScore": 0.45,
       "numSubmissions": 3,
       "files": ["NLP_LBS1_answers.R"],
@@ -239,7 +239,7 @@
       ]
     },
     {
-      "name": "Ines",
+      "name": "Ines Arabelle",
       "globalScore": 0.15,
       "numSubmissions": 1,
       "files": ["text_basics.R"],
@@ -264,7 +264,7 @@
       ]
     },
     {
-      "name": "Julian",
+      "name": "Julian Johnson",
       "globalScore": 0.45,
       "numSubmissions": 4,
       "files": ["vectorFunctions.R", "PreyEvading.cs"],
@@ -301,7 +301,7 @@
       ]
     },
     {
-      "name": "Karim",
+      "name": "Karim Smith",
       "globalScore": 0.35,
       "numSubmissions": 6,
       "files": ["CameraFollowPredator.cs"],
@@ -336,7 +336,7 @@
       ]
     },
     {
-      "name": "Leo",
+      "name": "Leo Lionel",
       "globalScore": 0.41,
       "numSubmissions": 7,
       "files": ["PredatorMovement.cs", "PreyEvading.cs"],
@@ -373,7 +373,7 @@
       ]
     },
     {
-      "name": "Maxim",
+      "name": "Maxim Romero",
       "globalScore": 0.12,
       "numSubmissions": 9,
       "files": ["cold_decoding.py", "PreyEvading.cs"],
