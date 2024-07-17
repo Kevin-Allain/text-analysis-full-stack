@@ -1,18 +1,29 @@
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 from textblob import TextBlob
 import time
 from datetime import datetime
 import nltk # (update for backend on Docker)
 import csv
 import os
-
 # IMPORT FROM FILES
 from main_binoculars import analyze_binoculars
+from models import db, Individual
 
 app = Flask(__name__)
 # CORS(app)
 # CORS(app, resources={r"/*": {"origins": "*"}})
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:h@ppyAI42@localhost/admin_'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:h%40ppyAI42@localhost:3306/admin_'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
+# db = SQLAlchemy(app)
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(80), unique=True, nullable=False)
 
 # CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 CORS(app, resources={
@@ -23,10 +34,12 @@ CORS(app, resources={
     }
 })
 
-
 # Issue with Docker in the backend!!! This could be an alternate point to look at https://dev.to/francescoxx/python-fullstack-rest-api-app-with-docker-1101
-
 nltk.download('punkt') # (update for backend on Docker)
+
+now = datetime.now() # current date and time
+date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+print("++"+date_time+"++ Set up with host 0.0.0.0")
 
 @app.route('/')
 def hello_world():
@@ -45,9 +58,7 @@ def get_current_time():
 def get_prettytime():
     now = datetime.now() # current date and time
     date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-    # print("date and time:",date_time)	
     return {'date_time':date_time}
-
 
 @app.route('/api/analyze', methods=['POST'])
 def analyze_text():
@@ -106,10 +117,50 @@ def analyze_text_t_b():
         return jsonify({"error": str(e)}), 500
 
 
-now = datetime.now() # current date and time
-date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-print("++"+date_time+"++ Set up with host 0.0.0.0")
+@app.route('/api/test_list_individuals', methods=['GET'])
+def test_list_individuals():
+    individuals = Individual.query.all()
+    if not individuals:
+        default_individuals = [
+            ("Alice", "Black"), ("Bob", "Vance"), ("Charlie", "Meyers"), ("David", "Wallace"),
+            ("Ethan", "Drake"), ("Francis", "Croshaw"), ("Gale", "Grimm"), ("Hugo", "Martin"),
+            ("Ines", "Arabelle"), ("Julian", "Johnson"), ("Karim", "Smith"), ("Leo", "Lionel"),
+            ("Maxim", "Romero")
+        ]
+        for first_name, last_name in default_individuals:
+            new_individual = Individual(first_name=first_name, last_name=last_name)
+            db.session.add(new_individual)
+        db.session.commit()
+        individuals = Individual.query.all()
+    result = [{"id": ind.id, "first_name": ind.first_name, "last_name": ind.last_name} for ind in individuals]
+    return jsonify(result)
+
+@app.route('/api/individuals/<individual_id>/files', methods=['GET'])
+def get_individual_files(individual_id):
+    individual = Individual.query.get(individual_id)
+    if individual is None:
+        return jsonify({"error": "Individual not found"}), 404
+    files = File.query.filter_by(individual_id=individual_id).all()
+    result = [{"id": file.id, "filename": file.filename} for file in files]
+    return jsonify(result)
+
+@app.route('/api/individuals/<individual_id>/files', methods=['POST'])
+def add_individual_file(individual_id):
+    individual = Individual.query.get(individual_id)
+    if individual is None:
+        return jsonify({"error": "Individual not found"}), 404
+    file_data = request.json
+    if not file_data or 'filename' not in file_data:
+        return jsonify({"error": "Invalid data"}), 400
+    new_file = File(filename=file_data['filename'], individual_id=individual_id)
+    db.session.add(new_file)
+    db.session.commit()
+    return jsonify({"id": new_file.id, "filename": new_file.filename}), 201
+
+
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(host='0.0.0.0', port=5000, debug=True)   
     # app.run(debug=True, port=int("5000"))

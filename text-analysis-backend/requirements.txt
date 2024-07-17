@@ -12,3 +12,5 @@ gradio_client
 scikit-learn
 seaborn
 pandas
+pymysql
+flask_sqlalchemy

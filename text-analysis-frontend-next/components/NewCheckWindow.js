@@ -2,32 +2,70 @@ import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { FormDataContext } from '@/components/context/FormDataContext'; // Adjust the path
 import "bootstrap/dist/css/bootstrap.min.css";
+import JSZip from 'jszip';
 
 export default function NewCheckWindow(props) {
-  console.log("NewCheckWindow | props: ",props);
   const product = props.product;
   const { formData, setFormData } = useContext(FormDataContext);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(0);
-
   const [institution, setInstitution] = useState(formData.institution);
   const [module, setModule] = useState(formData.module);
   const [name, setName] = useState(formData.name);
   const [files, setFiles] = useState(formData.files);
   const [errors, setErrors] = useState({});
+  const [zipError, setZipError] = useState(null);
 
   const router = useRouter();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const { id, value, files } = e.target;
+    console.log("handleInputChange: ", { id, value, files });
     if (id === "fileInput") {
-      setFiles(files);
+      const zipValidationResult = await validateZip(files[0]);
+      if (zipValidationResult.isValid) {
+        setFiles(files);
+        setZipError(null);
+      } else {
+        setFiles([]);
+        setZipError(zipValidationResult.error);
+      }
     } else if (id === "institutionInput") {
       setInstitution(value);
     } else if (id === "moduleInput") {
       setModule(value);
     } else if (id === "nameInput") {
       setName(value);
+    }
+  };
+
+  const validateZip = async (file) => {
+    const validTypes = ['application/zip', 'application/x-zip-compressed', 'application/x-7z-compressed'];
+    if (!validTypes.includes(file.type)) {
+      return { isValid: false, error: 'The uploaded file is not a supported zip file.' };
+    }
+    try {
+      const zip = await JSZip.loadAsync(file);
+      const folderNames = Object.keys(zip.files).filter((name) => name.endsWith('/'));
+      if (folderNames.length === 0) {
+        return { isValid: false, error: 'The zip file must contain at least one folder.' };
+      }
+      for (const folderName of folderNames) {
+        console.log("folderName: ",folderName);
+        const folderFiles = Object.keys(zip.files).filter((name) => name.startsWith(folderName) && !name.endsWith('/'));
+        console.log("folderFiles: ",folderFiles);
+        if (folderFiles.length === 0) {
+          return { isValid: false, error: `The folder '${folderName}' must contain at least one file.` };
+        }
+        const subFolders = folderFiles.filter((name) => name.split('/').length > 3);
+        console.log("subFolders: ", subFolders);
+        if (subFolders.length > 0) {
+          return { isValid: false, error: `The folder '${folderName}' contains subfolders, which is not allowed.` };
+        }
+      }
+      return { isValid: true };
+    } catch (error) {
+      return { isValid: false, error: 'An error occurred while processing the zip file.' };
     }
   };
 
@@ -47,16 +85,11 @@ export default function NewCheckWindow(props) {
       const updatedFormData = { product, institution, module, name, files };
       setFormData(updatedFormData);
       setIsUploading(1);
-      // Simulate upload process, then navigate to results
       setTimeout(() => {
         setIsUploading(0);
-        // TODO set the values in localStorage? In progress
-        console.log("handleSubmit NewCheckWindow | formData ", updatedFormData);
         const filesUploaded = updatedFormData.files;
-        console.log("filesUploaded: ", filesUploaded,", typeof filesUploaded: ", typeof(filesUploaded),`, filesUploaded.length: ${filesUploaded.length}, filesUploaded[0]: ${filesUploaded[0]}, filesUploaded.item(0): ${filesUploaded.item(0)}, filesUploaded.item(0).name: ${filesUploaded.item(0).name}, Object.keys(filesUploaded.item(0)): ${Object.keys(filesUploaded.item(0))}`);
-        
         let arrObjFile = [];
-        for(let i =0; i < filesUploaded.length; i++){
+        for (let i = 0; i < filesUploaded.length; i++) {
           arrObjFile.push({
             "name": filesUploaded.item(i).name,
             "lastModified": filesUploaded.item(i).lastModified,
@@ -64,12 +97,9 @@ export default function NewCheckWindow(props) {
             "size": filesUploaded.item(i).size,
             "type": filesUploaded.item(i).type,
             "webkitRelativePath": filesUploaded.item(i).webkitRelativePath,
-          })
+          });
         }
-        console.log("¬¬ arrObjFile: ", arrObjFile);
-
         localStorage.setItem("files", JSON.stringify(arrObjFile));
-        console.log(" handleSubmit NewCheckWindow | localStorage: ", localStorage);
         router.push("/InitialResults");
       }, 3000); // Simulate upload time
     }
@@ -81,8 +111,7 @@ export default function NewCheckWindow(props) {
         className="progress-bar progress-bar-striped progress-bar-animated"
         style={{ width: `${progress}%`, fontSize: "1.2em" }}
       >
-        {" "}
-        Uploading ({progress}%)...{" "}
+        Uploading ({progress}%)...
       </div>
     </div>
   );
@@ -95,7 +124,6 @@ export default function NewCheckWindow(props) {
           let newValue = prevProgress + randomIncrement;
           if (newValue > 100) newValue = 100;
           if (newValue >= 100) {
-            console.log("useEffect NewCheckWindow | localStorage: ", localStorage);
             clearInterval(interval);
             router.push("/InitialResults");
           }
@@ -119,8 +147,7 @@ export default function NewCheckWindow(props) {
     >
       <div className="card" style={{ width: "40%" }}>
         <div className="card-header" style={{ textAlign: "center" }}>
-          {" "}
-          New Check{" "}
+          New Check
         </div>
         <div className="card-body">
           <form onSubmit={handleSubmit}>
@@ -185,6 +212,9 @@ export default function NewCheckWindow(props) {
               />
               {errors.files && (
                 <div className="text-danger">{errors.files}</div>
+              )}
+              {zipError && (
+                <div className="text-danger">{zipError}</div>
               )}
             </div>
             {isUploading === 0 && (
