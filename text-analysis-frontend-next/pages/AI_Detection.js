@@ -14,7 +14,7 @@ import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_exa
 import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
-
+import UserList from '@/components/UserList';
 import { calculateOpacity, getBinFromScore } from '@/utils/UtilsMath';
 
 export default function AI_Detection(){
@@ -133,48 +133,6 @@ export default function AI_Detection(){
     }
   };
 
-  // const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
-  //   let highlightedText = text;
-  //   let sizeOffset = 0;
-  //   console.log("Plagiarism / highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
-  //   let allScores = scoreDetails.map(a => a.score);
-  //   let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
-  //   const minOpacity = 0.05, maxOpacity = 0.85;
-  //   // Function to calculate opacity based on score
-  //   const calculateOpacity = (score, min, max, binning, numBin) => {
-  //     if (min === max) return 0.90; // Handle the case where all scores are the same
-  //     if (binning) {
-  //       const binSize = (max - min) / numBin;
-  //       const binIndex = Math.floor((score - min) / binSize);
-  //       return minOpacity + (binIndex / (numBin - 1)) * (maxOpacity - minOpacity);
-  //     } else {
-  //       return minOpacity + ((score - min) / (max - min)) * maxOpacity;
-  //     }
-  //   };
-  //   const getBinFromScore = (score, min, max, numBin) => {
-  //     const binSize = (max - min) / numBin;
-  //     return Math.floor((score - min) / binSize);
-  //   };
-  //   scoreDetails.forEach(detail => {
-  //     const { type, range, score } = detail;
-  //     const opacity = calculateOpacity(score, minScore, maxScore, binning, numBin);
-  //     const binIndex = binning ? getBinFromScore(score, minScore, maxScore, numBin) : 0;
-  //     const binClass = "bin_"+binIndex;
-  //     const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} style="background-color: rgba(255, 0, 0, ${opacity});">`;
-  //     const highlightEnd = "</span>";
-  //     const start = range[0];
-  //     const end = range[1];
-  //     highlightedText =
-  //       highlightedText.slice(0, start + sizeOffset) +
-  //       highlightStart +
-  //       highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
-  //       highlightEnd +
-  //       highlightedText.slice(end + sizeOffset + 1);
-  //     sizeOffset += highlightStart.length + highlightEnd.length;
-  //   });
-  //   return highlightedText;
-  // };
-
   const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
     let highlightedText = text;
     let sizeOffset = 0;
@@ -202,7 +160,9 @@ export default function AI_Detection(){
     return highlightedText;
   };
 
-  const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); };
+  const handleUserClick = (user) => { 
+    setSelectedUser(user.name); setIndexFile(0); 
+  };
   const handleHighlightClick = (e,className) => { console.log("handleHighlightClick | e: ",e,"className: ",className); };
   const handleFileClick = (index) => { setIndexFile(index); };
 
@@ -298,7 +258,7 @@ export default function AI_Detection(){
             <div className="row">
               {/* <div className="col-md-7"> */}
               <div className="col-md-9">
-               <Breadcrumb />
+               {/* <Breadcrumb /> */}
                <>
                 <div>
                   Submission from {selectedUser}.{" "}
@@ -306,8 +266,8 @@ export default function AI_Detection(){
                   {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
                   Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}. 
                 </div>
-                <div>
-                  <u>Files</u><br/>
+                <div style={{"vertical-align": "middle"}}>
+                  <u>Files</u>
                   {selectedUser && 
                     fileList.map((file, index) => (
                       <button 
@@ -335,37 +295,21 @@ export default function AI_Detection(){
                 ) : (
                   outputAI.details && (
                 <>
-                  <h3 className="heading-section text-center">
+                  {/* <h3 className="heading-section text-center">
                     Generated Text Probability
-                  </h3>
+                  </h3> */}
                   <h4>
                     {(selectedUser && codecheckerData_ai_detection.data) &&
                       codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]
                     }
                     {" | "}
-                    Average score: {outputAI.average.toFixed(2)}
+                    Generated Text Probability:
+                    <div className='score_big' style={{"width":"fit-content", "color":"white", "background-color":"red", "padding":"0.5rem", "font-size":"larger", "border-radius":"0.5rem"}}>{outputAI.average.toFixed(2)}</div>
                   </h4>
                   {/* <h2>Average score: {outputAI.average.toFixed(2)} </h2> */}
                   {/* {(minScoreAI && maxScoreAI) && <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} /> } */}
-                  {(minScoreAI && maxScoreAI) && 
-                    <LegendBinned 
-                      minScore={minScoreAI} 
-                      maxScore={maxScoreAI} 
-                      numBins={maxBin}
-                      onSelectBin={handleSelectBin} 
-                      selectedBin={selectedBinIndex}/>
-                  }
-                  {selectedBinIndex !== null && (
-                    <div className="mt-3">
-                      <h5>Selected Bin</h5>
-                      <p>
-                        Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
-                        {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
-                      </p>
-                    </div>
-                  )}                  
                   {/* {outputAI.details && outputAI.details.map((oAI, index) => ( <span key={index} style={{ backgroundColor: getBackgroundColorAI( outputAI, index ), color: "#fff", padding: "2px 4px", margin: "2px", display: "inline-block", }} > {oAI.text}{" "} </span> ))} */}
-                  <span>The score produced by our AI is indicative of the probability of the content being generated by a generative AI. Do note that high scores are no guarantee of content generated by AI, nor low ones guarantee content was made by a human. You should judge the content based on the context.</span>
+                  {/* <span>The score produced by our AI is indicative of the probability of the content being generated by a generative AI. Do note that high scores are no guarantee of content generated by AI, nor low ones guarantee content was made by a human. You should judge the content based on the context.</span> */}
                   {/* h-25 */}
                   <div className="card overflow-y-scroll">
                     <div className="card-body">
@@ -379,25 +323,31 @@ export default function AI_Detection(){
                 ))}
               </div>
               <div className="col-md-3 right_side">
-                <HorizontalNav/>
-                <div className="user_listing">
-                  <ul className="list-group">
-                    {users.map((user, index) => (
-                      <li
-                        key={index}
-                        className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`}
-                        onClick={() => handleUserClick(user)}
-                      >
-                        <span>{user.name}</span>
-                        {user.globalScore !== null && 
-                          <span>{(user.globalScore * 100).toFixed(2)}%</span>
-                        }
-                      </li>
-                    ))}
-                  </ul>
+                <HorizontalNav />
+                <UserList
+                  users={users}
+                  selectedUser={selectedUser}
+                  handleUserClick={handleUserClick}
+                />
+                <div className='legend'>
+                  {(minScoreAI && maxScoreAI) &&
+                    <LegendBinned
+                      minScore={minScoreAI}
+                      maxScore={maxScoreAI}
+                      numBins={maxBin}
+                      onSelectBin={handleSelectBin}
+                      selectedBin={selectedBinIndex} />
+                  }
+                  {selectedBinIndex !== null && (
+                    <div className="mt-3">
+                      <h5>Selected Bin</h5>
+                      <p>
+                        Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
+                        {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
+                      </p>
+                    </div>
+                  )}
                 </div>
-                {/* TODO maybe put some sort of legend here... */}
-                <div className='legend'></div>
               </div>
             </div>
           </div>
