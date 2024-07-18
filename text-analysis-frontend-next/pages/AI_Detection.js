@@ -259,29 +259,6 @@ export default function AI_Detection(){
               {/* <div className="col-md-7"> */}
               <div className="col-md-9">
                {/* <Breadcrumb /> */}
-               <>
-                <div>
-                  Submission from {selectedUser}.{" "}
-                  {/* TODO update this... codecheckerData_ai_detection has null on globalScore for now... */}
-                  {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
-                  Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}. 
-                </div>
-                <div style={{"vertical-align": "middle"}}>
-                  <u>Files</u>
-                  {selectedUser && 
-                    fileList.map((file, index) => (
-                      <button 
-                        key={index} 
-                        className={`btn btn-link ${(indexFile === index) ? 'active' : ''} ${(indexFile === index)? 'text-secondary': ''}`} 
-                        onClick={() => handleFileClick(index)}
-                        disabled={isLoadingAI}
-                      >
-                        {file}
-                      </button>
-                    ))
-                  }
-                </div>
-                </>
                {isLoadingAI ? (
                 <>
                   <h3 className="heading-section text-center">
@@ -348,6 +325,30 @@ export default function AI_Detection(){
                     </div>
                   )}
                 </div>
+                <>
+                <div>
+                  Submission from {selectedUser}.{" "}
+                  {/* TODO update this... codecheckerData_ai_detection has null on globalScore for now... */}
+                  {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
+                  Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}. 
+                </div>
+                <div style={{"vertical-align": "middle"}}>
+                  <u>Files</u>
+                  {selectedUser && 
+                    fileList.map((file, index) => (
+                      <button 
+                        key={index} 
+                        className={`btn btn-link ${(indexFile === index) ? 'active' : ''} ${(indexFile === index)? 'text-secondary': ''}`} 
+                        onClick={() => handleFileClick(index)}
+                        disabled={isLoadingAI}
+                      >
+                        {file}
+                      </button>
+                    ))
+                  }
+                </div>
+                </>
+
               </div>
             </div>
           </div>
