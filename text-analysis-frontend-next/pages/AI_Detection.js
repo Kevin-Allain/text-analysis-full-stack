@@ -300,7 +300,7 @@ export default function AI_Detection(){
                 ))}
               </div>
               <div className="col-md-3 right_side">
-                <HorizontalNav />
+                <HorizontalNav features={["Collusion","AI_Detection","Plagiarism"]}/>
                 <UserList
                   users={users}
                   selectedUser={selectedUser}

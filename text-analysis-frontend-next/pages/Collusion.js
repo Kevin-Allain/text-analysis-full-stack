@@ -213,7 +213,7 @@ export default function Collusion(){
               </div>
 
               <div className="col-md-3 right_side">
-                <HorizontalNav/>
+                <HorizontalNav features={["Collusion","AI_Detection","Plagiarism"]}/>
                 <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
                 {/* <div className="user_listing">
                   <ul className="list-group">

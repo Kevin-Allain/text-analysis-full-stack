@@ -62,25 +62,6 @@ export default function Plagiarism() {
     }
   }, [fileContent]);
 
-  // const fetchFileContent = async (fileName, scoreDetails, setter, highlight= null) => {
-  //   try {
-  //     const response = await fetch(`/data/codechecker_files/${fileName}`);
-  //     if (response.ok) {
-  //       const text = await response.text();
-  //       if (highlight) {
-  //         setter(highlight(text,scoreDetails))
-  //       } else {
-  //         setter(text,scoreDetails)
-  //       }
-  //     } else {
-  //       setter("Error loading file content.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching file content:", error);
-  //     setter("Error loading file content");
-  //   }
-  // };
-
   const highlightText = (text, scoreDetails) => {
     let highlightedText = text;
     let sizeOffset = 0;
@@ -145,7 +126,7 @@ export default function Plagiarism() {
             </div>
           </div>
           <div className="col-md-3">
-            <HorizontalNav/>
+            <HorizontalNav features={["Collusion","AI_Detection","Plagiarism"]}/>            
             <UserList
               users={users}
               selectedUser={selectedUser}

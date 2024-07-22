@@ -2,16 +2,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { FormDataContext } from '@/components/context/FormDataContext';
-import { gray } from 'd3';
 
-const HorizontalNav = () => {
+const HorizontalNav = ({features}) => {
   const router = useRouter();
   const { formData, setFormData } = useContext(FormDataContext);
   let curFeature = router.pathname.replace('/','');
-
-  const handleNavigation = (page) => {
-      router.push(`/${page}`);
-  };
+  const handleNavigation = (page) => { router.push(`/${page}`); };
 
   return (
     <div className="container mt-4">
@@ -19,27 +15,27 @@ const HorizontalNav = () => {
         <div className="btn-group" role="group" aria-label="Horizontal navigation">
           <button 
             type="button" 
-            className={`btn ${curFeature==='Collusion'? "btn-secondary" : "btn-primary"}`}
-            onClick={() => handleNavigation('Collusion')}
-            disabled = {curFeature==='Collusion'}
+            className={`btn ${curFeature===features[0]? "btn-secondary" : "btn-primary"}`}
+            onClick={() => handleNavigation(features[0])}
+            disabled = {curFeature===features[0]}
           >
-            Collusion
+            {features[0].replace('_',' ')}
           </button>
           <button 
             type="button" 
-            className={`btn ${curFeature==='AI_Detection'? "btn-secondary" : "btn-primary"}`}
-            onClick={() => handleNavigation('AI_Detection')}
-            disabled = {curFeature==='AI_Detection'}
+            className={`btn ${curFeature===features[1]? "btn-secondary" : "btn-primary"}`}
+            onClick={() => handleNavigation(features[1])}
+            disabled = {curFeature===features[1]}
           >
-            AI Detection
+            {features[1].replace('_',' ')}
           </button>
           <button 
             type="button" 
-            className={`btn ${curFeature==='Plagiarism'? "btn-secondary" : "btn-primary"}`}
-            onClick={() => handleNavigation('Plagiarism')}
-            disabled = {curFeature==='Plagiarism'}
+            className={`btn ${curFeature===features[2]? "btn-secondary" : "btn-primary"}`}
+            onClick={() => handleNavigation(features[2])}
+            disabled = {curFeature===features[2]}
           >
-            Plagiarism
+            {features[2].replace('_',' ')}
           </button>
         </div>
       </div>
