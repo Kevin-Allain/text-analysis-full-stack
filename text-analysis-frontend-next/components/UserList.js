@@ -5,6 +5,8 @@ import '@/styles/UserList.css';
 const UserList = ({ users, selectedUser, handleUserClick }) => {
   const [isListVisible, setIsListVisible] = useState(false);
 
+  // TODO ? sort users by score, if it has a metric available. Otherwise... either don't touch or make it alphabetically sorted
+
   const toggleListVisibility = () => {
     setIsListVisible(!isListVisible);
   };

@@ -2,7 +2,7 @@
   "data": [
     {
       "name": "Alice Black",
-      "worstScore": 0.95,
+      "globalScore": 0.95,
       "numSubmissions": 3,
       "files": [
         "Addresses.py",
@@ -146,7 +146,7 @@
     },
     {
       "name": "Bob Vance",
-      "worstScore": 1.0,
+      "globalScore": 1.0,
       "numSubmissions": 2,
       "files": [
         "Addresses.py",
@@ -268,7 +268,7 @@
     },
     {
       "name": "Charlie Meyers",
-      "worstScore": 0.99,
+      "globalScore": 0.99,
       "numSubmissions": 1,
       "files": [
         "index.vue"
@@ -366,7 +366,7 @@
     },
     {
       "name": "David Wallace",
-      "worstScore": 0.97,
+      "globalScore": 0.97,
       "numSubmissions": 2,
       "files": [
         "INSTALL.txt",
@@ -488,7 +488,7 @@
     },
     {
       "name": "Ethan Drake",
-      "worstScore": 0.98,
+      "globalScore": 0.98,
       "numSubmissions": 3,
       "files": [
         "ggplot_tips.R",
@@ -632,7 +632,7 @@
     },
     {
       "name": "Francis Croshaw",
-      "worstScore": 0.98,
+      "globalScore": 0.98,
       "numSubmissions": 2,
       "files": [
         "PreyEvading.cs",
@@ -754,7 +754,7 @@
     },
     {
       "name": "Gale Grimm",
-      "worstScore": 0.99,
+      "globalScore": 0.99,
       "numSubmissions": 3,
       "files": [
         "ggplot_tips.R",
@@ -898,7 +898,7 @@
     },
     {
       "name": "Hugo Martin",
-      "worstScore": 0.98,
+      "globalScore": 0.98,
       "numSubmissions": 2,
       "files": [
         "old_PredatorMovement.cs",
@@ -1020,7 +1020,7 @@
     },
     {
       "name": "Ines Arabelle",
-      "worstScore": 0.95,
+      "globalScore": 0.95,
       "numSubmissions": 3,
       "files": [
         "PredatorMovement.cs",
@@ -1164,7 +1164,7 @@
     },
     {
       "name": "Julian Johnson",
-      "worstScore": 0.94,
+      "globalScore": 0.94,
       "numSubmissions": 1,
       "files": [
         "attack_control.py"
@@ -1262,7 +1262,7 @@
     },
     {
       "name": "Karim Smith",
-      "worstScore": 1.0,
+      "globalScore": 1.0,
       "numSubmissions": 2,
       "files": [
         "INSTALL.txt",
@@ -1384,7 +1384,7 @@
     },
     {
       "name": "Leo Lionel",
-      "worstScore": 0.97,
+      "globalScore": 0.97,
       "numSubmissions": 1,
       "files": [
         "PreyEvading.cs"
@@ -1482,7 +1482,7 @@
     },
     {
       "name": "Maxim Romero",
-      "worstScore": 0.96,
+      "globalScore": 0.96,
       "numSubmissions": 1,
       "files": [
         "Addresses.py"

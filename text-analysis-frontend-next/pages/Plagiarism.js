@@ -10,7 +10,7 @@ import { FormDataContext } from '@/components/context/FormDataContext';
 import '@/styles/PlagiarismFeature.css';
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import { fetchFileContent } from '@/utils/FileLoader';
-
+import UserList from '@/components/UserList';
 
 export default function Plagiarism() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -133,24 +133,8 @@ export default function Plagiarism() {
         <div className="row">
           <Sidebar />
           <div className="col-md-7 text_selec">
-            <HorizontalNav/>          
             <h1> {formData?.product && formData?.product} Plagiarism - Details</h1>
-            <Breadcrumb />
-            <>
-            <div>
-              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
-            </div>
-            <div>
-              <u>Files</u>
-              {selectedUser && 
-                fileList.map((file, index) => (
-                  <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
-                    {file}
-                  </button>
-                ))
-              }
-            </div>
-            </>
+            {/* <Breadcrumb /> */}
             <h4>
               {(selectedUser && codecheckerData_plagiarism.data) &&
                 codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
@@ -160,21 +144,18 @@ export default function Plagiarism() {
               <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
             </div>
           </div>
-          <div className="col-md-3 right_side">
-            <div className="user_listing">
-              <ul className="list-group">
-                {users.map((user, index) => (
-                  <li
-                    key={index}
-                    className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`}
-                    onClick={() => handleUserClick(user)}
-                  >
-                    <span>{user.name}</span>
-                    <span>{(user.globalScore * 100).toFixed(2)}%</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="col-md-3">
+            <HorizontalNav/>
+            <UserList
+              users={users}
+              selectedUser={selectedUser}
+              handleUserClick={handleUserClick}
+            />
+
+            {/* <div className="user_listing">
+              <ul className="list-group"> {users.map((user, index) => ( <li key={index} className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`} onClick={() => handleUserClick(user)} > <span>{user.name}</span> <span>{(user.globalScore * 100).toFixed(2)}%</span> </li> ))} </ul>
+            </div> */}
+
             <div className="details_score" ref={detailsScoreRef}>
               {detailsPlagiarism.map((item, index) => (
                 <div key={index}>
@@ -203,6 +184,21 @@ export default function Plagiarism() {
                   )}
                 </div>
               ))}
+            </div>
+            <div>
+              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}.
+              <br/>
+              Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
+            </div>
+            <div>
+              <u>Files</u>
+              {selectedUser && 
+                fileList.map((file, index) => (
+                  <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
+                    {file}
+                  </button>
+                ))
+              }
             </div>
           </div>
         </div>

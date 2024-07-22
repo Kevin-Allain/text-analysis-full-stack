@@ -8,18 +8,16 @@
 }
 
 .right_side {
-    border-left: 1px solid #ccc;
+    /* border-left: 1px solid #ccc; */
     height: 85vh;
     /* height: 100vh; */
     /* overflow-y: auto; */
 }
 
-.user_listing {
-    /* border-left: 1px solid #ccc; */
+/* .user_listing {
     overflow-y: auto;
     height: 35vh;
-    /* height: 100vh; */
-}
+} */
 
 .text-content .highlight {
     cursor: pointer;
@@ -35,7 +33,7 @@
 .details_score {
     padding: 20px;
     overflow-y: auto;
-    height: 45vh;
+    /* height: 45vh; */
 }
 
 .detail-item {

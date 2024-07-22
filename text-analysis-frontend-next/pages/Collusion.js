@@ -10,7 +10,7 @@ import HorizontalNav from '@/components/HorizontalNav';
 import { FormDataContext } from '@/components/context/FormDataContext';
 import '@/styles/Collusion.module.css'
 import { fetchFileContent, fetchFileContentToDivs } from '@/utils/FileLoader';
-
+import UserList from '@/components/UserList';
 import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
 
 
@@ -23,9 +23,9 @@ export default function Collusion(){
   const [fileContent, setFileContent] = useState("");
   const [indexFile, setIndexFile] = useState(0);
   const [fileList, setFileList] = useState([]);
-  const users = codecheckerData_collusion.data.sort((a, b) => b.worstScore - a.worstScore);
-  console.log("worstScore of first: ", codecheckerData_collusion.data[0].worstScore)
-  console.log("typeof worstScore of first: ", typeof(codecheckerData_collusion.data[0].worstScore))
+  const users = codecheckerData_collusion.data.sort((a, b) => b.globalScore - a.globalScore);
+  console.log("globalScore of first: ", codecheckerData_collusion.data[0].globalScore)
+  console.log("typeof globalScore of first: ", typeof(codecheckerData_collusion.data[0].globalScore))
 
   const [fileCollusion1, setFileCollusion1] = useState(null);
   const [fileCollusion2, setFileCollusion2] = useState(null);
@@ -153,8 +153,7 @@ export default function Collusion(){
         <div className="row">
           <Sidebar />
           <div className="col-md-10">
-            <Breadcrumb />
-            <HorizontalNav/>          
+            {/* <Breadcrumb /> */} 
             <h1> {formData?.product && formData?.product} Collusion - Details</h1>            
             <div className="row">
               <div className="col-md-9">
@@ -212,24 +211,18 @@ export default function Collusion(){
               </div>
 
               <div className="col-md-3 right_side">
-                <div className="user_listing">
+                <HorizontalNav/>
+                <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
+                {/* <div className="user_listing">
                   <ul className="list-group">
-                    {users
-                      .filter(a => a!== selectedUser)
-                      .map((user, index) => (
-                      <li
-                        key={index}
-                        className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`}
-                        onClick={() => handleUserClick(user)}
-                      >
+                    {users.filter(a => a!== selectedUser).map((user, index) => (
+                      <li key={index} className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`} onClick={() => handleUserClick(user)} >
                         <span>{user.name}</span>
-                        {user.worstScore !== null && 
-                          <span>{(user.worstScore * 100).toFixed(2)}%</span>
-                        }
+                        {user.globalScore !== null &&  <span>{(user.globalScore * 100).toFixed(2)}%</span> }
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
               </div>
 
             </div>
