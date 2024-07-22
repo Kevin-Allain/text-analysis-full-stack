@@ -51,9 +51,10 @@ const BarChartD3 = ({
       .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
       .call(d3.axisBottom(x))
       .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-20)")
+      .attr("transform", "translate(-10,0)rotate(-12.5)")
       .style("text-anchor", "end")
-      .style("font-size", d => d === activeSelection ? "20px" : "10px");
+      // .style("font-size", "10px")
+      .style("font-size", d => d === activeSelection ? "12px" : "10px");
       // .style("font-size", 10);
       // .style("fill", "#69a3b2");
 
@@ -103,6 +104,10 @@ const BarChartD3 = ({
         if (d.value < 0.8) return "orange";
         return "red";
       })
+      .attr("stroke", "black")
+      .attr("stroke-width", d => d.name === activeSelection ? "2" : "0")
+      // .style("border", d => d === activeSelection ? "2px solid black" : "0px")
+      // .attr("font-size", d => d === activeSelection ? "20px" : "10px")
       ;
 
     // Add invisible tracking zones over each bar
@@ -123,7 +128,7 @@ const BarChartD3 = ({
           .style("top", `${ 2.5}%`) // event.screenY +
           .style("opacity", 0.8)
           .style("width", `${95}%`)
-          .html(`<strong>${d.name}</strong><br/>Value: ${d.value}<br/>Description: ${d.description}`);
+          .html(`<strong>${d.name}</strong><br/>Value: ${d.value}`); // <br/>Description: ${d.description}
         d3.select(event.target).attr("fill", "rgba(200, 200, 200, 0.3)");
       })
       .on("mouseout", (event) => {
@@ -136,7 +141,6 @@ const BarChartD3 = ({
       })
       ;
   });
-  // }, [data]);
 
   return (
     <>

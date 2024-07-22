@@ -168,46 +168,48 @@ export default function Collusion(){
                 {/* <hr/>
                 <h4>Files details</h4><h3>{(selectedUser && codecheckerData_collusion.data) && codecheckerData_collusion.data.find(user => user.name === selectedUser)?.files[indexFile]}</h3>
                 <div><u>Files</u>{selectedUser && fileList.map((file, index) => (<button  key={index} className={`btn btn-link ${(indexFile === index) ? 'active' : ''}`} onClick={() => handleFileClick(index)}>{file}</button>))}</div> */}
-
-                <div className="card" >
-                  <div className="card-body">
-                  <p>Details about collusion scores for each files combination here.</p>
-                    {otherUser && 
-                      <>
-                      <TableComponent 
-                        inputString={
-                          JSON.stringify( codecheckerData_collusion.data
-                            .find(user => user.name === selectedUser)
-                            .scoreDetails
-                            .relations
-                            .filter(a => a.name === otherUser)[0]
-                            .collusionScores
-                        )}
-                        setFileCollusion1={setFileCollusion1} 
-                        setFileCollusion2={setFileCollusion2} 
-                      />
-                        {/* <div dangerouslySetInnerHTML={parseAndGenerateHTMLTable(JSON.stringify(codecheckerData_collusion.data.find(user => user.name === selectedUser).scoreDetails.relations.filter(a => a.name === otherUser)[0].collusionScores))} /> */}
-                        { (fileCollusion1 && fileCollusion2) &&
-                          <div className="d-flex justify-content-between mx-3">
-                            <div className="w-50">
-                              <b>{fileCollusion1}</b><hr/>
-                              {(contentCollusion1 !== null) && 
-                                contentCollusion1
-                              }
+                {otherUser &&
+                  <div className="card" >
+                    <div className="card-body">
+                      <p>Details about collusion scores for each files combination with {otherUser}.</p>
+                      {otherUser &&
+                        <>
+                          <TableComponent
+                            inputString={
+                              JSON.stringify(codecheckerData_collusion.data
+                                .find(user => user.name === selectedUser)
+                                .scoreDetails
+                                .relations
+                                .filter(a => a.name === otherUser)[0]
+                                .collusionScores
+                              )}
+                            setFileCollusion1={setFileCollusion1}
+                            setFileCollusion2={setFileCollusion2}
+                          />
+                          {/* <div dangerouslySetInnerHTML={parseAndGenerateHTMLTable(JSON.stringify(codecheckerData_collusion.data.find(user => user.name === selectedUser).scoreDetails.relations.filter(a => a.name === otherUser)[0].collusionScores))} /> */}
+                          {(fileCollusion1 && fileCollusion2) &&
+                            <div className="d-flex justify-content-between mx-3">
+                              <div className="w-50">
+                                <b>{fileCollusion1}</b><hr />
+                                {(contentCollusion1 !== null) &&
+                                  contentCollusion1
+                                }
+                              </div>
+                              <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
+                              <div className="w-50">
+                                <b>{fileCollusion2}</b><hr />
+                                {(contentCollusion2 !== null) &&
+                                  contentCollusion2
+                                }
+                              </div>
                             </div>
-                            <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
-                            <div className="w-50">
-                              <b>{fileCollusion2}</b><hr/>
-                              {(contentCollusion2 !== null) && 
-                                contentCollusion2
-                              }
-                            </div>
-                          </div>
-                        }
-                      </>
-                    }
+                          }
+                        </>
+                      }
+                    </div>
                   </div>
-                </div>
+
+                }
               </div>
 
               <div className="col-md-3 right_side">
