@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import HorizontalNav from '@/components/HorizontalNav';
 import { FormDataContext } from '@/components/context/FormDataContext';
 import UserList from '@/components/UserList';
+import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 
 export default function Audio_Analysis() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -81,7 +82,8 @@ export default function Audio_Analysis() {
         <div className="row">
           {/* <Sidebar /> */}
           <div className="col-md-9 text_selec">
-            <h1>{formData?.product && formData?.product} - Audio Analysis</h1>
+            {/* <h1>{formData?.product && formData?.product} - Audio Analysis</h1> */}
+            <ProductFeatureTitle feature="Audio Analysis" product={formData?.product}/>            
             <div className="audio-upload-section">
               <input type="file" accept="audio/*" onChange={handleAudioChange} style={{ marginBottom: "0.5rem" }} />
               {isUploading && (
@@ -99,6 +101,7 @@ export default function Audio_Analysis() {
                   <button className="btn btn-primary mb-3" onClick={() => setAudio(null)}>
                     Replace Audio
                   </button>
+                  <br/>
                   <audio controls className="w-100">
                     <source src={audio} type="audio/mp3" />
                     Your browser does not support the audio element.

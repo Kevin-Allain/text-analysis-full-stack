@@ -18,13 +18,14 @@ export default function Sidebar() {
 
   if (arrayFiles.length > 0) {
     return (
-      <div className="col-md-2" style={{ padding: 0 }}>
+      // <div className="col-md-2" style={{ padding: 0 }}>
+      <div style={{"padding":"0","width":"100%"}}>
         <ul
           className="list-group list-group-flush"
           style={{
             borderRight: "1px solid #eee",
-            minHeight: "95vh",
-            maxHeight: "95vh",
+            // minHeight: "90vh",
+            // maxHeight: "90vh",
           }}
         >
           <li
@@ -55,13 +56,14 @@ export default function Sidebar() {
   } 
   else if (module){
     return (
-      <div className="col-md-2" style={{ padding: 0 }}>
+      // <div className="col-md-2" style={{ padding: 0 }}>
+      <div style={{"padding":"0","width":"100%"}}>      
         <ul
           className="list-group list-group-flush"
           style={{
             borderRight: "1px solid #eee",
-            minHeight: "95vh",
-            maxHeight: "95vh",
+            // minHeight: "90vh",
+            // maxHeight: "90vh",
           }}
         >
           <li
@@ -92,14 +94,15 @@ export default function Sidebar() {
   }
   else {
     return (
-      <div className="col-md-2" style={{ padding: 0 }}>
+      // <div className="col-md-2" style={{ padding: 0 }}>
+      <div style={{"padding":"0","width":"100%"}}>
         <ul
           className="list-group
           list-group-flush"
           style={{
             borderRight: "1px solid #eee",
-            minHeight: "95vh",
-            maxHeight: "95vh",
+            // minHeight: "90vh",
+            // maxHeight: "90vh",
           }}
         >
           <li
@@ -114,7 +117,7 @@ export default function Sidebar() {
           <li
             className="list-group-item"
             style={{
-              height: "85vh",
+              // height: "85vh",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

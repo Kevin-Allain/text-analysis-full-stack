@@ -12,9 +12,9 @@ import '@/styles/Collusion.module.css'
 import { fetchFileContent, fetchFileContentToDivs } from '@/utils/FileLoader';
 import UserList from '@/components/UserList';
 import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
+import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 
-
-export default function Collusion(){
+export default function Collusion() {
   const { formData, setFormData } = useContext(FormDataContext);
 
   const [selectedUser, setSelectedUser] = useState(null);
@@ -25,7 +25,7 @@ export default function Collusion(){
   const [fileList, setFileList] = useState([]);
   const users = codecheckerData_collusion.data.sort((a, b) => b.globalScore - a.globalScore);
   console.log("globalScore of first: ", codecheckerData_collusion.data[0].globalScore)
-  console.log("typeof globalScore of first: ", typeof(codecheckerData_collusion.data[0].globalScore))
+  console.log("typeof globalScore of first: ", typeof (codecheckerData_collusion.data[0].globalScore))
 
   const [fileCollusion1, setFileCollusion1] = useState(null);
   const [fileCollusion2, setFileCollusion2] = useState(null);
@@ -33,8 +33,8 @@ export default function Collusion(){
   const [contentCollusion2, setContentCollusion2] = useState(null);
 
   // ----- functions
-  const handleUserClick = (user) => { 
-    setSelectedUser(user.name); 
+  const handleUserClick = (user) => {
+    setSelectedUser(user.name);
     setOtherUser(null);
     setIndexFile(0); // Reset to the first file
   };
@@ -51,14 +51,14 @@ export default function Collusion(){
           setFileCollusion2(file2);
         });
       });
-    }, [tableHTML]);  
-    return ( <div className="container"> 
-      <div dangerouslySetInnerHTML={tableHTML} /> 
-    </div> );
+    }, [tableHTML]);
+    return (<div className="container">
+      <div dangerouslySetInnerHTML={tableHTML} />
+    </div>);
   };
   const parseAndGenerateHTMLTable = (inputString) => {
     const data = JSON.parse(inputString);
-    const users = {};  
+    const users = {};
     // Parse the input data to collect user files
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
@@ -68,8 +68,8 @@ export default function Collusion(){
         users[name1.trim()].add(file1.slice(0, -1).trim());
         users[name2.trim()].add(file2.slice(0, -1).trim());
       }
-    }  
-    const rows = [];  
+    }
+    const rows = [];
     // Generate combinations and fetch scores
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
@@ -106,41 +106,40 @@ export default function Collusion(){
     if (selectedUser) {
       const userData = codecheckerData_collusion.data
         .find(user => user.name === selectedUser);
-      if (userData && userData.files.length > 0)
-        {setFileList(userData.files);} 
+      if (userData && userData.files.length > 0) { setFileList(userData.files); }
       setOtherUser(null);
     }
   }, [selectedUser, indexFile]);
 
-  useEffect(() => { 
-    if (otherUser) {console.log("useEffect Collusion | otherUser: ",otherUser);}
+  useEffect(() => {
+    if (otherUser) { console.log("useEffect Collusion | otherUser: ", otherUser); }
     setFileCollusion1(null);
     setFileCollusion2(null);
- }, [otherUser]);
+  }, [otherUser]);
 
   useEffect(() => {
-    if (fileCollusion1 && fileCollusion2 ){
+    if (fileCollusion1 && fileCollusion2) {
       let userData1 = codecheckerData_collusion.data.find(user => user.name === selectedUser);
       let userData2 = codecheckerData_collusion.data.find(user => user.name === otherUser);
-      console.log("useEffect [fileCollusion1,filecollusion2] | userData1: ",userData1," userData2: ",userData2);
+      console.log("useEffect [fileCollusion1,filecollusion2] | userData1: ", userData1, " userData2: ", userData2);
       let indexFile1 = 0; let indexFile2 = 0;
 
       // fetchFileContent(
       fetchFileContentToDivs(
-        fileCollusion1, 
-        userData1.scoreDetails[indexFile1], 
+        fileCollusion1,
+        userData1.scoreDetails[indexFile1],
         setContentCollusion1,
         // highlightText
       );
       // fetchFileContent(
       fetchFileContentToDivs(
-        fileCollusion2, 
-        userData2.scoreDetails[indexFile2], 
+        fileCollusion2,
+        userData2.scoreDetails[indexFile2],
         setContentCollusion2,
         // highlightText
       )
     }
-  },[fileCollusion1,fileCollusion2])
+  }, [fileCollusion1, fileCollusion2])
 
 
   return (
@@ -151,83 +150,65 @@ export default function Collusion(){
       <div className="container-fluid">
         <Navbar />
         <div className="row">
-          <Sidebar />
-          <div className="col-md-10">
-            {/* <Breadcrumb /> */} 
-            <h1> {formData?.product && formData?.product} Collusion - Details</h1>            
-            <div className="row">
-              <div className="col-md-9">
-                <h4>Summary of collusion between {selectedUser} and others.</h4>
-                  {(selectedUser!==null && codecheckerData_collusion.data) && 
-                    <CollusionSelectionGraph 
-                      user={codecheckerData_collusion.data.find(user => user.name === selectedUser)} 
-                      setOtherUser = {setOtherUser}
-                      otherUser = {otherUser}
-                    />
-                  }
-                {/* <hr/>
+          <div className="col-md-3 right_side">
+            <HorizontalNav features={["Collusion", "AI_Detection", "Plagiarism"]} />
+            <Sidebar />
+            <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
+          </div>
+          <div className="col-md-9">
+            <ProductFeatureTitle feature="Collusion" product={formData?.product} />
+            <h4>Summary of collusion between {selectedUser} and others.</h4>
+            {(selectedUser !== null && codecheckerData_collusion.data) &&
+              <CollusionSelectionGraph
+                user={codecheckerData_collusion.data.find(user => user.name === selectedUser)}
+                setOtherUser={setOtherUser}
+                otherUser={otherUser}
+              />
+            }
+            {/* <hr/>
                 <h4>Files details</h4><h3>{(selectedUser && codecheckerData_collusion.data) && codecheckerData_collusion.data.find(user => user.name === selectedUser)?.files[indexFile]}</h3>
                 <div><u>Files</u>{selectedUser && fileList.map((file, index) => (<button  key={index} className={`btn btn-link ${(indexFile === index) ? 'active' : ''}`} onClick={() => handleFileClick(index)}>{file}</button>))}</div> */}
-                {otherUser &&
-                  <div className="card" >
-                    <div className="card-body">
-                      <p>Details about collusion scores for each files combination with {otherUser}.</p>
-                      {otherUser &&
-                        <>
-                          <TableComponent
-                            inputString={
-                              JSON.stringify(codecheckerData_collusion.data
-                                .find(user => user.name === selectedUser)
-                                .scoreDetails
-                                .relations
-                                .filter(a => a.name === otherUser)[0]
-                                .collusionScores
-                              )}
-                            setFileCollusion1={setFileCollusion1}
-                            setFileCollusion2={setFileCollusion2}
-                          />
-                          {/* <div dangerouslySetInnerHTML={parseAndGenerateHTMLTable(JSON.stringify(codecheckerData_collusion.data.find(user => user.name === selectedUser).scoreDetails.relations.filter(a => a.name === otherUser)[0].collusionScores))} /> */}
-                          {(fileCollusion1 && fileCollusion2) &&
-                            <div className="d-flex justify-content-between mx-3">
-                              <div className="w-50">
-                                <b>{fileCollusion1}</b><hr />
-                                {(contentCollusion1 !== null) &&
-                                  contentCollusion1
-                                }
-                              </div>
-                              <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
-                              <div className="w-50">
-                                <b>{fileCollusion2}</b><hr />
-                                {(contentCollusion2 !== null) &&
-                                  contentCollusion2
-                                }
-                              </div>
-                            </div>
-                          }
-                        </>
+            {otherUser &&
+              <div className="card" >
+                <div className="card-body">
+                  <p>Details about collusion scores for each files combination with {otherUser}.</p>
+                  {otherUser &&
+                    <>
+                      <TableComponent
+                        inputString={
+                          JSON.stringify(codecheckerData_collusion.data
+                            .find(user => user.name === selectedUser)
+                            .scoreDetails
+                            .relations
+                            .filter(a => a.name === otherUser)[0]
+                            .collusionScores
+                          )}
+                        setFileCollusion1={setFileCollusion1}
+                        setFileCollusion2={setFileCollusion2}
+                      />
+                      {/* <div dangerouslySetInnerHTML={parseAndGenerateHTMLTable(JSON.stringify(codecheckerData_collusion.data.find(user => user.name === selectedUser).scoreDetails.relations.filter(a => a.name === otherUser)[0].collusionScores))} /> */}
+                      {(fileCollusion1 && fileCollusion2) &&
+                        <div className="d-flex justify-content-between mx-3">
+                          <div className="w-50">
+                            <b>Filename:{" "} {fileCollusion1}</b><hr />
+                            {(contentCollusion1 !== null) &&
+                              contentCollusion1
+                            }
+                          </div>
+                          <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
+                          <div className="w-50">
+                            <b>Filename:{" "} {fileCollusion2}</b><hr />
+                            {(contentCollusion2 !== null) &&
+                              contentCollusion2
+                            }
+                          </div>
+                        </div>
                       }
-                    </div>
-                  </div>
-
-                }
+                    </>
+                  }
+                </div>
               </div>
-
-              <div className="col-md-3 right_side">
-                <HorizontalNav features={["Collusion","AI_Detection","Plagiarism"]}/>
-                <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
-                {/* <div className="user_listing">
-                  <ul className="list-group">
-                    {users.filter(a => a!== selectedUser).map((user, index) => (
-                      <li key={index} className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`} onClick={() => handleUserClick(user)} >
-                        <span>{user.name}</span>
-                        {user.globalScore !== null &&  <span>{(user.globalScore * 100).toFixed(2)}%</span> }
-                      </li>
-                    ))}
-                  </ul>
-                </div> */}
-              </div>
-
-            </div>
+            }
           </div>
         </div>
       </div>

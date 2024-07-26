@@ -7,7 +7,7 @@ import Sidebar from '@/components/Sidebar'
 import Breadcrumb from '@/components/BreadCrumb'
 import CollusionSelectionGraph from '@/components/vis/CollusionSelectionGraph'
 import HorizontalNav from '@/components/HorizontalNav';
-
+import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 import { FormDataContext } from '@/components/context/FormDataContext';
 // TODO update this to use codecheckerData_ai_detection
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
@@ -252,17 +252,68 @@ export default function AI_Detection(){
       <div className="container-fluid">
         <Navbar />
         <div className="row">
-          <Sidebar/>
-          <div className="col-md-10">     
-            <h1> {formData?.product && formData?.product} AI_Detection - Details</h1>
-            <div className="row">
-              {/* <div className="col-md-7"> */}
-              <div className="col-md-9">
+          <div className="col-md-3 right_side">
+            <HorizontalNav features={["Collusion", "AI_Detection", "Plagiarism"]} />
+            <Sidebar/>
+            <UserList
+              users={users}
+              selectedUser={selectedUser}
+              handleUserClick={handleUserClick}
+            />
+            <div className='legend'>
+              {(minScoreAI && maxScoreAI) &&
+                <LegendBinned
+                  minScore={minScoreAI}
+                  maxScore={maxScoreAI}
+                  numBins={maxBin}
+                  onSelectBin={handleSelectBin}
+                  selectedBin={selectedBinIndex} />
+              }
+              {selectedBinIndex !== null && (
+                <div className="mt-3">
+                  <h5>Selected Bin</h5>
+                  <p>
+                    Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
+                    {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
+                  </p>
+                </div>
+              )}
+            </div>
+            <>
+              <div>
+                Submission from {selectedUser}.{" "}<br />
+                {/* TODO update this... codecheckerData_ai_detection has null on globalScore for now... */}
+                {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
+                Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
+              </div>
+              <div style={{ "vertical-align": "middle" }}>
+                <u>Files</u>
+                {selectedUser &&
+                  fileList.map((file, index) => (
+                    <button
+                      key={index}
+                      className={`btn btn-link ${(indexFile === index) ? 'active' : ''} ${(indexFile === index) ? 'text-secondary' : ''}`}
+                      onClick={() => handleFileClick(index)}
+                      disabled={isLoadingAI}
+                    >
+                      {file}
+                    </button>
+                  ))
+                }
+              </div>
+            </>
+
+          </div>
+          <div className="col-md-9">     
+            {/* <h1> {formData?.product && formData?.product} AI_Detection - Details</h1> */}
+            {/* <ProductFeatureTitle feature="AI Detection" product={formData?.product}/> */}
+
+                <ProductFeatureTitle feature="AI Detection" product={formData?.product}/>
                {/* <Breadcrumb /> */}
                {isLoadingAI ? (
                 <>
                   <h3 className="heading-section text-center">
-                    Generated Text Probability{" "}
+                    Calculating AI Detection Score{" "}
                   </h3>
                   <div className="text-center">
                     {" "}
@@ -276,19 +327,19 @@ export default function AI_Detection(){
                     Generated Text Probability
                   </h3> */}
                   <h4>
+                    Filename:{" "}
                     {(selectedUser && codecheckerData_ai_detection.data) &&
                       codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]
                     }
-                    {" | "}
-                    Generated Text Probability:
-                    <div className='score_big' style={{"width":"fit-content", "color":"white", "background-color":"red", "padding":"0.5rem", "font-size":"larger", "border-radius":"0.5rem"}}>{outputAI.average.toFixed(2)}</div>
+                    <br/>
+                    <div className='score_big' style={{"width":"fit-content", "color":"white", "background-color":"red", "padding":"0.5rem", "font-size":"larger", "border-radius":"0.5rem"}}>AI Detection Score:{" "}{outputAI.average.toFixed(2)}</div>
                   </h4>
                   {/* <h2>Average score: {outputAI.average.toFixed(2)} </h2> */}
                   {/* {(minScoreAI && maxScoreAI) && <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} /> } */}
                   {/* {outputAI.details && outputAI.details.map((oAI, index) => ( <span key={index} style={{ backgroundColor: getBackgroundColorAI( outputAI, index ), color: "#fff", padding: "2px 4px", margin: "2px", display: "inline-block", }} > {oAI.text}{" "} </span> ))} */}
                   {/* <span>The score produced by our AI is indicative of the probability of the content being generated by a generative AI. Do note that high scores are no guarantee of content generated by AI, nor low ones guarantee content was made by a human. You should judge the content based on the context.</span> */}
                   {/* h-25 */}
-                  <div className="card overflow-y-scroll" style={{"height":"80vh"}}>
+                  <div className="card overflow-y-scroll" style={{"height":"70vh"}}>
                     <div className="card-body">
                       {/* <p>Score distribution here</p> */}
                       <div ref={textRef} className="text-content">
@@ -298,59 +349,7 @@ export default function AI_Detection(){
                   </div>
                 </>
                 ))}
-              </div>
-              <div className="col-md-3 right_side">
-                <HorizontalNav features={["Collusion","AI_Detection","Plagiarism"]}/>
-                <UserList
-                  users={users}
-                  selectedUser={selectedUser}
-                  handleUserClick={handleUserClick}
-                />
-                <div className='legend'>
-                  {(minScoreAI && maxScoreAI) &&
-                    <LegendBinned
-                      minScore={minScoreAI}
-                      maxScore={maxScoreAI}
-                      numBins={maxBin}
-                      onSelectBin={handleSelectBin}
-                      selectedBin={selectedBinIndex} />
-                  }
-                  {selectedBinIndex !== null && (
-                    <div className="mt-3">
-                      <h5>Selected Bin</h5>
-                      <p>
-                        Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
-                        {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
-                      </p>
-                    </div>
-                  )}
-                </div>
-                <>
-                <div>
-                  Submission from {selectedUser}.{" "}<br/>
-                  {/* TODO update this... codecheckerData_ai_detection has null on globalScore for now... */}
-                  {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
-                  Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}. 
-                </div>
-                <div style={{"vertical-align": "middle"}}>
-                  <u>Files</u>
-                  {selectedUser && 
-                    fileList.map((file, index) => (
-                      <button 
-                        key={index} 
-                        className={`btn btn-link ${(indexFile === index) ? 'active' : ''} ${(indexFile === index)? 'text-secondary': ''}`} 
-                        onClick={() => handleFileClick(index)}
-                        disabled={isLoadingAI}
-                      >
-                        {file}
-                      </button>
-                    ))
-                  }
-                </div>
-                </>
 
-              </div>
-            </div>
           </div>
         </div>
       </div>

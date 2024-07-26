@@ -31,6 +31,7 @@ const IndexPage = () => {
         users:[],
         product: `${targetPage}`
       });
+      
       setFormData({
         institution: '',
         module: '',
@@ -39,6 +40,9 @@ const IndexPage = () => {
         users:[],
         product: `${targetPage}`
       });
+
+      localStorage.setItem('product',targetPage);
+
       router.push(`/${targetPage}`);
     } else {
       alert('Invalid login credentials');

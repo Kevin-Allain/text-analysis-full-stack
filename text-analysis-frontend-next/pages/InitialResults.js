@@ -7,6 +7,7 @@ import Sidebar from "@/components/Sidebar";
 import InitialResultsWindow from "@/components/InitialResultsWindow";
 import { FormDataContext } from "@/components/context/FormDataContext";
 import InitialResultsWindow_UserFocus from "@/components/InitialResultsWindow_UserFocus";
+import ProductFeatureTitle from "@/components/ProductFeatureTitle";
 
 // TODO get the values from inputs of form in NewCheckWindow!
 export default function InitialResults(props) {
@@ -29,7 +30,8 @@ export default function InitialResults(props) {
         <div className="row">
           <Sidebar />
           <div className="col-md-10">
-            <h3>{formData?.product && formData?.product} - Initial Results</h3>
+            {/* <h3>{formData?.product && formData?.product} - Initial Results</h3> */}
+            <ProductFeatureTitle feature="Initial Results" product={formData?.product}/>
             {/* <InitialResultsWindow /> */}
             <InitialResultsWindow_UserFocus />
           </div>

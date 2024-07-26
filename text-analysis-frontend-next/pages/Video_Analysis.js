@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import HorizontalNav from '@/components/HorizontalNav';
 import { FormDataContext } from '@/components/context/FormDataContext';
 import UserList from '@/components/UserList';
+import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 
 export default function Video_Analysis() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -81,7 +82,8 @@ export default function Video_Analysis() {
         <div className="row">
           {/* <Sidebar /> */}
           <div className="col-md-9 text_selec">
-            <h1>{formData?.product && formData?.product} - Video Analysis</h1>
+            {/* <h1>{formData?.product && formData?.product} - Video Analysis</h1> */}
+            <ProductFeatureTitle feature="Video Analysis" product={formData?.product}/>
             <div className="video-upload-section">
               <input type="file" accept="video/*" onChange={handleVideoChange} style={{ marginBottom: "0.5rem" }} />
               {isUploading && (
@@ -99,6 +101,7 @@ export default function Video_Analysis() {
                   <button className="btn btn-primary mb-3" onClick={() => setVideo(null)}>
                     Replace Video
                   </button>
+                  <br/>
                   <video controls className="img-fluid">
                     <source src={video} type="video/mp4" />
                     Your browser does not support the video tag.

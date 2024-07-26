@@ -106,19 +106,13 @@ export default function InitialResultsWindow_UserFocus(props) {
   return (
     <>
       <Head>
-        <title>Code Checker - Check Results</title>
+        <title>{formData?.product && formData?.product} - Check Results</title>
       </Head>
-      {name && name !== null && (
-        <Breadcrumb breadcrumbLinks={breadcrumbLinks} />
-      )}
+      {/* {name && name !== null && (<Breadcrumb breadcrumbLinks={breadcrumbLinks} />)} */}
       <div className="row">
         <ol
           className="list-group list-group-flush"
-          style={{
-            height: "calc(100% - 60px)",
-            width: "100%",
-            overflowY: "auto",
-          }}
+          style={{ height: "calc(100% - 60px)", width: "100%", overflowY: "auto", }}
         >
           {userScores.map((item, index) => (
             <li key={index} className="list-group-item">

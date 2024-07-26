@@ -8,7 +8,7 @@ import Sidebar from "@/components/Sidebar";
 import withAuth from "@/components/WithAuth";
 import NewCheckWindow from "@/components/NewCheckWindow";
 import { FormDataContext } from "@/components/context/FormDataContext";
-
+import ProductFeatureTitle from "@/components/ProductFeatureTitle";
 
 const CodeChecker = () => {
   const [code, setCode] = useState("");
@@ -62,12 +62,13 @@ const CodeChecker = () => {
           <div className="row">
             <Sidebar/>
             <div className="col-md-10">
-              <h1 className="heading-section text-center">Code Checker</h1>
+              {/* <h1 className="heading-section text-center">Code Checker</h1> */}
+              <ProductFeatureTitle feature="Code Checker"/>
               <NewCheckWindow product={"CodeChecker"} />
             </div>
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
     </>
   );
 };

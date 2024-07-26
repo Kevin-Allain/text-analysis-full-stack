@@ -1,0 +1,1014 @@
+[
+  {
+    "name": "Alice Black",
+    "university": "Cambridge",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 11,
+          "Collusion": 47,
+          "Plagiarism": 39
+        },
+        "Coursework 2": {
+          "AI_Detection": 70,
+          "Collusion": 86,
+          "Plagiarism": 10
+        },
+        "Coursework 3": {
+          "AI_Detection": 97,
+          "Collusion": 25,
+          "Plagiarism": 54
+        },
+        "Coursework 4": {
+          "AI_Detection": 33,
+          "Collusion": 88,
+          "Plagiarism": 20
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 37,
+          "Collusion": 100,
+          "Plagiarism": 56
+        },
+        "Coursework 2": {
+          "AI_Detection": 24,
+          "Collusion": 57,
+          "Plagiarism": 77
+        },
+        "Coursework 3": {
+          "AI_Detection": 66,
+          "Collusion": 14,
+          "Plagiarism": 33
+        },
+        "Coursework 4": {
+          "AI_Detection": 92,
+          "Collusion": 24,
+          "Plagiarism": 31
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 15,
+          "Collusion": 14,
+          "Plagiarism": 61
+        },
+        "Coursework 2": {
+          "AI_Detection": 69,
+          "Collusion": 84,
+          "Plagiarism": 12
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 51,
+          "Collusion": 13,
+          "Plagiarism": 19
+        },
+        "Coursework 2": {
+          "AI_Detection": 22,
+          "Collusion": 37,
+          "Plagiarism": 99
+        },
+        "Coursework 3": {
+          "AI_Detection": 62,
+          "Collusion": 92,
+          "Plagiarism": 83
+        }
+      }
+    }
+  },
+  {
+    "name": "Bob Vance",
+    "university": "Cambridge",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 60,
+          "Collusion": 26,
+          "Plagiarism": 12
+        },
+        "Coursework 2": {
+          "AI_Detection": 38,
+          "Collusion": 65,
+          "Plagiarism": 1
+        },
+        "Coursework 3": {
+          "AI_Detection": 48,
+          "Collusion": 38,
+          "Plagiarism": 66
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 16,
+          "Collusion": 50,
+          "Plagiarism": 6
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 38,
+          "Collusion": 12,
+          "Plagiarism": 68
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 58,
+          "Collusion": 85,
+          "Plagiarism": 44
+        },
+        "Coursework 2": {
+          "AI_Detection": 94,
+          "Collusion": 33,
+          "Plagiarism": 22
+        }
+      }
+    }
+  },
+  {
+    "name": "Charlie Meyers",
+    "university": "Warwick",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 69,
+          "Collusion": 86,
+          "Plagiarism": 69
+        },
+        "Coursework 2": {
+          "AI_Detection": 55,
+          "Collusion": 55,
+          "Plagiarism": 51
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 97,
+          "Collusion": 13,
+          "Plagiarism": 30
+        },
+        "Coursework 2": {
+          "AI_Detection": 38,
+          "Collusion": 82,
+          "Plagiarism": 32
+        },
+        "Coursework 3": {
+          "AI_Detection": 82,
+          "Collusion": 63,
+          "Plagiarism": 80
+        },
+        "Coursework 4": {
+          "AI_Detection": 13,
+          "Collusion": 55,
+          "Plagiarism": 73
+        },
+        "Coursework 5": {
+          "AI_Detection": 75,
+          "Collusion": 59,
+          "Plagiarism": 49
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 84,
+          "Collusion": 62,
+          "Plagiarism": 62
+        },
+        "Coursework 2": {
+          "AI_Detection": 13,
+          "Collusion": 56,
+          "Plagiarism": 48
+        },
+        "Coursework 3": {
+          "AI_Detection": 0,
+          "Collusion": 44,
+          "Plagiarism": 27
+        },
+        "Coursework 4": {
+          "AI_Detection": 84,
+          "Collusion": 33,
+          "Plagiarism": 21
+        },
+        "Coursework 5": {
+          "AI_Detection": 12,
+          "Collusion": 10,
+          "Plagiarism": 97
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 87,
+          "Collusion": 71,
+          "Plagiarism": 26
+        }
+      }
+    }
+  },
+  {
+    "name": "David Wallace",
+    "university": "City, University of London",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 84,
+          "Collusion": 55,
+          "Plagiarism": 97
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 8,
+          "Collusion": 48,
+          "Plagiarism": 91
+        },
+        "Coursework 2": {
+          "AI_Detection": 97,
+          "Collusion": 63,
+          "Plagiarism": 71
+        },
+        "Coursework 3": {
+          "AI_Detection": 71,
+          "Collusion": 47,
+          "Plagiarism": 33
+        },
+        "Coursework 4": {
+          "AI_Detection": 10,
+          "Collusion": 64,
+          "Plagiarism": 46
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 57,
+          "Collusion": 81,
+          "Plagiarism": 63
+        },
+        "Coursework 2": {
+          "AI_Detection": 55,
+          "Collusion": 77,
+          "Plagiarism": 63
+        },
+        "Coursework 3": {
+          "AI_Detection": 1,
+          "Collusion": 1,
+          "Plagiarism": 88
+        },
+        "Coursework 4": {
+          "AI_Detection": 57,
+          "Collusion": 37,
+          "Plagiarism": 81
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 36,
+          "Collusion": 6,
+          "Plagiarism": 100
+        },
+        "Coursework 2": {
+          "AI_Detection": 77,
+          "Collusion": 24,
+          "Plagiarism": 2
+        },
+        "Coursework 3": {
+          "AI_Detection": 8,
+          "Collusion": 88,
+          "Plagiarism": 78
+        },
+        "Coursework 4": {
+          "AI_Detection": 89,
+          "Collusion": 0,
+          "Plagiarism": 17
+        },
+        "Coursework 5": {
+          "AI_Detection": 68,
+          "Collusion": 50,
+          "Plagiarism": 6
+        }
+      }
+    }
+  },
+  {
+    "name": "Ethan Drake",
+    "university": "Imperial",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 67,
+          "Collusion": 56,
+          "Plagiarism": 54
+        },
+        "Coursework 2": {
+          "AI_Detection": 47,
+          "Collusion": 14,
+          "Plagiarism": 70
+        },
+        "Coursework 3": {
+          "AI_Detection": 46,
+          "Collusion": 51,
+          "Plagiarism": 94
+        },
+        "Coursework 4": {
+          "AI_Detection": 66,
+          "Collusion": 43,
+          "Plagiarism": 8
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 84,
+          "Collusion": 85,
+          "Plagiarism": 19
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 49,
+          "Collusion": 57,
+          "Plagiarism": 11
+        },
+        "Coursework 2": {
+          "AI_Detection": 24,
+          "Collusion": 22,
+          "Plagiarism": 76
+        },
+        "Coursework 3": {
+          "AI_Detection": 56,
+          "Collusion": 25,
+          "Plagiarism": 93
+        },
+        "Coursework 4": {
+          "AI_Detection": 52,
+          "Collusion": 5,
+          "Plagiarism": 33
+        },
+        "Coursework 5": {
+          "AI_Detection": 63,
+          "Collusion": 48,
+          "Plagiarism": 43
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 7,
+          "Collusion": 88,
+          "Plagiarism": 42
+        },
+        "Coursework 2": {
+          "AI_Detection": 45,
+          "Collusion": 48,
+          "Plagiarism": 11
+        },
+        "Coursework 3": {
+          "AI_Detection": 84,
+          "Collusion": 36,
+          "Plagiarism": 67
+        },
+        "Coursework 4": {
+          "AI_Detection": 51,
+          "Collusion": 2,
+          "Plagiarism": 68
+        },
+        "Coursework 5": {
+          "AI_Detection": 63,
+          "Collusion": 51,
+          "Plagiarism": 100
+        }
+      }
+    }
+  },
+  {
+    "name": "Francis Croshaw",
+    "university": "Oxford",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 75,
+          "Collusion": 69,
+          "Plagiarism": 57
+        },
+        "Coursework 2": {
+          "AI_Detection": 3,
+          "Collusion": 12,
+          "Plagiarism": 99
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 100,
+          "Collusion": 40,
+          "Plagiarism": 42
+        },
+        "Coursework 2": {
+          "AI_Detection": 46,
+          "Collusion": 77,
+          "Plagiarism": 35
+        },
+        "Coursework 3": {
+          "AI_Detection": 18,
+          "Collusion": 36,
+          "Plagiarism": 32
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 78,
+          "Collusion": 1,
+          "Plagiarism": 11
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 21,
+          "Collusion": 76,
+          "Plagiarism": 2
+        },
+        "Coursework 2": {
+          "AI_Detection": 76,
+          "Collusion": 0,
+          "Plagiarism": 30
+        }
+      }
+    }
+  },
+  {
+    "name": "Gale Grimm",
+    "university": "Oxford",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 25,
+          "Collusion": 10,
+          "Plagiarism": 79
+        },
+        "Coursework 2": {
+          "AI_Detection": 70,
+          "Collusion": 60,
+          "Plagiarism": 68
+        },
+        "Coursework 3": {
+          "AI_Detection": 46,
+          "Collusion": 1,
+          "Plagiarism": 5
+        },
+        "Coursework 4": {
+          "AI_Detection": 31,
+          "Collusion": 76,
+          "Plagiarism": 79
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 65,
+          "Collusion": 90,
+          "Plagiarism": 28
+        },
+        "Coursework 2": {
+          "AI_Detection": 26,
+          "Collusion": 26,
+          "Plagiarism": 46
+        },
+        "Coursework 3": {
+          "AI_Detection": 67,
+          "Collusion": 3,
+          "Plagiarism": 100
+        },
+        "Coursework 4": {
+          "AI_Detection": 98,
+          "Collusion": 0,
+          "Plagiarism": 48
+        },
+        "Coursework 5": {
+          "AI_Detection": 73,
+          "Collusion": 71,
+          "Plagiarism": 40
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 94,
+          "Collusion": 6,
+          "Plagiarism": 79
+        },
+        "Coursework 2": {
+          "AI_Detection": 29,
+          "Collusion": 34,
+          "Plagiarism": 95
+        },
+        "Coursework 3": {
+          "AI_Detection": 42,
+          "Collusion": 4,
+          "Plagiarism": 13
+        },
+        "Coursework 4": {
+          "AI_Detection": 77,
+          "Collusion": 100,
+          "Plagiarism": 97
+        },
+        "Coursework 5": {
+          "AI_Detection": 8,
+          "Collusion": 29,
+          "Plagiarism": 51
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 59,
+          "Collusion": 98,
+          "Plagiarism": 50
+        },
+        "Coursework 2": {
+          "AI_Detection": 37,
+          "Collusion": 88,
+          "Plagiarism": 73
+        },
+        "Coursework 3": {
+          "AI_Detection": 69,
+          "Collusion": 67,
+          "Plagiarism": 62
+        },
+        "Coursework 4": {
+          "AI_Detection": 38,
+          "Collusion": 71,
+          "Plagiarism": 85
+        },
+        "Coursework 5": {
+          "AI_Detection": 80,
+          "Collusion": 10,
+          "Plagiarism": 65
+        }
+      }
+    }
+  },
+  {
+    "name": "Hugo Martin",
+    "university": "Warwick",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 5,
+          "Collusion": 13,
+          "Plagiarism": 5
+        },
+        "Coursework 2": {
+          "AI_Detection": 24,
+          "Collusion": 46,
+          "Plagiarism": 30
+        },
+        "Coursework 3": {
+          "AI_Detection": 84,
+          "Collusion": 42,
+          "Plagiarism": 11
+        },
+        "Coursework 4": {
+          "AI_Detection": 9,
+          "Collusion": 34,
+          "Plagiarism": 18
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 71,
+          "Collusion": 45,
+          "Plagiarism": 64
+        },
+        "Coursework 2": {
+          "AI_Detection": 90,
+          "Collusion": 99,
+          "Plagiarism": 52
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 52,
+          "Collusion": 20,
+          "Plagiarism": 89
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 34,
+          "Collusion": 65,
+          "Plagiarism": 30
+        },
+        "Coursework 2": {
+          "AI_Detection": 34,
+          "Collusion": 91,
+          "Plagiarism": 21
+        }
+      }
+    }
+  },
+  {
+    "name": "Ines Arabelle",
+    "university": "City, University of London",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 26,
+          "Collusion": 53,
+          "Plagiarism": 32
+        },
+        "Coursework 2": {
+          "AI_Detection": 1,
+          "Collusion": 8,
+          "Plagiarism": 34
+        },
+        "Coursework 3": {
+          "AI_Detection": 22,
+          "Collusion": 80,
+          "Plagiarism": 15
+        },
+        "Coursework 4": {
+          "AI_Detection": 69,
+          "Collusion": 29,
+          "Plagiarism": 22
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 87,
+          "Collusion": 9,
+          "Plagiarism": 81
+        },
+        "Coursework 2": {
+          "AI_Detection": 85,
+          "Collusion": 9,
+          "Plagiarism": 87
+        },
+        "Coursework 3": {
+          "AI_Detection": 61,
+          "Collusion": 50,
+          "Plagiarism": 53
+        },
+        "Coursework 4": {
+          "AI_Detection": 53,
+          "Collusion": 55,
+          "Plagiarism": 40
+        },
+        "Coursework 5": {
+          "AI_Detection": 48,
+          "Collusion": 28,
+          "Plagiarism": 17
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 54,
+          "Collusion": 7,
+          "Plagiarism": 11
+        },
+        "Coursework 2": {
+          "AI_Detection": 42,
+          "Collusion": 58,
+          "Plagiarism": 60
+        },
+        "Coursework 3": {
+          "AI_Detection": 53,
+          "Collusion": 9,
+          "Plagiarism": 6
+        },
+        "Coursework 4": {
+          "AI_Detection": 46,
+          "Collusion": 89,
+          "Plagiarism": 2
+        },
+        "Coursework 5": {
+          "AI_Detection": 26,
+          "Collusion": 14,
+          "Plagiarism": 23
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 0,
+          "Collusion": 67,
+          "Plagiarism": 33
+        }
+      }
+    }
+  },
+  {
+    "name": "Julian Johnson",
+    "university": "Cambridge",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 53,
+          "Collusion": 7,
+          "Plagiarism": 55
+        },
+        "Coursework 2": {
+          "AI_Detection": 82,
+          "Collusion": 38,
+          "Plagiarism": 33
+        },
+        "Coursework 3": {
+          "AI_Detection": 68,
+          "Collusion": 76,
+          "Plagiarism": 0
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 55,
+          "Collusion": 67,
+          "Plagiarism": 47
+        },
+        "Coursework 2": {
+          "AI_Detection": 74,
+          "Collusion": 89,
+          "Plagiarism": 1
+        },
+        "Coursework 3": {
+          "AI_Detection": 60,
+          "Collusion": 48,
+          "Plagiarism": 77
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 93,
+          "Collusion": 68,
+          "Plagiarism": 60
+        },
+        "Coursework 2": {
+          "AI_Detection": 29,
+          "Collusion": 91,
+          "Plagiarism": 47
+        },
+        "Coursework 3": {
+          "AI_Detection": 21,
+          "Collusion": 48,
+          "Plagiarism": 25
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 39,
+          "Collusion": 35,
+          "Plagiarism": 94
+        },
+        "Coursework 2": {
+          "AI_Detection": 43,
+          "Collusion": 40,
+          "Plagiarism": 64
+        },
+        "Coursework 3": {
+          "AI_Detection": 26,
+          "Collusion": 24,
+          "Plagiarism": 86
+        },
+        "Coursework 4": {
+          "AI_Detection": 55,
+          "Collusion": 52,
+          "Plagiarism": 9
+        }
+      }
+    }
+  },
+  {
+    "name": "Karim Smith",
+    "university": "Cambridge",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 65,
+          "Collusion": 67,
+          "Plagiarism": 30
+        },
+        "Coursework 2": {
+          "AI_Detection": 67,
+          "Collusion": 27,
+          "Plagiarism": 97
+        },
+        "Coursework 3": {
+          "AI_Detection": 95,
+          "Collusion": 3,
+          "Plagiarism": 19
+        },
+        "Coursework 4": {
+          "AI_Detection": 84,
+          "Collusion": 98,
+          "Plagiarism": 75
+        },
+        "Coursework 5": {
+          "AI_Detection": 100,
+          "Collusion": 5,
+          "Plagiarism": 6
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 40,
+          "Collusion": 48,
+          "Plagiarism": 11
+        },
+        "Coursework 2": {
+          "AI_Detection": 32,
+          "Collusion": 56,
+          "Plagiarism": 74
+        },
+        "Coursework 3": {
+          "AI_Detection": 54,
+          "Collusion": 43,
+          "Plagiarism": 17
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 39,
+          "Collusion": 66,
+          "Plagiarism": 87
+        },
+        "Coursework 2": {
+          "AI_Detection": 11,
+          "Collusion": 42,
+          "Plagiarism": 28
+        },
+        "Coursework 3": {
+          "AI_Detection": 6,
+          "Collusion": 56,
+          "Plagiarism": 26
+        },
+        "Coursework 4": {
+          "AI_Detection": 82,
+          "Collusion": 73,
+          "Plagiarism": 75
+        },
+        "Coursework 5": {
+          "AI_Detection": 44,
+          "Collusion": 30,
+          "Plagiarism": 42
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 74,
+          "Collusion": 72,
+          "Plagiarism": 45
+        },
+        "Coursework 2": {
+          "AI_Detection": 20,
+          "Collusion": 22,
+          "Plagiarism": 62
+        },
+        "Coursework 3": {
+          "AI_Detection": 28,
+          "Collusion": 28,
+          "Plagiarism": 40
+        },
+        "Coursework 4": {
+          "AI_Detection": 44,
+          "Collusion": 23,
+          "Plagiarism": 66
+        },
+        "Coursework 5": {
+          "AI_Detection": 21,
+          "Collusion": 100,
+          "Plagiarism": 59
+        }
+      }
+    }
+  },
+  {
+    "name": "Leo Lionel",
+    "university": "Cambridge",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 7,
+          "Collusion": 58,
+          "Plagiarism": 24
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 68,
+          "Collusion": 59,
+          "Plagiarism": 38
+        },
+        "Coursework 2": {
+          "AI_Detection": 69,
+          "Collusion": 58,
+          "Plagiarism": 24
+        },
+        "Coursework 3": {
+          "AI_Detection": 55,
+          "Collusion": 94,
+          "Plagiarism": 75
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 15,
+          "Collusion": 27,
+          "Plagiarism": 41
+        },
+        "Coursework 2": {
+          "AI_Detection": 46,
+          "Collusion": 56,
+          "Plagiarism": 55
+        },
+        "Coursework 3": {
+          "AI_Detection": 4,
+          "Collusion": 36,
+          "Plagiarism": 75
+        },
+        "Coursework 4": {
+          "AI_Detection": 31,
+          "Collusion": 46,
+          "Plagiarism": 71
+        },
+        "Coursework 5": {
+          "AI_Detection": 52,
+          "Collusion": 74,
+          "Plagiarism": 49
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 76,
+          "Collusion": 89,
+          "Plagiarism": 3
+        },
+        "Coursework 2": {
+          "AI_Detection": 84,
+          "Collusion": 71,
+          "Plagiarism": 90
+        },
+        "Coursework 3": {
+          "AI_Detection": 36,
+          "Collusion": 14,
+          "Plagiarism": 47
+        }
+      }
+    }
+  },
+  {
+    "name": "Maxim Romero",
+    "university": "City, University of London",
+    "modules": {
+      "TypeScript 2024": {
+        "Coursework 1": {
+          "AI_Detection": 85,
+          "Collusion": 14,
+          "Plagiarism": 35
+        }
+      },
+      "Java Intro 2021": {
+        "Coursework 1": {
+          "AI_Detection": 50,
+          "Collusion": 99,
+          "Plagiarism": 31
+        },
+        "Coursework 2": {
+          "AI_Detection": 68,
+          "Collusion": 47,
+          "Plagiarism": 80
+        },
+        "Coursework 3": {
+          "AI_Detection": 41,
+          "Collusion": 16,
+          "Plagiarism": 99
+        },
+        "Coursework 4": {
+          "AI_Detection": 18,
+          "Collusion": 30,
+          "Plagiarism": 93
+        },
+        "Coursework 5": {
+          "AI_Detection": 48,
+          "Collusion": 34,
+          "Plagiarism": 33
+        }
+      },
+      "Unity Engine 2022": {
+        "Coursework 1": {
+          "AI_Detection": 85,
+          "Collusion": 98,
+          "Plagiarism": 91
+        },
+        "Coursework 2": {
+          "AI_Detection": 22,
+          "Collusion": 48,
+          "Plagiarism": 79
+        },
+        "Coursework 3": {
+          "AI_Detection": 7,
+          "Collusion": 93,
+          "Plagiarism": 93
+        }
+      },
+      "Stock Prediction 2023": {
+        "Coursework 1": {
+          "AI_Detection": 6,
+          "Collusion": 63,
+          "Plagiarism": 25
+        }
+      }
+    }
+  }
+]

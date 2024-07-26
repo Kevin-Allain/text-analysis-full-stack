@@ -11,6 +11,7 @@ import '@/styles/PlagiarismFeature.css';
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import { fetchFileContent } from '@/utils/FileLoader';
 import UserList from '@/components/UserList';
+import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 
 export default function Plagiarism() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -65,7 +66,7 @@ export default function Plagiarism() {
   const highlightText = (text, scoreDetails) => {
     let highlightedText = text;
     let sizeOffset = 0;
-    console.log("Plagiarism / highlightText | text: ",text,", scoreDetails: ",scoreDetails);    
+    // console.log("Plagiarism / highlightText | text: ",text,", scoreDetails: ",scoreDetails);
     scoreDetails.forEach(detail => {
       const { type, range } = detail;
       const detailInfo = detailsPlagiarism.find(d => d.className === type);
@@ -112,26 +113,30 @@ export default function Plagiarism() {
       <div className="container-fluid">
         <Navbar />
         <div className="row">
-          <Sidebar />
-          <div className="col-md-7 text_selec">
-            <h1> {formData?.product && formData?.product} Plagiarism - Details</h1>
-            {/* <Breadcrumb /> */}
-            <h4>
-              {(selectedUser && codecheckerData_plagiarism.data) &&
-                codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
-              }
-            </h4>
-            <div ref={textRef} className="text-content">
-              <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
-            </div>
-          </div>
           <div className="col-md-3">
             <HorizontalNav features={["Collusion","AI_Detection","Plagiarism"]}/>            
+            <Sidebar />
             <UserList
               users={users}
               selectedUser={selectedUser}
               handleUserClick={handleUserClick}
             />
+
+            <div>
+              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}.
+              <br/>
+              Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
+            </div>
+            <div>
+              <u>Files</u>
+              {selectedUser && 
+                fileList.map((file, index) => (
+                  <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
+                    {file}
+                  </button>
+                ))
+              }
+            </div>
 
             {/* <div className="user_listing">
               <ul className="list-group"> {users.map((user, index) => ( <li key={index} className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`} onClick={() => handleUserClick(user)} > <span>{user.name}</span> <span>{(user.globalScore * 100).toFixed(2)}%</span> </li> ))} </ul>
@@ -166,20 +171,22 @@ export default function Plagiarism() {
                 </div>
               ))}
             </div>
-            <div>
-              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}.
-              <br/>
-              Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
-            </div>
-            <div>
-              <u>Files</u>
-              {selectedUser && 
-                fileList.map((file, index) => (
-                  <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
-                    {file}
-                  </button>
-                ))
+          </div>
+          <div className="col-md-9 text_selec">
+            {/* <h1> {formData?.product && formData?.product} Plagiarism - Details</h1> */}
+            <ProductFeatureTitle feature="Plagiarism" product={formData?.product}/>
+            {/* <Breadcrumb /> */}
+            <h4>Filename:{" "} 
+              {(selectedUser && codecheckerData_plagiarism.data) &&
+                codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
               }
+            </h4>
+            <div className="card overflow-y-scroll" style={{"height":"75vh"}}>
+              <div className="card-body">
+                <div ref={textRef} className="text-content">
+                  <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

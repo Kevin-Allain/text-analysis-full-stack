@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import HorizontalNav from '@/components/HorizontalNav';
 import { FormDataContext } from '@/components/context/FormDataContext';
 import UserList from '@/components/UserList';
+import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 
 export default function Image_Analysis() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -81,7 +82,9 @@ export default function Image_Analysis() {
         <div className="row">
           {/* <Sidebar /> */}
           <div className="col-md-9 text_selec">
-            <h1>{formData?.product && formData?.product} - Image Analysis</h1>
+            {/* <h1 style={{"box-shadow": "10px 10px", "padding": "5px", "margin": "20px", "border": "solid"}}> {formData?.product && (formData?.product+" -")} Image Analysis </h1> */}
+            <ProductFeatureTitle feature="Image Analysis" product={formData?.product}/>
+
             <div className="image-upload-section">
               <input type="file" accept="image/*" onChange={handleImageChange} style={{"marginBottom":"0.5rem"}} />
               {isUploading && (
@@ -99,6 +102,7 @@ export default function Image_Analysis() {
                   <button className="btn btn-primary mb-3" onClick={() => setImage(null)}>
                     Replace Image
                   </button>
+                  <br/>
                   <img src={image} alt="Uploaded" className="img-fluid" />
                 </div>
               )}
