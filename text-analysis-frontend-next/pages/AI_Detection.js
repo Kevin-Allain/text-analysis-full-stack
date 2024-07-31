@@ -12,6 +12,7 @@ import { FormDataContext } from '@/components/context/FormDataContext';
 // TODO update this to use codecheckerData_ai_detection
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
+import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
 import UserList from '@/components/UserList';
@@ -39,17 +40,26 @@ export default function AI_Detection(){
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
 
   // ---- functions
-  const fetchFileContent = async (fileName, scoreDetails) => {
+  const fetchFileContent = async (fileName, scoreDetails, usePreload = true) => {
     try {
       const response = await fetch(`/data/codechecker_files/${fileName}`);
-      if (response.ok) {
-        // first, load the file
-        const textFile = await response.text();
-        // console.log("textFile: ",textFile);
-        // second, call the AI
-        loadAIText(textFile);
+      if (usePreload) {
+        console.log("codecheckerData_ai_detection_preload: ", codecheckerData_ai_detection_preload,", fileName: ",fileName);
+        // select preloaded output
+        // TODO we make the assumption of a single file. Later it will have to be based on unique identifier.
+        let ai_preload_file = codecheckerData_ai_detection_preload.filter(a => a.fileName === fileName)[0]; 
+        console.log("ai_preload_file: ",ai_preload_file);
+        setOutputAI(ai_preload_file);
       } else {
-        setFileContent("Error loading file content.");
+        if (response.ok) {
+          // first, load the file
+          const textFile = await response.text();
+          // console.log("textFile: ",textFile);
+          // second, call the AI
+          loadAIText(textFile);
+        } else {
+          setFileContent("Error loading file content.");
+        }
       }
     } catch (error) {
       console.error("Error fetching file content:", error);
@@ -116,9 +126,7 @@ export default function AI_Detection(){
       console.log("strAnalyze AI Text: ", strAnalyze);
       // Flask runs on port 5000 by default
       const response = await fetch(strAnalyze, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: textFile }),
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: textFile }),
       });
       if (!response.ok) throw new Error("Network response was not ok.");
       const data = await response.json();
@@ -259,6 +267,9 @@ export default function AI_Detection(){
               users={users}
               selectedUser={selectedUser}
               handleUserClick={handleUserClick}
+              fileList={fileList}
+              handleFileClick={handleFileClick}
+              indexFile={indexFile}              
             />
             <div className='legend'>
               {(minScoreAI && maxScoreAI) &&
@@ -286,62 +297,41 @@ export default function AI_Detection(){
                 {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
                 Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
               </div>
-              <div style={{ "vertical-align": "middle" }}>
-                <u>Files</u>
-                {selectedUser &&
-                  fileList.map((file, index) => (
-                    <button
-                      key={index}
-                      className={`btn btn-link ${(indexFile === index) ? 'active' : ''} ${(indexFile === index) ? 'text-secondary' : ''}`}
-                      onClick={() => handleFileClick(index)}
-                      disabled={isLoadingAI}
-                    >
-                      {file}
-                    </button>
-                  ))
-                }
-              </div>
+              {/* TODO consider how we want to apply the idea we had of disabled={isLoadingAI} | Not necessary with fake data, but valuable later. */}
+              {/* <div style={{ "vertical-align": "middle" }}> <u>Files</u> {selectedUser && fileList.map((file, index) => ( <button key={index} className={`btn btn-link ${(indexFile === index) ? 'active' : ''} ${(indexFile === index) ? 'text-secondary' : ''}`} onClick={() => handleFileClick(index)} disabled={isLoadingAI} > {file} </button> ))} </div> */}
             </>
 
           </div>
-          <div className="col-md-9">     
-            {/* <h1> {formData?.product && formData?.product} AI_Detection - Details</h1> */}
-            {/* <ProductFeatureTitle feature="AI Detection" product={formData?.product}/> */}
-
-                <ProductFeatureTitle feature="AI Detection" product={formData?.product}/>
+          <div className="col-md-9">
+              <ProductFeatureTitle feature="AI Detection" product={formData?.product}/>
                {/* <Breadcrumb /> */}
                {isLoadingAI ? (
                 <>
-                  <h3 className="heading-section text-center">
+                  <h5 className="heading-section text-center">
                     Calculating AI Detection Score{" "}
-                  </h3>
-                  <div className="text-center">
-                    {" "}
-                    <div className="spinner-border text-primary" role="status" />
-                  </div>
+                    {/* TODO fix eventually */}
+                    {/* {(selectedUser!==null && indexFile) && `for user: ${selectedUser}, file name: ${codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]}`} */}
+                  </h5>
+                  <div className="text-center"> <div className="spinner-border text-primary" role="status"/> </div>
                 </>
                 ) : (
                   outputAI.details && (
                 <>
-                  {/* <h3 className="heading-section text-center">
-                    Generated Text Probability
-                  </h3> */}
-                  <h4>
+                  {/* <h3 className="heading-section text-center"> Generated Text Probability </h3> */}
+                  <h5>
                     Filename:{" "}
                     {(selectedUser && codecheckerData_ai_detection.data) &&
                       codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]
                     }
                     <br/>
                     <div className='score_big' style={{"width":"fit-content", "color":"white", "background-color":"red", "padding":"0.5rem", "font-size":"larger", "border-radius":"0.5rem"}}>AI Detection Score:{" "}{outputAI.average.toFixed(2)}</div>
-                  </h4>
+                  </h5>
                   {/* <h2>Average score: {outputAI.average.toFixed(2)} </h2> */}
                   {/* {(minScoreAI && maxScoreAI) && <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} /> } */}
                   {/* {outputAI.details && outputAI.details.map((oAI, index) => ( <span key={index} style={{ backgroundColor: getBackgroundColorAI( outputAI, index ), color: "#fff", padding: "2px 4px", margin: "2px", display: "inline-block", }} > {oAI.text}{" "} </span> ))} */}
                   {/* <span>The score produced by our AI is indicative of the probability of the content being generated by a generative AI. Do note that high scores are no guarantee of content generated by AI, nor low ones guarantee content was made by a human. You should judge the content based on the context.</span> */}
-                  {/* h-25 */}
                   <div className="card overflow-y-scroll" style={{"height":"75vh"}}>
                     <div className="card-body">
-                      {/* <p>Score distribution here</p> */}
                       <div ref={textRef} className="text-content">
                         <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
                       </div>

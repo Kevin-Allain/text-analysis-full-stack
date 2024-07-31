@@ -125,7 +125,6 @@ export default function Plagiarism() {
               fileList={fileList}
               handleFileClick={handleFileClick}
               indexFile={indexFile}
-              setIndexFile={setIndexFile}
             />
             {/* <div>
               <u>Files</u>
