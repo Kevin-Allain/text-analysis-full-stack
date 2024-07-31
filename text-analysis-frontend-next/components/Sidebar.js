@@ -33,9 +33,10 @@ export default function Sidebar() {
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <span>Your File Sets</span>
-            <a href="/NewFile Set" className="btn btn-sm btn-outline-primary">
+            {/* TODO make a system to store folder structure */}
+            {/* <a href="/NewFile Set" className="btn btn-sm btn-outline-primary" disabled={true}>
               New File Set
-            </a>
+            </a> */}
           </li>
           <li key={"sb_" + institution + "_" + module + "_" + name} className="list-group-item" >
             {institution}
@@ -71,9 +72,10 @@ export default function Sidebar() {
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <span>Your File Sets</span>
-            <a href="/NewFile Set" className="btn btn-sm btn-outline-primary">
+            {/* TODO make a system to store folder structure */}            
+            {/* <a href="/NewFile Set" className="btn btn-sm btn-outline-primary">
               New File Set
-            </a>
+            </a> */}
           </li>
           <li key={"sb_" + institution + "_" + module + "_" + name} className="list-group-item" >
             {institution}

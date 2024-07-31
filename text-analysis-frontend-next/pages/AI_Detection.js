@@ -261,7 +261,7 @@ export default function AI_Detection(){
         <Navbar />
         <div className="row">
           <div className="col-md-3 right_side">
-            <HorizontalNav features={["Collusion", "AI_Detection", "Plagiarism"]} />
+            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
             <Sidebar/>
             <UserList
               users={users}

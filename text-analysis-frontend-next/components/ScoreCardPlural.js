@@ -65,7 +65,7 @@ const ScoreCardPlural = ({
         <div style={scoreItemStyle} onClick={() => handleClickNavigation("/Collusion", name)} onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
           onMouseOut={(e) => e.currentTarget.style.color = 'initial'}
         >
-          <span>Collusion</span>
+          <span>Similarity</span>
           <div style={circleStyle(color_collusion)} >
             {score_collusion === "X" ? <LuLoader className="loader-icon" /> : <>{score_collusion}</>}
           </div>

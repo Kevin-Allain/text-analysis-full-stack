@@ -116,7 +116,7 @@ export default function Plagiarism() {
         <Navbar />
         <div className="row">
           <div className="col-md-3">
-            <HorizontalNav features={["Collusion", "AI_Detection", "Plagiarism"]} />
+            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
             <Sidebar />
             <UserList
               users={users}
