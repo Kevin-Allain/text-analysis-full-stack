@@ -28,10 +28,12 @@ export default function InitialResults(props) {
       <div className="container-fluid">
         <Navbar />
         <div className="row">
-          <Sidebar />
-          <div className="col-md-10">
+          <div className="col-md-3 ">
+            <Sidebar />
+          </div>
+          <div className="col-md-9">
             {/* <h3>{formData?.product && formData?.product} - Initial Results</h3> */}
-            <ProductFeatureTitle feature="Initial Results" product={formData?.product}/>
+            <ProductFeatureTitle feature="Initial Results" product={formData?.product} />
             {/* <InitialResultsWindow /> */}
             <InitialResultsWindow_UserFocus />
           </div>

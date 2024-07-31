@@ -55,10 +55,10 @@ export default function Breadcrumb(props){
                 {
                   breadcrumbLinks.map((item, index) => {
                     if (item.status == 'active'){
-                      return <li className='breadcrumb-item active' aria-current='page'>{item.name}</li>
+                      return <li key={index} className='breadcrumb-item active' aria-current='page'>{item.name}</li>
                     }else{
-                      return <li className='breadcrumb-item'>
-                        <a href={item.href}>
+                      return <li key={index} className='breadcrumb-item'>
+                        <a key={index} href={item.href}>
                           {item.name}
                         </a>
                       </li>

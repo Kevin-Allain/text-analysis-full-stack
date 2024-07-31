@@ -1,4 +1,5 @@
 import styles from "@/app/page.module.css";
+import 'bootstrap/dist/css/bootstrap.min.css'
 import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import CodeEditor from "@/components/CodeEditor";
@@ -57,18 +58,20 @@ const CodeChecker = () => {
       <Head>
         <title>Code Checker</title>
       </Head>
-        <div className="container-fluid d-flex flex-column min-vh-100">
-          <Navbar />
-          <div className="row">
-            <Sidebar/>
-            <div className="col-md-10">
-              {/* <h1 className="heading-section text-center">Code Checker</h1> */}
-              <ProductFeatureTitle feature="Code Checker"/>
-              <NewCheckWindow product={"CodeChecker"} />
-            </div>
+      <div className="container-fluid d-flex flex-column min-vh-100">
+        <Navbar />
+        <div className="row">
+          <div className="col-md-3 right_side">
+            <Sidebar />
+          </div>
+          <div className="col-md-9">
+            {/* <h1 className="heading-section text-center">Code Checker</h1> */}
+            <ProductFeatureTitle feature="Code Checker" />
+            <NewCheckWindow product={"CodeChecker"} />
           </div>
         </div>
-        {/* <Footer /> */}
+      </div>
+      {/* <Footer /> */}
     </>
   );
 };

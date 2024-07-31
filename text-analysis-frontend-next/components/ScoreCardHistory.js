@@ -51,7 +51,7 @@ const ScoreCardHistory = ({ selectedUser }) => {
 
   return (
     <div style={containerStyle}>
-      <h2>{selectedUser}'s Coursework History</h2>
+      {/* <h2>{selectedUser} - Coursework History</h2> */}
       {Object.entries(historyUser.modules).map(([moduleName, courseworks]) => (
         <div key={moduleName} style={moduleContainerStyle}>
           <h3>{moduleName}</h3>

@@ -6,7 +6,6 @@ import Sidebar from '@/components/Sidebar';
 import Breadcrumb from '@/components/BreadCrumb';
 import HorizontalNav from '@/components/HorizontalNav';
 import { FormDataContext } from '@/components/context/FormDataContext';
-// import '@/Collusion.module.css';
 import '@/styles/PlagiarismFeature.css';
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import { fetchFileContent } from '@/utils/FileLoader';
@@ -38,13 +37,14 @@ export default function Plagiarism() {
   }, [users]);
 
   useEffect(() => {
+    console.log("useEffect triggered | selectedUser:", selectedUser, "indexFile:", indexFile);
     if (selectedUser) {
       const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
       if (userData && userData.files.length > 0) {
         setFileList(userData.files);
         fetchFileContent(
-          userData.files[indexFile], 
-          userData.scoreDetails[indexFile], 
+          userData.files[indexFile],
+          userData.scoreDetails[indexFile],
           setFileContent,
           highlightText
         );
@@ -86,11 +86,13 @@ export default function Plagiarism() {
   };
 
   const handleUserClick = (user) => {
+    console.log("User clicked:", user);
     setSelectedUser(user.name);
     setIndexFile(0); // Reset to the first file
   };
 
   const handleFileClick = (index) => {
+    console.log("File clicked:", index);
     setIndexFile(index);
   };
 
@@ -114,20 +116,18 @@ export default function Plagiarism() {
         <Navbar />
         <div className="row">
           <div className="col-md-3">
-            <HorizontalNav features={["Collusion","AI_Detection","Plagiarism"]}/>            
+            <HorizontalNav features={["Collusion", "AI_Detection", "Plagiarism"]} />
             <Sidebar />
             <UserList
               users={users}
               selectedUser={selectedUser}
               handleUserClick={handleUserClick}
+              fileList={fileList}
+              handleFileClick={handleFileClick}
+              indexFile={indexFile}
+              setIndexFile={setIndexFile}
             />
-
-            <div>
-              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}.
-              <br/>
-              Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
-            </div>
-            <div>
+            {/* <div>
               <u>Files</u>
               {selectedUser && 
                 fileList.map((file, index) => (
@@ -136,6 +136,11 @@ export default function Plagiarism() {
                   </button>
                 ))
               }
+            </div> */}
+            <div>
+              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}.
+              <br />
+              Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
             </div>
 
             {/* <div className="user_listing">
@@ -154,15 +159,15 @@ export default function Plagiarism() {
                   </div>
                   {selectedDetail === item.className && (
                     <div className="detail-indications">
-                      {(selectedUser && codecheckerData_plagiarism.data) && 
+                      {(selectedUser && codecheckerData_plagiarism.data) &&
                         <>
                           <a href={codecheckerData_plagiarism.data.find(user => user.name === selectedUser)
                             ?.scoreDetails[indexFile].find(sc => sc.type === item.className)?.source} target="_blank" rel="noopener noreferrer">
-                              {codecheckerData_plagiarism.data
-                                .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
-                                  .find(sc => sc.type === item.className)?.source}
+                            {codecheckerData_plagiarism.data
+                              .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
+                              .find(sc => sc.type === item.className)?.source}
                           </a>
-                          <hr/>
+                          <hr />
                         </>
                       }
                       {item.indications}
@@ -174,16 +179,16 @@ export default function Plagiarism() {
           </div>
           <div className="col-md-9 text_selec">
             {/* <h1> {formData?.product && formData?.product} Plagiarism - Details</h1> */}
-            <ProductFeatureTitle feature="Plagiarism" product={formData?.product}/>
+            <ProductFeatureTitle feature="Plagiarism" product={formData?.product} />
             {/* <Breadcrumb /> */}
-            <h4>Filename:{" "} 
+            <h5>Filename:{" "}
               {(selectedUser && codecheckerData_plagiarism.data) &&
                 codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
               }
-            </h4>
-            <div className="card overflow-y-scroll" style={{"height":"75vh"}}>
+            </h5>
+            <div className="card overflow-y-scroll" style={{ "height": "75vh" }}>
               <div className="card-body">
-                <div ref={textRef} className="text-content">
+                <div className="text-content">
                   <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
                 </div>
               </div>
