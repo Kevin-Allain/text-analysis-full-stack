@@ -9,10 +9,10 @@ export default function NewCheckWindow(props) {
   const { formData, setFormData } = useContext(FormDataContext);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(0);
-  const [institution, setInstitution] = useState(formData.institution);
-  const [module, setModule] = useState(formData.module);
-  const [name, setName] = useState(formData.name);
-  const [files, setFiles] = useState(formData.files);
+  const [institution, setInstitution] = useState(formData?.institution || '');
+  const [module, setModule] = useState(formData?.module || '');
+  const [name, setName] = useState(formData?.name || '');
+  const [files, setFiles] = useState(formData?.files || []);
   const [errors, setErrors] = useState({});
   const [zipError, setZipError] = useState(null);
 
@@ -22,13 +22,18 @@ export default function NewCheckWindow(props) {
     const { id, value, files } = e.target;
     console.log("handleInputChange: ", { id, value, files });
     if (id === "fileInput") {
-      const zipValidationResult = await validateZip(files[0]);
-      if (zipValidationResult.isValid) {
-        setFiles(files);
-        setZipError(null);
+      if (files && files.length > 0) {
+        const zipValidationResult = await validateZip(files[0]);
+        if (zipValidationResult.isValid) {
+          setFiles(files);
+          setZipError(null);
+        } else {
+          setFiles([]);
+          setZipError(zipValidationResult.error);
+        }
       } else {
         setFiles([]);
-        setZipError(zipValidationResult.error);
+        setZipError(null);
       }
     } else if (id === "institutionInput") {
       setInstitution(value);
@@ -51,9 +56,9 @@ export default function NewCheckWindow(props) {
         return { isValid: false, error: 'The zip file must contain at least one folder.' };
       }
       for (const folderName of folderNames) {
-        console.log("folderName: ",folderName);
+        console.log("folderName: ", folderName);
         const folderFiles = Object.keys(zip.files).filter((name) => name.startsWith(folderName) && !name.endsWith('/'));
-        console.log("folderFiles: ",folderFiles);
+        console.log("folderFiles: ", folderFiles);
         if (folderFiles.length === 0) {
           return { isValid: false, error: `The folder '${folderName}' must contain at least one file.` };
         }
@@ -74,7 +79,8 @@ export default function NewCheckWindow(props) {
     if (!institution) newErrors.institution = "Institution is required";
     if (!module) newErrors.module = "Module is required";
     if (!name) newErrors.name = "Name is required";
-    if (files.length === 0) newErrors.files = "At least one file is required";
+    // TODO prepare a nice explanation for this. Until then, don't worry about forcing users to upload files.
+    // if (files.length === 0) newErrors.files = "At least one file is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -200,11 +206,11 @@ export default function NewCheckWindow(props) {
             </div>
             <div className="mb-3">
               <label htmlFor="fileInput" className="form-label">
-                Files
+                Compressed folder
               </label>
               <input
                 name="file[]"
-                multiple
+                single
                 type="file"
                 className="form-control"
                 id="fileInput"

@@ -14,7 +14,7 @@ import UserList from '@/components/UserList';
 import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 
-export default function Collusion() {
+export default function Similarity() {
   const { formData, setFormData } = useContext(FormDataContext);
 
   const [selectedUser, setSelectedUser] = useState(null);
@@ -27,10 +27,10 @@ export default function Collusion() {
   console.log("globalScore of first: ", codecheckerData_collusion.data[0].globalScore)
   console.log("typeof globalScore of first: ", typeof (codecheckerData_collusion.data[0].globalScore))
 
-  const [fileCollusion1, setFileCollusion1] = useState(null);
-  const [fileCollusion2, setFileCollusion2] = useState(null);
-  const [contentCollusion1, setContentCollusion1] = useState(null);
-  const [contentCollusion2, setContentCollusion2] = useState(null);
+  const [fileSimilarity1, setFileSimilarity1] = useState(null);
+  const [fileSimilarity2, setFileSimilarity2] = useState(null);
+  const [contentSimilarity1, setContentSimilarity1] = useState(null);
+  const [contentSimilarity2, setContentSimilarity2] = useState(null);
 
   // ----- functions
   const handleUserClick = (user) => {
@@ -39,7 +39,7 @@ export default function Collusion() {
     setIndexFile(0); // Reset to the first file
   };
   const handleFileClick = (index) => { setIndexFile(index); };
-  const TableComponent = ({ inputString, setFileCollusion1, setFileCollusion2 }) => {
+  const TableComponent = ({ inputString, setFileSimilarity1, setFileSimilarity2 }) => {
     const tableHTML = parseAndGenerateHTMLTable(inputString);
     useEffect(() => {
       const rows = document.querySelectorAll('.clickable-row');
@@ -47,8 +47,8 @@ export default function Collusion() {
         row.addEventListener('click', () => {
           const file1 = row.getAttribute('data-file1');
           const file2 = row.getAttribute('data-file2');
-          setFileCollusion1(file1);
-          setFileCollusion2(file2);
+          setFileSimilarity1(file1);
+          setFileSimilarity2(file2);
         });
       });
     }, [tableHTML]);
@@ -82,9 +82,9 @@ export default function Collusion() {
       }
     }
     // Generate HTML table
-    // const tableHTML = `<table class="table table-striped"><thead><tr><th>Name 1</th><th>File 1</th><th>Name 2</th><th>File 2</th><th>Score</th></tr></thead><tbody>${rows.map(row => `<tr onclick="setFileCollusions('${row.file1}', '${row.file2}')"><td>${row.name1}</td><td>${row.file1}</td><td>${row.name2}</td><td>${row.file2}</td><td>${row.score}</td></tr>`).join('')}</tbody></table>`;
+    // const tableHTML = `<table class="table table-striped"><thead><tr><th>Name 1</th><th>File 1</th><th>Name 2</th><th>File 2</th><th>Score</th></tr></thead><tbody>${rows.map(row => `<tr onclick="setFileSimilaritys('${row.file1}', '${row.file2}')"><td>${row.name1}</td><td>${row.file1}</td><td>${row.name2}</td><td>${row.file2}</td><td>${row.score}</td></tr>`).join('')}</tbody></table>`;
     const tableHTML = `<table class="table table-striped">
-        <thead><tr><th>User 1</th><th>File 1</th><th>User 2</th><th>File 2</th><th>Collusion Score</th></tr></thead>
+        <thead><tr><th>User 1</th><th>File 1</th><th>User 2</th><th>File 2</th><th>Similarity Score</th></tr></thead>
         <tbody>
           ${rows.map((row, index) => `<tr class="clickable-row" data-file1="${row.file1}" data-file2="${row.file2}" style="cursor: pointer;">
               <td>${row.name1}</td><td>${row.file1}</td><td>${row.name2}</td><td>${row.file2}</td><td>${row.score}</td></tr>`).join('')}
@@ -112,34 +112,34 @@ export default function Collusion() {
   }, [selectedUser, indexFile]);
 
   useEffect(() => {
-    if (otherUser) { console.log("useEffect Collusion | otherUser: ", otherUser); }
-    setFileCollusion1(null);
-    setFileCollusion2(null);
+    if (otherUser) { console.log("useEffect Similarity | otherUser: ", otherUser); }
+    setFileSimilarity1(null);
+    setFileSimilarity2(null);
   }, [otherUser]);
 
   useEffect(() => {
-    if (fileCollusion1 && fileCollusion2) {
+    if (fileSimilarity1 && fileSimilarity2) {
       let userData1 = codecheckerData_collusion.data.find(user => user.name === selectedUser);
       let userData2 = codecheckerData_collusion.data.find(user => user.name === otherUser);
-      console.log("useEffect [fileCollusion1,filecollusion2] | userData1: ", userData1, " userData2: ", userData2);
+      console.log("useEffect [fileSimilarity1,filesimilarity2] | userData1: ", userData1, " userData2: ", userData2);
       let indexFile1 = 0; let indexFile2 = 0;
 
       // fetchFileContent(
       fetchFileContentToDivs(
-        fileCollusion1,
+        fileSimilarity1,
         userData1.scoreDetails[indexFile1],
-        setContentCollusion1,
+        setContentSimilarity1,
         // highlightText
       );
       // fetchFileContent(
       fetchFileContentToDivs(
-        fileCollusion2,
+        fileSimilarity2,
         userData2.scoreDetails[indexFile2],
-        setContentCollusion2,
+        setContentSimilarity2,
         // highlightText
       )
     }
-  }, [fileCollusion1, fileCollusion2])
+  }, [fileSimilarity1, fileSimilarity2])
 
 
   return (
@@ -151,13 +151,13 @@ export default function Collusion() {
         <Navbar />
         <div className="row">
           <div className="col-md-3 right_side">
-            <HorizontalNav features={["Collusion", "AI_Detection", "Plagiarism"]} />
+            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
             <Sidebar />
             <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
           </div>
           <div className="col-md-9">
-            <ProductFeatureTitle feature="Collusion" product={formData?.product} />
-            <h4>Summary of collusion between {selectedUser} and others.</h4>
+            <ProductFeatureTitle feature="Similarity" product={formData?.product} />
+            <h4>Summary of similarity between {selectedUser} and others.</h4>
             {(selectedUser !== null && codecheckerData_collusion.data) &&
               <CollusionSelectionGraph
                 user={codecheckerData_collusion.data.find(user => user.name === selectedUser)}
@@ -171,7 +171,7 @@ export default function Collusion() {
             {otherUser &&
               <div className="card" >
                 <div className="card-body">
-                  <p>Details about collusion scores for each files combination with {otherUser}.</p>
+                  <p>Details about similarity scores for each files combination with {otherUser}.</p>
                   {otherUser &&
                     <>
                       <TableComponent
@@ -183,23 +183,23 @@ export default function Collusion() {
                             .filter(a => a.name === otherUser)[0]
                             .collusionScores
                           )}
-                        setFileCollusion1={setFileCollusion1}
-                        setFileCollusion2={setFileCollusion2}
+                        setFileSimilarity1={setFileSimilarity1}
+                        setFileSimilarity2={setFileSimilarity2}
                       />
                       {/* <div dangerouslySetInnerHTML={parseAndGenerateHTMLTable(JSON.stringify(codecheckerData_collusion.data.find(user => user.name === selectedUser).scoreDetails.relations.filter(a => a.name === otherUser)[0].collusionScores))} /> */}
-                      {(fileCollusion1 && fileCollusion2) &&
+                      {(fileSimilarity1 && fileSimilarity2) &&
                         <div className="d-flex justify-content-between mx-3">
                           <div className="w-50">
-                            <b>Filename:{" "} {fileCollusion1}</b><hr />
-                            {(contentCollusion1 !== null) &&
-                              contentCollusion1
+                            <b>Filename:{" "} {fileSimilarity1}</b><hr />
+                            {(contentSimilarity1 !== null) &&
+                              contentSimilarity1
                             }
                           </div>
                           <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
                           <div className="w-50">
-                            <b>Filename:{" "} {fileCollusion2}</b><hr />
-                            {(contentCollusion2 !== null) &&
-                              contentCollusion2
+                            <b>Filename:{" "} {fileSimilarity2}</b><hr />
+                            {(contentSimilarity2 !== null) &&
+                              contentSimilarity2
                             }
                           </div>
                         </div>
