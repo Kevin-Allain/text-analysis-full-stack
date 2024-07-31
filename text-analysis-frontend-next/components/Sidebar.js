@@ -112,9 +112,9 @@ export default function Sidebar() {
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <span>Your File Sets</span>
-            <button type="button" className="btn btn-sm btn-outline-primary">
+            {/* <button type="button" className="btn btn-sm btn-outline-primary">
               New File Set
-            </button>
+            </button> */}
           </li>
           <li
             className="list-group-item"
