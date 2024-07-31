@@ -62,7 +62,7 @@ const ScoreCardPlural = ({
             {score_plagiarism === "X" ? <LuLoader className="loader-icon" /> : <>{score_plagiarism}</>}
           </div>
         </div>
-        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/Collusion", name)} onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/Similarity", name)} onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
           onMouseOut={(e) => e.currentTarget.style.color = 'initial'}
         >
           <span>Similarity</span>

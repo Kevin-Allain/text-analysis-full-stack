@@ -71,8 +71,8 @@ const ScoreCardHistory = ({ selectedUser }) => {
                     {scores.Plagiarism}
                   </div>
                 </div>
-                <div style={scoreItemStyle} onClick={() => handleClickNavigation("Collusion")}>
-                  <span>Collusion</span>
+                <div style={scoreItemStyle} onClick={() => handleClickNavigation("Similarity")}>
+                  <span>Similarity</span>
                   <div style={circleStyle(getColor(scores.Collusion))}>
                     {scores.Collusion}
                   </div>
