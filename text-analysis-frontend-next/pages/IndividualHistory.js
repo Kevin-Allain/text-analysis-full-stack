@@ -15,6 +15,8 @@ import collusion_data from "@/public/data/codechecker_collusion_example.json";
 import plagiarism_data from "@/public/data/codechecker_plagiarism_example.json";
 import individuals_history from "@/public/data/codechecker_individual_history_example.json";
 import DetailsHistoryIndividual from "@/components/DetailsHistoryIndividual";
+import PagePDFExport from "@/components/export/PagePDFExport";
+
 
 export default function IndividualHistory(props) {
   console.log("IndividualHistory | props: ", props);
@@ -54,7 +56,8 @@ export default function IndividualHistory(props) {
               handleUserClick={handleUserClick}
             />
           </div>
-          <div className="col-md-10">
+          <div className="col-md-10 scoreCardHistory">
+            {/* <PagePDFExport/> */}
             <ProductFeatureTitle feature="Individual History" product={selectedUser}/>
             <DetailsHistoryIndividual selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
           </div>

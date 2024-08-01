@@ -7,41 +7,19 @@ const ScoreCardHistory = ({ selectedUser }) => {
   const colorLowRisk = "#3cc343"; // green
   const colorMediumRisk = "#d97826"; // orange
   const colorHighRisk = "#d2342d"; // red
-
   const historyUser = individuals_history.filter(a => a.name === selectedUser)[0];
 
-  if (!historyUser) {
-    return <div>User not found</div>;
-  }
+  if (!historyUser) { return <div>User not found</div>; }
 
-  const circleStyle = (color) => ({
-    backgroundColor: color, borderRadius: '50%', width: '40px', height: '40px', minWidth: '40px', minHeight: '40px', aspectRatio: '1 / 1', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontWeight: 'bold', cursor: 'pointer',
-  });
+  const circleStyle = (color) => ({ backgroundColor: color, borderRadius: '50%', width: '40px', height: '40px', minWidth: '40px', minHeight: '40px', aspectRatio: '1 / 1', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontWeight: 'bold', cursor: 'pointer', });
+  const containerStyle = { display: 'flex', flexDirection: 'column', width: '100%', padding: '10px', };
+  const moduleContainerStyle = { marginBottom: '20px', };
+  const courseworkStyle = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px 0', };
+  const scoresContainerStyle = { display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '70%', };
+  const scoreItemStyle = { display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', };
 
-  const containerStyle = {
-    display: 'flex', flexDirection: 'column', width: '100%', padding: '10px',
-  };
-
-  const moduleContainerStyle = {
-    marginBottom: '20px',
-  };
-
-  const courseworkStyle = {
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px 0',
-  };
-
-  const scoresContainerStyle = {
-    display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '70%',
-  };
-
-  const scoreItemStyle = {
-    display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer',
-  };
-
-  const handleClickNavigation = (where) => {
-    console.log("handleClickNavigation | where: ", where, ", selectedUser: ", selectedUser);
-    window.location.href = where; // Navigate to the specified URL
-  };
+  // Navigate to the specified URL
+  const handleClickNavigation = (where) => { window.location.href = where; };
 
   const getColor = (score) => {
     if (score < 33) return colorLowRisk;
@@ -51,7 +29,6 @@ const ScoreCardHistory = ({ selectedUser }) => {
 
   return (
     <div style={containerStyle}>
-      {/* <h2>{selectedUser} - Coursework History</h2> */}
       {Object.entries(historyUser.modules).map(([moduleName, courseworks]) => (
         <div key={moduleName} style={moduleContainerStyle}>
           <h3>{moduleName}</h3>
