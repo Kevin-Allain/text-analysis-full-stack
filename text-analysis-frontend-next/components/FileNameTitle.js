@@ -1,7 +1,6 @@
-export default function ProductFeatureTitle(props) {
-  const { feature, product } = props;
-  console.log("ProductFeatureTitle | ", { feature, product });
-
+export default function FileNameTitle(props) {
+  const { fileName } = props;
+  console.log("FileNameTitle | ", { fileName });
   return (
     <>
       <h1 style={{
@@ -13,8 +12,7 @@ export default function ProductFeatureTitle(props) {
           "justifyContent":"space-evenly",
           }}
           >
-          {product && product + " - "}
-          {feature}
+          File Name:{" "}{fileName}
       </h1>
     </>
   );

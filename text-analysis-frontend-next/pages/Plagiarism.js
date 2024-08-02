@@ -11,6 +11,7 @@ import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_exa
 import { fetchFileContent } from '@/utils/FileLoader';
 import UserList from '@/components/UserList';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
+import FileNameTitle from '@/components/FileNameTitle';
 
 export default function Plagiarism() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -125,8 +126,33 @@ export default function Plagiarism() {
       <div className="container-fluid">
         <Navbar />
         <div className="row">
-          <div style={stickyColumn} className="col-md-3">
+          <div className="col-md-9 text_selec">
+            {/* <ProductFeatureTitle feature="Plagiarism" product={formData?.product} /> */}
+            <FileNameTitle fileName={codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/>            
+            {/* <Breadcrumb /> */}
+            {/* <h5>
+              <div
+                className='score_big'
+                style={{ "width": "fit-content", "color": "white", "background-color": "red", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem"
+                }}>User Plagiarism Score:{" "}{codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)}</div>
+              Filename:{" "}
+              {(selectedUser && codecheckerData_plagiarism.data) &&
+                codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
+              }
+            </h5> */}
             <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+
+            {/* Used to be fine, but if we want to export output, then we need everything in one page...? */}
+            {/* <div className="card overflow-y-scroll" style={{ "height": "75vh" }}> */}
+            <div className="card">
+              <div className="card-body">
+                <div className="text-content">
+                  <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style={stickyColumn} className="col-md-3">
             <Sidebar/>
             <UserList
               users={users}
@@ -137,9 +163,21 @@ export default function Plagiarism() {
               indexFile={indexFile}
             />
             <div>
-              Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}.
-              <br />
-              Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}.
+              {/* Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. */}
+              <div
+                className='score_big mb-1'
+                style={{ 
+                  "width": "100%", 
+                  "color": "white", 
+                  "background-color": "red", 
+                  "padding": "0.25rem", 
+                  "font-size": "larger", 
+                  "border-radius": "0.25rem"
+                }}> 
+                Submission from {selectedUser} <br/> 
+                User Plagiarism Score:{" "}{codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)} <br/>
+                Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}
+              </div>
             </div>
 
             {/* <div className="user_listing">
@@ -174,38 +212,6 @@ export default function Plagiarism() {
                   )}
                 </div>
               ))}
-            </div>
-          </div>
-          <div className="col-md-9 text_selec">
-            {/* <h1> {formData?.product && formData?.product} Plagiarism - Details</h1> */}
-            <ProductFeatureTitle feature="Plagiarism" product={formData?.product} />
-            {/* <Breadcrumb /> */}
-            <h5>
-              <div
-                className='score_big'
-                style={{
-                  "width": "fit-content",
-                  "color": "white",
-                  "background-color": "red",
-                  "padding": "0.5rem",
-                  "font-size": "larger",
-                  "border-radius": "0.5rem"
-                }}>User Plagiarism Score:{" "}{codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)}</div>
-
-              Filename:{" "}
-              {(selectedUser && codecheckerData_plagiarism.data) &&
-                codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
-              }
-            </h5>
-
-            {/* Used to be fine, but if we want to export output, then we need everything in one page...? */}
-            {/* <div className="card overflow-y-scroll" style={{ "height": "75vh" }}> */}
-            <div className="card">
-              <div className="card-body">
-                <div className="text-content">
-                  <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
-                </div>
-              </div>
             </div>
           </div>
         </div>

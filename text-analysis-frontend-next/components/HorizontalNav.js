@@ -10,9 +10,9 @@ const HorizontalNav = ({features}) => {
   const handleNavigation = (page) => { router.push(`/${page}`); };
 
   return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-center">
-        <div className="btn-group" role="group" aria-label="Horizontal navigation">
+    <div className="container mb-1">
+      <div className="d-flex justify-content-center" >
+        <div className="btn-group" role="group" aria-label="Horizontal navigation" style={{"width":"100%"}}>
           <button 
             type="button" 
             className={`btn ${curFeature===features[0]? "btn-secondary" : "btn-primary"}`}

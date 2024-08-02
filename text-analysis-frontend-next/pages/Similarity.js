@@ -150,11 +150,6 @@ export default function Similarity() {
       <div className="container-fluid">
         <Navbar />
         <div className="row">
-          <div className="col-md-3 right_side">
-            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
-            <Sidebar />
-            <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
-          </div>
           <div className="col-md-9">
             <ProductFeatureTitle feature="Similarity" product={formData?.product} />
             <h4>Summary of similarity between {selectedUser} and others.</h4>
@@ -209,6 +204,11 @@ export default function Similarity() {
                 </div>
               </div>
             }
+          </div>
+          <div className="col-md-3 right_side">
+            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+            <Sidebar />
+            <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
           </div>
         </div>
       </div>
