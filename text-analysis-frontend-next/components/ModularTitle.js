@@ -1,6 +1,6 @@
-export default function FileNameTitle(props) {
-  const { fileName } = props;
-  console.log("FileNameTitle | ", { fileName });
+export default function ModularTitle(props) {
+  const { title } = props;
+  console.log("ModularTitle | ", { title });
   return (
     <>
       <h1 style={{
@@ -12,7 +12,7 @@ export default function FileNameTitle(props) {
           "justifyContent":"space-evenly",
           }}
           >
-          File Name:{" "}{fileName}
+          {title}
       </h1>
     </>
   );
