@@ -30,7 +30,16 @@ const PagePDFExport = () => {
   };
   
   return (
-      <button style={{"border":"none","background":"none","margin-bottom":"0.25rem"}} onClick={saveAsPDF}><FaRegFilePdf/></button>    
+      <button 
+        style={{"border":"none","background":"none",}}
+        onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+        onMouseOut={(e) => e.currentTarget.style.color = 'initial'}              
+        onClick={saveAsPDF}>
+        <FaRegFilePdf
+          style={{"width":"100%","height":"100%","verticalAlign":"text-bottom"}}
+
+        />
+      </button>    
   );
 };
 

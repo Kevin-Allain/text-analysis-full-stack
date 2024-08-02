@@ -107,6 +107,16 @@ export default function Plagiarism() {
     setSelectedDetail(detail.className === selectedDetail ? null : detail.className);
   };
 
+  const stickyColumn = {
+    position: "sticky",
+    top: 0,
+    zIndex: 10,
+    height: "90vh",
+    overflowY: "auto",
+    backgroundColor: "#f8f9fa", // Just for visibility
+  };
+
+
   return (
     <>
       <Head>
@@ -115,9 +125,9 @@ export default function Plagiarism() {
       <div className="container-fluid">
         <Navbar />
         <div className="row">
-          <div className="col-md-3">
+          <div style={stickyColumn} className="col-md-3">
             <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
-            <Sidebar />
+            <Sidebar/>
             <UserList
               users={users}
               selectedUser={selectedUser}
@@ -126,16 +136,6 @@ export default function Plagiarism() {
               handleFileClick={handleFileClick}
               indexFile={indexFile}
             />
-            {/* <div>
-              <u>Files</u>
-              {selectedUser && 
-                fileList.map((file, index) => (
-                  <button key={index} className={`btn btn-link ${indexFile === index ? 'active' : ''}`} onClick={() => handleFileClick(index)}>
-                    {file}
-                  </button>
-                ))
-              }
-            </div> */}
             <div>
               Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}.
               <br />
@@ -180,12 +180,27 @@ export default function Plagiarism() {
             {/* <h1> {formData?.product && formData?.product} Plagiarism - Details</h1> */}
             <ProductFeatureTitle feature="Plagiarism" product={formData?.product} />
             {/* <Breadcrumb /> */}
-            <h5>Filename:{" "}
+            <h5>
+              <div
+                className='score_big'
+                style={{
+                  "width": "fit-content",
+                  "color": "white",
+                  "background-color": "red",
+                  "padding": "0.5rem",
+                  "font-size": "larger",
+                  "border-radius": "0.5rem"
+                }}>User Plagiarism Score:{" "}{codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)}</div>
+
+              Filename:{" "}
               {(selectedUser && codecheckerData_plagiarism.data) &&
                 codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
               }
             </h5>
-            <div className="card overflow-y-scroll" style={{ "height": "75vh" }}>
+
+            {/* Used to be fine, but if we want to export output, then we need everything in one page...? */}
+            {/* <div className="card overflow-y-scroll" style={{ "height": "75vh" }}> */}
+            <div className="card">
               <div className="card-body">
                 <div className="text-content">
                   <pre dangerouslySetInnerHTML={{ __html: fileContent }} />

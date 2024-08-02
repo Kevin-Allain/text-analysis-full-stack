@@ -31,7 +31,7 @@
 .text-content .highlight.green { background-color: rgb(72, 216, 72); } */
 
 .details_score {
-    padding: 20px;
+    /* padding: 20px; */
     overflow-y: auto;
     /* height: 45vh; */
 }
@@ -41,6 +41,7 @@
     margin-bottom: 5px;
     /* color: #fff; */
     cursor: pointer;
+    border-radius: 0.25rem;
   }
   
 .detail-indications {

@@ -36,19 +36,28 @@ const ScoreCardHistory = ({ selectedUser }) => {
             <div key={courseworkTitle} style={courseworkStyle}>
               <span>{courseworkTitle}</span>
               <div style={scoresContainerStyle}>
-                <div style={scoreItemStyle} onClick={() => handleClickNavigation("AI_Detection")}>
+                <div style={scoreItemStyle}
+                  onClick={() => handleClickNavigation("AI_Detection")}
+                  onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+                  onMouseOut={(e) => e.currentTarget.style.color = 'initial'}
+                >
                   <span>AI Detection</span>
                   <div style={circleStyle(getColor(scores.AI_Detection))}>
                     {scores.AI_Detection}
                   </div>
                 </div>
-                <div style={scoreItemStyle} onClick={() => handleClickNavigation("Plagiarism")}>
+                <div style={scoreItemStyle} onClick={() => handleClickNavigation("Plagiarism")}
+                  onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+                  onMouseOut={(e) => e.currentTarget.style.color = 'initial'}
+                >
                   <span>Plagiarism</span>
                   <div style={circleStyle(getColor(scores.Plagiarism))}>
                     {scores.Plagiarism}
                   </div>
                 </div>
-                <div style={scoreItemStyle} onClick={() => handleClickNavigation("Similarity")}>
+                <div style={scoreItemStyle} onClick={() => handleClickNavigation("Similarity")}
+                  onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+                  onMouseOut={(e) => e.currentTarget.style.color = 'initial'}>
                   <span>Similarity</span>
                   <div style={circleStyle(getColor(scores.Collusion))}>
                     {scores.Collusion}

@@ -1,8 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { FormDataContext } from "@/components/context/FormDataContext";
-
 import { usePathname } from 'next/navigation'
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
 
 export default function Sidebar() {
@@ -16,27 +17,26 @@ export default function Sidebar() {
   const pathname = usePathname()
   console.log("SideBar | pathname: ",pathname)
 
+  const [fileListVisible, setFileListVisible] = useState(false);
+  const toggleFilesVisibility = () => {
+    setFileListVisible(!fileListVisible);
+  };
+
+
+
   if (arrayFiles.length > 0) {
     return (
       // <div className="col-md-2" style={{ padding: 0 }}>
       <div style={{"padding":"0","width":"100%"}}>
         <ul
-          className="list-group list-group-flush"
-          style={{
-            borderRight: "1px solid #eee",
-            // minHeight: "90vh",
-            // maxHeight: "90vh",
-          }}
-        >
+          className="list-group list-group-flush" style={{ borderRight: "1px solid #eee",}}> {/* // minHeight: "90vh", maxHeight: "90vh",  */}
           <li
             className="list-group-item"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <span>Your File Sets</span>
             {/* TODO make a system to store folder structure */}
-            {/* <a href="/NewFile Set" className="btn btn-sm btn-outline-primary" disabled={true}>
-              New File Set
-            </a> */}
+            {/* <a href="/NewFile Set" className="btn btn-sm btn-outline-primary" disabled={true}> New File Set </a> */}
           </li>
           <li key={"sb_" + institution + "_" + module + "_" + name} className="list-group-item" >
             {institution}
@@ -58,7 +58,11 @@ export default function Sidebar() {
   else if (module){
     return (
       // <div className="col-md-2" style={{ padding: 0 }}>
-      <div style={{"padding":"0","width":"100%"}}>      
+      <div style={{"padding":"0","width":"100%"}}>
+      <button className="btn btn-secondary w-100 mt-1" onClick={toggleFilesVisibility}>
+        Your File Sets {fileListVisible ? <FaCaretUp /> : <FaCaretDown />}
+      </button>
+      {fileListVisible && (      
         <ul
           className="list-group list-group-flush"
           style={{
@@ -71,11 +75,8 @@ export default function Sidebar() {
             className="list-group-item"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <span>Your File Sets</span>
             {/* TODO make a system to store folder structure */}            
-            {/* <a href="/NewFile Set" className="btn btn-sm btn-outline-primary">
-              New File Set
-            </a> */}
+            {/* <a href="/NewFile Set" className="btn btn-sm btn-outline-primary"> New File Set </a> */}
           </li>
           <li key={"sb_" + institution + "_" + module + "_" + name} className="list-group-item" >
             {institution}
@@ -91,6 +92,7 @@ export default function Sidebar() {
             </ul>
           </li>
         </ul>
+      )}
       </div>
     );    
   }

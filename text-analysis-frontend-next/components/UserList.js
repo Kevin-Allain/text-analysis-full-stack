@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
+
 import '@/styles/UserList.css';
 
 const UserList = ({ users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile }) => {
@@ -18,10 +20,10 @@ const UserList = ({ users, selectedUser, handleUserClick, fileList, handleFileCl
   return (
     <div className="user_listing">
       <button className="btn btn-secondary w-100 mt-1" onClick={toggleListVisibility}>
-        Individuals {isListVisible ? <FaArrowUp /> : <FaArrowDown />}
+        Individuals {isListVisible ? <FaCaretUp /> : <FaCaretDown />}
       </button>
       {isListVisible && (
-        <ul className="list-group list-animated">
+        <ul className="list-group list-animated" style={{ width:"95%", marginLeft:"5%" }}>
           {users.map((user, index) => (
             <>
             <div style={{ 
@@ -31,18 +33,22 @@ const UserList = ({ users, selectedUser, handleUserClick, fileList, handleFileCl
             }}>
               <li
                 key={index}
-                className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''} ${selectedUser === user.name ? 'text-white' : ''}`}
+                className={`list-group-item d-flex justify-content-between}`}
+                style={{
+                  "backgroundColor": selectedUser === user.name ? 'darkgrey': '', 
+                  "color": selectedUser === user.name ? 'white' : ''
+                }}
                 onClick={() => handleUserClick(user)}
               >
                 <span>{user.name}</span>
                 {user.globalScore !== null &&
-                  <span>{(user.globalScore * 100).toFixed(2)}%</span>
+                  <span>{"-"}{(user.globalScore * 100).toFixed(2)}%</span>
                 }
               </li>
               {(selectedUser === user.name && fileList) && (
                 <li>
                   <button className="btn w-100" onClick={toggleFilesVisibility}>
-                    Files {fileListVisible ? <FaArrowUp /> : <FaArrowDown />}
+                    Files {fileListVisible ? <FaCaretUp /> : <FaCaretDown />}
                   </button>
                   <div className="userFileSelection">
                     {fileListVisible &&
