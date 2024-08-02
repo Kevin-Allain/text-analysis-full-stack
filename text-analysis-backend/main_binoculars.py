@@ -1,4 +1,5 @@
 from binoculars import Binoculars
+# from binoculars.detector import Binoculars
 
 bino = Binoculars()
 

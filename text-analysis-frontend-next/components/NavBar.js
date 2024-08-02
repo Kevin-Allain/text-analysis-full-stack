@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { FormDataContext } from "@/components/context/FormDataContext";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import logo from "@/public/img/AI-AWARE-LOGO-WEBSITE-1-BLACK.png";
@@ -10,20 +11,26 @@ import { LuDownload } from "react-icons/lu";
 import PagePDFExport from "@/components/export/PagePDFExport";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
+import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
+import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
 
-export default function Navbar() {
+
+export default function Navbar(props) {
+  const {users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile} = props;
+  console.log("Navbar | props: ",{users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile});
+  const { formData } = useContext(FormDataContext);
+  const { institution, module, name, files } = formData;
+  console.log("Navbar | formData stuff: ", {institution, module, name, files});
   const router = useRouter();
   const [showProducts, setShowProducts] = useState(false);
   const timerRef = useRef(null);
 
-  const handleLogoClick = () => {
-    router.push("/");
-  };
+  const handleLogoClick = () => { router.push("/"); };
 
-  const handleContactClick = () => {
-    router.push("https://aiaware.io/contact");
-  };
+  const handleContactClick = () => { router.push("https://aiaware.io/contact"); };
 
   const handleMouseEnter = () => {
     clearTimeout(timerRef.current);
@@ -36,25 +43,21 @@ export default function Navbar() {
     }, 300); // delay before hiding the dropdown
   };
 
+  const [institutionListVisible, setInstitutionListVisible] = useState(false);
+  const [moduleListVisible, setModuleListVisible] = useState(false);
+  const [nameListVisible, setNameListVisible] = useState(false);  
+  const [userListVisible, setUserListVisible] = useState(false);
+  const [fileListVisible, setFileListVisible] = useState(false);
+
   const productsButtonStyle = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    textDecoration: "none",
-    color: "black",
-    cursor: "pointer",
-    fontSize: "1rem",
+    display: "flex", flexDirection: "column", alignItems: "center", textDecoration: "none", color: "black", cursor: "pointer", fontSize: "1rem",
   };
   const iconStyle = {
-    fontSize: "1.5rem", // Set a fixed size for all icons
-    marginBottom: "5px",
+    fontSize: "1.5rem", marginBottom: "5px", // Set a fixed size for all icons
   };
 
   // Could be updated differently later...?
-  const handleDownload = () => {
-    saveAsPDF();
-  }
-
+  const handleDownload = () => { saveAsPDF(); }
   const saveAsPDF = () => {
     html2canvas(document.body).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -64,22 +67,20 @@ export default function Navbar() {
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
       let position = 0;
-
       pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
-
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
         pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-
       pdf.save('page.pdf');
     });
   };
 
-
+  const toggleUser = () => { setUserListVisible(!userListVisible);  }
+  const toggleFile = () => { setFileListVisible(!fileListVisible);  }
 
   return (
     <div className="row">
@@ -95,9 +96,70 @@ export default function Navbar() {
           >
             <Image src={logo} alt="Logo" />
           </div>
+          
+          <div className="ml-auto d-flex align-items-center navigations ">
+            <div className="navFileSets" style={{"padding-left":"1rem", "padding-right":"1rem", "margin-right":"5rem"}} >
+              <div className="institutionSelect" style={{"padding-right":"1rem"}}> 
+                {institution} 
+                {/* {institutionListVisible ? <FaCaretUp /> : <FaCaretDown />} */}
+              </div>
+              <div className="moduleSelect" style={{"padding-left":"1rem", "padding-right":"1rem"}}> 
+                {module} 
+                {/* {moduleListVisible ? <FaCaretUp /> : <FaCaretDown />} */}
+              </div>
+              <div className="nameSelect" style={{"padding-left":"2rem", "padding-right":"1rem"}}> 
+                {name} 
+                {/* {nameListVisible ? <FaCaretUp /> : <FaCaretDown />} */}
+              </div>
+            </div>
+            <div className="navPeopleSets">
+              <button className="btn individualSelect" 
+                style={{"padding-right":"1rem"}}
+                onMouseOver={(e) => (e.currentTarget.style.color = "blue")}
+                onMouseOut={(e) => (e.currentTarget.style.color = "initial")}
+                onClick={toggleUser}
+              > {selectedUser} {userListVisible ? <FaCaretUp /> : <FaCaretDown />}
+              </button>
+              {/* {userListVisible && (
+                <ul key={"users"} className="list-group list-animated">
+                  {users.map((user, index) => (
+                    <>
+                      <div style={{
+                        "border": selectedUser === user.name ? 'solid' : "",
+                        "border-radius": selectedUser === user.name ? '0.5rem' : "",
+                        "border-width": selectedUser === user.name ? 'thin' : ""
+                      }}>
+                        <li
+                          key={index}
+                          className={`list-group-item d-flex justify-content-between}`}
+                          style={{
+                            "backgroundColor": selectedUser === user.name ? 'darkgrey' : '',
+                            "color": selectedUser === user.name ? 'white' : ''
+                          }}
+                          onClick={() => handleUserClick(user)}
+                        >
+                          <span>{user.name}</span>
+                          {user.globalScore !== null &&
+                            <span>{"-"}{(user.globalScore * 100).toFixed(2)}%</span>
+                          }
+                        </li>
+                      </div>
+                    </>))}
+                </ul>)} */}
+              <br />
+              <button className="btn fileSelect"
+                style={{"padding-left":"1rem", "padding-right":"1rem"}}
+                onMouseOver={(e) => (e.currentTarget.style.color = "blue")}
+                onMouseOut={(e) => (e.currentTarget.style.color = "initial")}
+                onClick={toggleFile}
+              > 
+                {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]} {fileListVisible ? <FaCaretUp /> : <FaCaretDown />}
+              </button>
+            </div>
+          </div>
+
           <div className="ml-auto d-flex align-items-center">
-            
-          <div
+            <div
               onClick={handleDownload}
               className="btn btn-link text-decoration-none btn ml-3"
               style={productsButtonStyle}
@@ -107,13 +169,7 @@ export default function Navbar() {
               <LuDownload style={iconStyle} />
               Download
             </div>
-
-            
-            <div
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              className="position-relative"
-            >
+            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="position-relative">
               <div
                 className="btn btn-link text-decoration-none"
                 style={productsButtonStyle}
@@ -202,36 +258,29 @@ export default function Navbar() {
         .leftPic img {
           max-width: 150px; /* Adjust the size as needed */
         }
-
         .ml-auto {
           margin-left: auto;
         }
-
         .btn-link {
           color: black;
           cursor: pointer;
           font-size: 1.2rem;
         }
-
         .btn-link:hover {
           color: blue;
         }
-
         .products-dropdown {
           background: white;
           border: 1px solid #ddd;
           padding: 10px;
           z-index: 1000;
         }
-
         .products-dropdown .btn-link {
           margin: 5px 0;
         }
-
         .btn-link.text-decoration-none:hover {
           color: blue;
         }
-
         .position-relative:hover .products-dropdown {
           display: flex;
         }
