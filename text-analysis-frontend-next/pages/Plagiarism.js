@@ -11,7 +11,7 @@ import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_exa
 import { fetchFileContent } from '@/utils/FileLoader';
 import UserList from '@/components/UserList';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
-import FileNameTitle from '@/components/FileNameTitle';
+import ModularTitle from '@/components/ModularTitle';
 
 export default function Plagiarism() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -128,7 +128,9 @@ export default function Plagiarism() {
         <div className="row">
           <div className="col-md-9 text_selec">
             {/* <ProductFeatureTitle feature="Plagiarism" product={formData?.product} /> */}
-            <FileNameTitle fileName={codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/>            
+            <ModularTitle title={"File Name: "+codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/>
+            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+
             {/* <Breadcrumb /> */}
             {/* <h5>
               <div
@@ -140,7 +142,6 @@ export default function Plagiarism() {
                 codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
               }
             </h5> */}
-            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
 
             {/* Used to be fine, but if we want to export output, then we need everything in one page...? */}
             {/* <div className="card overflow-y-scroll" style={{ "height": "75vh" }}> */}
@@ -174,7 +175,8 @@ export default function Plagiarism() {
                   "font-size": "larger", 
                   "border-radius": "0.25rem"
                 }}> 
-                Submission from {selectedUser} <br/> 
+                {/* TODO set the name into a link to personal record? */}
+                Submission from <u>{selectedUser}</u><br/> 
                 User Plagiarism Score:{" "}{codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)} <br/>
                 Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}
               </div>

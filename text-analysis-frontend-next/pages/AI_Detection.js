@@ -8,6 +8,7 @@ import Breadcrumb from '@/components/BreadCrumb'
 import CollusionSelectionGraph from '@/components/vis/CollusionSelectionGraph'
 import HorizontalNav from '@/components/HorizontalNav';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
+import ModularTitle from '@/components/ModularTitle';
 import { FormDataContext } from '@/components/context/FormDataContext';
 // TODO update this to use codecheckerData_ai_detection
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
@@ -261,7 +262,9 @@ export default function AI_Detection(){
         <Navbar />
         <div className="row">
           <div className="col-md-9">
-              <ProductFeatureTitle feature="AI Detection" product={formData?.product}/>
+              {/* <ProductFeatureTitle feature="AI Detection" product={formData?.product}/> */}
+              <ModularTitle title={"File Name: "+codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]}/>
+              <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
                {/* <Breadcrumb /> */}
                {isLoadingAI ? (
                 <>
@@ -276,13 +279,6 @@ export default function AI_Detection(){
                   outputAI.details && (
                 <>
                   {/* <h3 className="heading-section text-center"> Generated Text Probability </h3> */}
-                  <h5>
-                    <div className='score_big' style={{"width":"fit-content", "color":"white", "background-color":"red", "padding":"0.5rem", "font-size":"larger", "border-radius":"0.5rem"}}>AI Detection Score:{" "}{outputAI.average.toFixed(2)}</div>
-                    Filename:{" "}
-                    {(selectedUser && codecheckerData_ai_detection.data) &&
-                      codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]
-                    }
-                  </h5>
                   {/* <h2>Average score: {outputAI.average.toFixed(2)} </h2> */}
                   {/* {(minScoreAI && maxScoreAI) && <LegendQuant minScore={minScoreAI} maxScore={maxScoreAI} /> } */}
                   {/* {outputAI.details && outputAI.details.map((oAI, index) => ( <span key={index} style={{ backgroundColor: getBackgroundColorAI( outputAI, index ), color: "#fff", padding: "2px 4px", margin: "2px", display: "inline-block", }} > {oAI.text}{" "} </span> ))} */}
@@ -301,7 +297,6 @@ export default function AI_Detection(){
 
           </div>
           <div className="col-md-3 right_side">
-            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
             <Sidebar/>
             <UserList
               users={users}
@@ -311,6 +306,13 @@ export default function AI_Detection(){
               handleFileClick={handleFileClick}
               indexFile={indexFile}              
             />
+            {outputAI.average &&
+              (<div className='score_big' style={{ "width": "100%", "color": "white", "background-color": "red", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
+                AI Detection Score:{" "}{outputAI.average.toFixed(2)} <br />
+                Submission from {selectedUser}.{" "}<br />
+                Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
+              </div>)
+            }
             <div className='legend'>
               {(minScoreAI && maxScoreAI) &&
                 <LegendBinned
@@ -332,10 +334,6 @@ export default function AI_Detection(){
             </div>
             <>
               <div>
-                Submission from {selectedUser}.{" "}<br />
-                {/* TODO update this... codecheckerData_ai_detection has null on globalScore for now... */}
-                {/* with a score of {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.globalScore}.  */}
-                Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
               </div>
               {/* TODO consider how we want to apply the idea we had of disabled={isLoadingAI} | Not necessary with fake data, but valuable later. */}
               {/* <div style={{ "vertical-align": "middle" }}> <u>Files</u> {selectedUser && fileList.map((file, index) => ( <button key={index} className={`btn btn-link ${(indexFile === index) ? 'active' : ''} ${(indexFile === index) ? 'text-secondary' : ''}`} onClick={() => handleFileClick(index)} disabled={isLoadingAI} > {file} </button> ))} </div> */}

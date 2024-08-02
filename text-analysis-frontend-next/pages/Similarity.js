@@ -13,6 +13,7 @@ import { fetchFileContent, fetchFileContentToDivs } from '@/utils/FileLoader';
 import UserList from '@/components/UserList';
 import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
+import ModularTitle from '@/components/ModularTitle';
 
 export default function Similarity() {
   const { formData, setFormData } = useContext(FormDataContext);
@@ -151,8 +152,9 @@ export default function Similarity() {
         <Navbar />
         <div className="row">
           <div className="col-md-9">
-            <ProductFeatureTitle feature="Similarity" product={formData?.product} />
-            <h4>Summary of similarity between {selectedUser} and others.</h4>
+            <ModularTitle title={`Similarity Scores of ${selectedUser}`} />
+            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+            {/* TODO remove this bit... */}
             {(selectedUser !== null && codecheckerData_collusion.data) &&
               <CollusionSelectionGraph
                 user={codecheckerData_collusion.data.find(user => user.name === selectedUser)}
@@ -206,7 +208,6 @@ export default function Similarity() {
             }
           </div>
           <div className="col-md-3 right_side">
-            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
             <Sidebar />
             <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
           </div>
