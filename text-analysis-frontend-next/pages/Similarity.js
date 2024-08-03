@@ -216,6 +216,13 @@ export default function Similarity() {
             }
           </div>
           <div className="col-md-3 right_side">
+          {selectedUser &&
+              (<div className='score_big' style={{ "width": "100%", "color": "white", "background-color": "red", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
+                Worst Similarity Score:{" "}{codecheckerData_collusion.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)} <br />
+                Submission from {selectedUser}.{" "}<br />
+                Number of submissions: {codecheckerData_collusion.data.find(user => user.name === selectedUser)?.numSubmissions}.
+              </div>)
+            }
             
             {/* <Sidebar />
             <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} /> */}
