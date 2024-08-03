@@ -149,11 +149,18 @@ export default function Similarity() {
         <title>Code Checker - Check Results</title>
       </Head>
       <div className="container-fluid">
-        <Navbar />
+        <Navbar 
+            users={users}
+            selectedUser={selectedUser}
+            handleUserClick={handleUserClick}
+            fileList={fileList}
+            handleFileClick={handleFileClick}
+            indexFile={indexFile}
+          />
         <div className="row">
+          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
           <div className="col-md-9">
-            <ModularTitle title={`Similarity Scores of ${selectedUser}`} />
-            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+            {/* <ModularTitle title={`Similarity Scores of ${selectedUser}`} /> */}
             {/* TODO remove this bit... */}
             {(selectedUser !== null && codecheckerData_collusion.data) &&
               <CollusionSelectionGraph

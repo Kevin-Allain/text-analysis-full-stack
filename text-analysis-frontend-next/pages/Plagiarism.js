@@ -124,12 +124,19 @@ export default function Plagiarism() {
         <title>Code Checker - Check Results</title>
       </Head>
       <div className="container-fluid">
-        <Navbar />
+        <Navbar 
+          users={users}
+          selectedUser={selectedUser}
+          handleUserClick={handleUserClick}
+          fileList={fileList}
+          handleFileClick={handleFileClick}
+          indexFile={indexFile}
+        />
         <div className="row">
+          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />        
           <div className="col-md-9 text_selec">
             {/* <ProductFeatureTitle feature="Plagiarism" product={formData?.product} /> */}
-            <ModularTitle title={"File Name: "+codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/>
-            <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+            {/* <ModularTitle title={"File Name: "+codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/> */}
 
             {/* <Breadcrumb /> */}
             {/* <h5>

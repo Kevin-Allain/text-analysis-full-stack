@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import React, { useState, useRef, useContext } from "react";
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { FormDataContext } from "@/components/context/FormDataContext";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -11,6 +12,7 @@ import { LuDownload } from "react-icons/lu";
 import PagePDFExport from "@/components/export/PagePDFExport";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
 import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
@@ -113,6 +115,61 @@ export default function Navbar(props) {
               </div>
             </div>
             <div className="navPeopleSets">
+              <DropdownButton
+                id="dropdown-basic-button"
+                title={`${selectedUser}`} //  ${userListVisible ? <FaCaretUp /> : <FaCaretDown />}`
+                onClick={toggleUser}
+                className="individualSelect"
+                style={{ paddingRight: '1rem' }}
+                show={userListVisible}
+              >
+                {users.map((user, index) => (
+                  <Dropdown.Item
+                    key={index}
+                    onClick={() => handleUserClick(user)}
+                    style={{
+                      backgroundColor: selectedUser === user.name ? 'darkgrey' : '',
+                      color: selectedUser === user.name ? 'white' : '',
+                      border: selectedUser === user.name ? 'solid' : '',
+                      borderRadius: selectedUser === user.name ? '0.5rem' : '',
+                      borderWidth: selectedUser === user.name ? 'thin' : '',
+                    }}
+                  >
+                    {user.name}
+                    {user.globalScore !== null && ( <span className="float-right"> {' - '} {(user.globalScore * 100).toFixed(2)}% </span> )}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+            </div>
+
+            <div className="navFileSets">
+              <DropdownButton
+                id="dropdown-basic-button"
+                title={`${codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]}`} //  ${userListVisible ? <FaCaretUp /> : <FaCaretDown />}`
+                onClick={toggleFile}
+                className="individualSelect"
+                style={{ paddingRight: '1rem' }}
+                show={fileListVisible}
+              >
+                {fileList.map((file, index) => (
+                  <Dropdown.Item
+                    key={index}
+                    onClick={() => handleFileClick(index)}
+                    style={{
+                      backgroundColor: indexFile === index ? 'darkgrey' : '',
+                      color: indexFile === index ? 'white' : '',
+                      border: indexFile === index ? 'solid' : '',
+                      borderRadius: indexFile === index ? '0.5rem' : '',
+                      borderWidth: indexFile === index ? 'thin' : '',
+                    }}
+                  >
+                    {file}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+            </div>
+
+            {/* <div className="navPeopleSets">
               <button className="btn individualSelect" 
                 style={{"padding-right":"1rem"}}
                 onMouseOver={(e) => (e.currentTarget.style.color = "blue")}
@@ -120,32 +177,35 @@ export default function Navbar(props) {
                 onClick={toggleUser}
               > {selectedUser} {userListVisible ? <FaCaretUp /> : <FaCaretDown />}
               </button>
-              {/* {userListVisible && (
-                <ul key={"users"} className="list-group list-animated">
-                  {users.map((user, index) => (
-                    <>
-                      <div style={{
-                        "border": selectedUser === user.name ? 'solid' : "",
-                        "border-radius": selectedUser === user.name ? '0.5rem' : "",
-                        "border-width": selectedUser === user.name ? 'thin' : ""
-                      }}>
-                        <li
-                          key={index}
-                          className={`list-group-item d-flex justify-content-between}`}
-                          style={{
-                            "backgroundColor": selectedUser === user.name ? 'darkgrey' : '',
-                            "color": selectedUser === user.name ? 'white' : ''
-                          }}
-                          onClick={() => handleUserClick(user)}
-                        >
-                          <span>{user.name}</span>
-                          {user.globalScore !== null &&
-                            <span>{"-"}{(user.globalScore * 100).toFixed(2)}%</span>
-                          }
-                        </li>
-                      </div>
-                    </>))}
-                </ul>)} */}
+              {userListVisible && (
+                <div className="position-absolute mt-2 d-flex flex-column">
+                  <ul key={"users"} className="list-group list-animated">
+                    {users.map((user, index) => (
+                      <>
+                        <div style={{
+                          "border": selectedUser === user.name ? 'solid' : "",
+                          "border-radius": selectedUser === user.name ? '0.5rem' : "",
+                          "border-width": selectedUser === user.name ? 'thin' : ""
+                        }}>
+                          <li
+                            key={index}
+                            className={`list-group-item d-flex justify-content-between}`}
+                            style={{
+                              "backgroundColor": selectedUser === user.name ? 'darkgrey' : '',
+                              "color": selectedUser === user.name ? 'white' : ''
+                            }}
+                            onClick={() => handleUserClick(user)}
+                          >
+                            <span>{user.name}</span>
+                            {user.globalScore !== null &&
+                              <span>{"-"}{(user.globalScore * 100).toFixed(2)}%</span>
+                            }
+                          </li>
+                        </div>
+                      </>))}
+                  </ul>
+                </div>
+              )}
               <br />
               <button className="btn fileSelect"
                 style={{"padding-left":"1rem", "padding-right":"1rem"}}
@@ -155,7 +215,7 @@ export default function Navbar(props) {
               > 
                 {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]} {fileListVisible ? <FaCaretUp /> : <FaCaretDown />}
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className="ml-auto d-flex align-items-center">
