@@ -156,6 +156,7 @@ export default function Similarity() {
             fileList={fileList}
             handleFileClick={handleFileClick}
             indexFile={indexFile}
+            feature={"Similarity"}
           />
         <div className="row">
           <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
@@ -215,8 +216,9 @@ export default function Similarity() {
             }
           </div>
           <div className="col-md-3 right_side">
-            <Sidebar />
-            <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} />
+            
+            {/* <Sidebar />
+            <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} /> */}
           </div>
         </div>
       </div>

@@ -266,6 +266,7 @@ export default function AI_Detection(){
           fileList={fileList}
           handleFileClick={handleFileClick}
           indexFile={indexFile}
+          feature={"AI_Detection"}
         />
         <div className="row">
           <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
@@ -304,7 +305,7 @@ export default function AI_Detection(){
 
           </div>
           <div className="col-md-3 right_side">
-            <Sidebar/>
+            {/* <Sidebar/>
             <UserList
               users={users}
               selectedUser={selectedUser}
@@ -312,7 +313,7 @@ export default function AI_Detection(){
               fileList={fileList}
               handleFileClick={handleFileClick}
               indexFile={indexFile}              
-            />
+            /> */}
             {outputAI.average &&
               (<div className='score_big' style={{ "width": "100%", "color": "white", "background-color": "red", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
                 AI Detection Score:{" "}{outputAI.average.toFixed(2)} <br />

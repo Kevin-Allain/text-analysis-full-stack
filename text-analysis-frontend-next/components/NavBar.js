@@ -21,8 +21,8 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
 
 export default function Navbar(props) {
-  const {users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile} = props;
-  console.log("Navbar | props: ",{users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile});
+  const {users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile, feature} = props;
+  console.log("Navbar | props: ",{users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile, feature});
   const { formData } = useContext(FormDataContext);
   const { institution, module, name, files } = formData;
   console.log("Navbar | formData stuff: ", {institution, module, name, files});
@@ -83,6 +83,8 @@ export default function Navbar(props) {
 
   const toggleUser = () => { setUserListVisible(!userListVisible);  }
   const toggleFile = () => { setFileListVisible(!fileListVisible);  }
+
+  const structToLookFilesIn = feature==="AI_Detection"?codecheckerData_ai_detection:feature==="Similarity"?codecheckerData_collusion:codecheckerData_plagiarism;
 
   return (
     <div className="row">
@@ -145,7 +147,9 @@ export default function Navbar(props) {
             <div className="navFileSets">
               <DropdownButton
                 id="dropdown-basic-button"
-                title={`${codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]}`} //  ${userListVisible ? <FaCaretUp /> : <FaCaretDown />}`
+                title={
+                  `${structToLookFilesIn.data.find(user => user.name === selectedUser)?.files[indexFile]}`
+                  }
                 onClick={toggleFile}
                 className="individualSelect"
                 style={{ paddingRight: '1rem' }}
@@ -168,54 +172,6 @@ export default function Navbar(props) {
                 ))}
               </DropdownButton>
             </div>
-
-            {/* <div className="navPeopleSets">
-              <button className="btn individualSelect" 
-                style={{"padding-right":"1rem"}}
-                onMouseOver={(e) => (e.currentTarget.style.color = "blue")}
-                onMouseOut={(e) => (e.currentTarget.style.color = "initial")}
-                onClick={toggleUser}
-              > {selectedUser} {userListVisible ? <FaCaretUp /> : <FaCaretDown />}
-              </button>
-              {userListVisible && (
-                <div className="position-absolute mt-2 d-flex flex-column">
-                  <ul key={"users"} className="list-group list-animated">
-                    {users.map((user, index) => (
-                      <>
-                        <div style={{
-                          "border": selectedUser === user.name ? 'solid' : "",
-                          "border-radius": selectedUser === user.name ? '0.5rem' : "",
-                          "border-width": selectedUser === user.name ? 'thin' : ""
-                        }}>
-                          <li
-                            key={index}
-                            className={`list-group-item d-flex justify-content-between}`}
-                            style={{
-                              "backgroundColor": selectedUser === user.name ? 'darkgrey' : '',
-                              "color": selectedUser === user.name ? 'white' : ''
-                            }}
-                            onClick={() => handleUserClick(user)}
-                          >
-                            <span>{user.name}</span>
-                            {user.globalScore !== null &&
-                              <span>{"-"}{(user.globalScore * 100).toFixed(2)}%</span>
-                            }
-                          </li>
-                        </div>
-                      </>))}
-                  </ul>
-                </div>
-              )}
-              <br />
-              <button className="btn fileSelect"
-                style={{"padding-left":"1rem", "padding-right":"1rem"}}
-                onMouseOver={(e) => (e.currentTarget.style.color = "blue")}
-                onMouseOut={(e) => (e.currentTarget.style.color = "initial")}
-                onClick={toggleFile}
-              > 
-                {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]} {fileListVisible ? <FaCaretUp /> : <FaCaretDown />}
-              </button>
-            </div> */}
           </div>
 
           <div className="ml-auto d-flex align-items-center">

@@ -131,6 +131,7 @@ export default function Plagiarism() {
           fileList={fileList}
           handleFileClick={handleFileClick}
           indexFile={indexFile}
+          feature={"Plagiarism"}
         />
         <div className="row">
           <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />        
@@ -161,7 +162,7 @@ export default function Plagiarism() {
             </div>
           </div>
           <div style={stickyColumn} className="col-md-3">
-            <Sidebar/>
+            {/* <Sidebar/>
             <UserList
               users={users}
               selectedUser={selectedUser}
@@ -169,7 +170,7 @@ export default function Plagiarism() {
               fileList={fileList}
               handleFileClick={handleFileClick}
               indexFile={indexFile}
-            />
+            /> */}
             <div>
               {/* Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. */}
               <div
