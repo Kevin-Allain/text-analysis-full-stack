@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React, { useState, useEffect, useRef, useContext } from 'react';
-
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 import Head from 'next/head'
 import Navbar from '@/components/NavBar'
 import Sidebar from '@/components/Sidebar'
@@ -33,13 +33,18 @@ export default function Similarity() {
   const [contentSimilarity1, setContentSimilarity1] = useState(null);
   const [contentSimilarity2, setContentSimilarity2] = useState(null);
 
+  const [showMenuOtherUser, setShowMenuOtherUser] = useState(false);
+  const toggleOtherUser = () => { setShowMenuOtherUser(!showMenuOtherUser);}
+
+  const [selectedFiles, setSelectedFiles] = useState({ file1: null, file2: null });
+
+
   // ----- functions
   const handleUserClick = (user) => {
     setSelectedUser(user.name);
     setOtherUser(null);
     setIndexFile(0); // Reset to the first file
   };
-  const handleFileClick = (index) => { setIndexFile(index); };
   const TableComponent = ({ inputString, setFileSimilarity1, setFileSimilarity2 }) => {
     const tableHTML = parseAndGenerateHTMLTable(inputString);
     useEffect(() => {
@@ -50,8 +55,21 @@ export default function Similarity() {
           const file2 = row.getAttribute('data-file2');
           setFileSimilarity1(file1);
           setFileSimilarity2(file2);
+          setSelectedFiles({ file1, file2 });
         });
       });
+
+      // Setting the style
+      rows.forEach(row => {
+        const file1 = row.getAttribute('data-file1');
+        const file2 = row.getAttribute('data-file2');
+        if (file1 === selectedFiles.file1 && file2 === selectedFiles.file2) {
+          row.style.border = '2px solid black';
+        } else {
+          row.style.border = 'none';
+        }
+      });
+
     }, [tableHTML]);
     return (<div className="container">
       <div dangerouslySetInnerHTML={tableHTML} />
@@ -78,14 +96,14 @@ export default function Similarity() {
         rows.push({
           name1: name1.trim(), file1: file1.slice(0, -1).trim(),
           name2: name2.trim(), file2: file2.slice(0, -1).trim(),
-          score: score
+          score: (100*score).toFixed(2)+"%"
         });
       }
     }
     // Generate HTML table
     // const tableHTML = `<table class="table table-striped"><thead><tr><th>Name 1</th><th>File 1</th><th>Name 2</th><th>File 2</th><th>Score</th></tr></thead><tbody>${rows.map(row => `<tr onclick="setFileSimilaritys('${row.file1}', '${row.file2}')"><td>${row.name1}</td><td>${row.file1}</td><td>${row.name2}</td><td>${row.file2}</td><td>${row.score}</td></tr>`).join('')}</tbody></table>`;
     const tableHTML = `<table class="table table-striped">
-        <thead><tr><th>User 1</th><th>File 1</th><th>User 2</th><th>File 2</th><th>Similarity Score</th></tr></thead>
+        <thead><tr><th>Individual 1</th><th>File 1</th><th>Individual 2</th><th>File 2</th><th>Similarity Score</th></tr></thead>
         <tbody>
           ${rows.map((row, index) => `<tr class="clickable-row" data-file1="${row.file1}" data-file2="${row.file2}" style="cursor: pointer;">
               <td>${row.name1}</td><td>${row.file1}</td><td>${row.name2}</td><td>${row.file2}</td><td>${row.score}</td></tr>`).join('')}
@@ -153,30 +171,60 @@ export default function Similarity() {
             users={users}
             selectedUser={selectedUser}
             handleUserClick={handleUserClick}
-            fileList={fileList}
-            handleFileClick={handleFileClick}
-            indexFile={indexFile}
             feature={"Similarity"}
+            // fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile}
           />
         <div className="row">
           <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
           <div className="col-md-9">
             {/* <ModularTitle title={`Similarity Scores of ${selectedUser}`} /> */}
-            {/* TODO remove this bit... */}
             {(selectedUser !== null && codecheckerData_collusion.data) &&
-              <CollusionSelectionGraph
-                user={codecheckerData_collusion.data.find(user => user.name === selectedUser)}
-                setOtherUser={setOtherUser}
-                otherUser={otherUser}
-              />
+              <>
+                <div className="otherUserSets">
+                  <DropdownButton
+                    id="dropdown-basic-button"
+                    title={
+                      `${otherUser? ("Similarity with "+otherUser) :"Select other user to compare similarity"}`
+                    }
+                    onClick={toggleOtherUser}
+                    isExpanded={true}
+                    className="btn otherIndividualSelect"
+                    // size="lg"
+                    // align={{ lg: 'end' }}
+                    style={{ "minWidth": '100% !important' }} // Ensures it takes priority
+                    show={showMenuOtherUser}
+                  >
+                    {codecheckerData_collusion.data.find(user => user.name === selectedUser)
+                      .scoreDetails.relations.map((relation, index) => (
+                      <Dropdown.Item
+                        key={index}
+                        onClick={() => setOtherUser(relation.name)}
+                        style={{
+                          backgroundColor: relation.name === otherUser ? 'darkgrey' : '',
+                          color: relation.name === otherUser ? 'white' : '',
+                          border: relation.name === otherUser ? 'solid' : '',
+                          borderRadius: relation.name === otherUser ? '0.5rem' : '',
+                          borderWidth: relation.name === otherUser ? 'thin' : '',
+                          width:"100%"
+                        }}
+                      >
+                        {relation.name}
+                      </Dropdown.Item>
+                    ))}
+                  </DropdownButton>
+                </div>
+                {/* <CollusionSelectionGraph
+                  user={codecheckerData_collusion.data.find(user => user.name === selectedUser)}
+                  setOtherUser={setOtherUser}
+                  otherUser={otherUser}
+                /> */}
+              </>
             }
-            {/* <hr/>
-                <h4>Files details</h4><h3>{(selectedUser && codecheckerData_collusion.data) && codecheckerData_collusion.data.find(user => user.name === selectedUser)?.files[indexFile]}</h3>
-                <div><u>Files</u>{selectedUser && fileList.map((file, index) => (<button  key={index} className={`btn btn-link ${(indexFile === index) ? 'active' : ''}`} onClick={() => handleFileClick(index)}>{file}</button>))}</div> */}
             {otherUser &&
               <div className="card" >
                 <div className="card-body">
                   <p>Details about similarity scores for each files combination with {otherUser}.</p>
+                  <p>Select a row in the table to compare two files.</p>
                   {otherUser &&
                     <>
                       <TableComponent
@@ -217,9 +265,9 @@ export default function Similarity() {
           </div>
           <div className="col-md-3 right_side">
           {selectedUser &&
-              (<div className='score_big' style={{ "width": "100%", "color": "white", "background-color": "red", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
-                Worst Similarity Score:{" "}{codecheckerData_collusion.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)} <br />
-                Submission from {selectedUser}.{" "}<br />
+              (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
+                Submission from <u>{selectedUser}</u>.{" "}<br />
+                Worst Similarity Score:{" "}{(100*codecheckerData_collusion.data.find(user => user.name === selectedUser)?.globalScore).toFixed(2)+"%"} <br />
                 Number of submissions: {codecheckerData_collusion.data.find(user => user.name === selectedUser)?.numSubmissions}.
               </div>)
             }
@@ -233,3 +281,52 @@ export default function Similarity() {
   )
 }
 
+
+// TODO consider this code for fix of width of button for selection of other user. Quite annoying
+// {(selectedUser !== null && codecheckerData_collusion.data) &&
+//   <>
+//     <div className="otherUserSets">
+//       <DropdownButton
+//         id="dropdown-basic-button"
+//         title={
+//           `${otherUser? ("Similarity with "+otherUser) :"Select other user to compare similarity"}`
+//         }
+//         onClick={toggleOtherUser}
+//         isExpanded={true}
+//         className="otherIndividualSelect" 
+//         // size="lg"
+//         // align={{ lg: 'end' }}
+//         // style={{ "minWidth": '100% !important' }} // Ensures it takes priority
+//         style={{
+//           "backgroundColor":"#0d6efd", // TODO find cleaner fix
+//           "borderRadius":"0.25rem",
+//           width:"100%"
+//           }} 
+//         show={showMenuOtherUser}
+//       >
+//         {codecheckerData_collusion.data.find(user => user.name === selectedUser)
+//           .scoreDetails.relations.map((relation, index) => (
+//           <Dropdown.Item
+//             key={index}
+//             onClick={() => setOtherUser(relation.name)}
+//             // className="w-100"
+//             style={{
+//               backgroundColor: relation.name === otherUser ? 'darkgrey' : '',
+//               color: relation.name === otherUser ? 'white' : '',
+//               border: relation.name === otherUser ? 'solid' : '',
+//               borderRadius: relation.name === otherUser ? '0.5rem' : '',
+//               borderWidth: relation.name === otherUser ? 'thin' : '',
+//             }}
+//           >
+//             {relation.name}
+//           </Dropdown.Item>
+//         ))}
+//       </DropdownButton>
+//     </div>
+//     {/* <CollusionSelectionGraph
+//       user={codecheckerData_collusion.data.find(user => user.name === selectedUser)}
+//       setOtherUser={setOtherUser}
+//       otherUser={otherUser}
+//     /> */}
+//   </>
+// }

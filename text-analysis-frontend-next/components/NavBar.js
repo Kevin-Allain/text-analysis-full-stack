@@ -81,6 +81,11 @@ export default function Navbar(props) {
     });
   };
 
+  // TODO feels dirty because only one element...
+  const toggleInstitution = () => { setInstitutionListVisible(!institutionListVisible);  }
+  const toggleModule = () => { setModuleListVisible(!moduleListVisible);  }
+  const toggleName = () => { setNameListVisible(!nameListVisible);  }
+
   const toggleUser = () => { setUserListVisible(!userListVisible);  }
   const toggleFile = () => { setFileListVisible(!fileListVisible);  }
 
@@ -93,91 +98,148 @@ export default function Navbar(props) {
           className="container-fluid"
           style={{ marginLeft: "1rem", marginRight: "1rem" }}
         >
-          <div
-            className="leftPic"
-            onClick={handleLogoClick}
-            style={{ cursor: "pointer" }}
-          >
+          <div className="leftPic" onClick={handleLogoClick} style={{ cursor: "pointer" }} >
             <Image src={logo} alt="Logo" />
           </div>
           
           <div className="ml-auto d-flex align-items-center navigations ">
-            <div className="navFileSets" style={{"padding-left":"1rem", "padding-right":"1rem", "margin-right":"5rem"}} >
-              <div className="institutionSelect" style={{"padding-right":"1rem"}}> 
-                {institution} 
-                {/* {institutionListVisible ? <FaCaretUp /> : <FaCaretDown />} */}
-              </div>
-              <div className="moduleSelect" style={{"padding-left":"1rem", "padding-right":"1rem"}}> 
-                {module} 
-                {/* {moduleListVisible ? <FaCaretUp /> : <FaCaretDown />} */}
-              </div>
-              <div className="nameSelect" style={{"padding-left":"2rem", "padding-right":"1rem"}}> 
-                {name} 
-                {/* {nameListVisible ? <FaCaretUp /> : <FaCaretDown />} */}
-              </div>
-            </div>
-            <div className="navPeopleSets">
+            <div className="navFolderSets" 
+              // style={{"padding-left":"1rem", "padding-right":"1rem", "margin-right":"5rem"}} 
+            >
+              {/* <div className="institutionSelect" style={{"padding-right":"1rem"}}> {institution} </div>
+              <div className="moduleSelect" style={{"padding-left":"1rem", "padding-right":"1rem"}}> {module} </div>
+              <div className="nameSelect" style={{"padding-left":"2rem", "padding-right":"1rem"}}> {name} </div> */}
               <DropdownButton
-                id="dropdown-basic-button"
-                title={`${selectedUser}`} //  ${userListVisible ? <FaCaretUp /> : <FaCaretDown />}`
-                onClick={toggleUser}
-                className="individualSelect"
-                style={{ paddingRight: '1rem' }}
-                show={userListVisible}
-              >
-                {users.map((user, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleUserClick(user)}
-                    style={{
-                      backgroundColor: selectedUser === user.name ? 'darkgrey' : '',
-                      color: selectedUser === user.name ? 'white' : '',
-                      border: selectedUser === user.name ? 'solid' : '',
-                      borderRadius: selectedUser === user.name ? '0.5rem' : '',
-                      borderWidth: selectedUser === user.name ? 'thin' : '',
-                    }}
+                    id="dropdown-basic-button"
+                    title={`${institution} | ${module} | ${name}`} //  ${userListVisible ? <FaCaretUp /> : <FaCaretDown />}`
+                    onClick={toggleInstitution}
+                    className="individualSelect"
+                    style={{ paddingRight: '1rem' }}
+                    show={institutionListVisible}
                   >
-                    {user.name}
-                    {user.globalScore !== null && ( <span className="float-right"> {' - '} {(user.globalScore * 100).toFixed(2)}% </span> )}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
+                    {/* Institution */}
+                    <Dropdown.ItemText><u>Institution</u></Dropdown.ItemText>
+                    {[institution].map((institution, index) => (
+                      <Dropdown.Item
+                        key={index}
+                        // onClick={() => handleUserClick(user)}
+                        style={{
+                          backgroundColor: 'darkgrey',
+                          color: 'white',
+                          border: 'solid',
+                          borderRadius: '0.5rem',
+                          borderWidth: '',
+                        }}
+                      >
+                        {institution}
+                      </Dropdown.Item>
+                    ))}
+                    {/* Module */}
+                    <Dropdown.ItemText><u>Module</u></Dropdown.ItemText>
+                    {[module].map((module, index) => (
+                      <Dropdown.Item
+                        key={index}
+                        // onClick={() => handleUserClick(user)}
+                        style={{
+                          backgroundColor: 'darkgrey',
+                          color: 'white',
+                          border: 'solid',
+                          borderRadius: '0.5rem',
+                          borderWidth: '',
+                        }}
+                      >
+                        {module}
+                      </Dropdown.Item>
+                    ))}
+                    {/* Name */}
+                    <Dropdown.ItemText><u>Name</u></Dropdown.ItemText>
+                    {[name].map((name, index) => (
+                      <Dropdown.Item
+                        key={index}
+                        // onClick={() => handleUserClick(user)}
+                        style={{
+                          backgroundColor: 'darkgrey',
+                          color: 'white',
+                          border: 'solid',
+                          borderRadius: '0.5rem',
+                          borderWidth: '',
+                        }}
+                      >
+                        {name}
+                      </Dropdown.Item>
+                    ))}
+                  </DropdownButton>
             </div>
-
-            <div className="navFileSets">
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={
-                  `${structToLookFilesIn.data.find(user => user.name === selectedUser)?.files[indexFile]}`
-                  }
-                onClick={toggleFile}
-                className="individualSelect"
-                style={{ paddingRight: '1rem' }}
-                show={fileListVisible}
-              >
-                {fileList.map((file, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleFileClick(index)}
-                    style={{
-                      backgroundColor: indexFile === index ? 'darkgrey' : '',
-                      color: indexFile === index ? 'white' : '',
-                      border: indexFile === index ? 'solid' : '',
-                      borderRadius: indexFile === index ? '0.5rem' : '',
-                      borderWidth: indexFile === index ? 'thin' : '',
-                    }}
+            {users && 
+              <>
+                <div className="navPeopleSets">
+                  <DropdownButton
+                    id="dropdown-basic-button"
+                    title={`Indidivual: ${selectedUser}`} //  ${userListVisible ? <FaCaretUp /> : <FaCaretDown />}`
+                    onClick={toggleUser}
+                    className="individualSelect"
+                    style={{ paddingRight: '1rem' }}
+                    show={userListVisible}
                   >
-                    {file}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
+                    {users.map((user, index) => (
+                      <Dropdown.Item
+                        key={index}
+                        onClick={() => handleUserClick(user)}
+                        style={{
+                          backgroundColor: selectedUser === user.name ? 'darkgrey' : '',
+                          color: selectedUser === user.name ? 'white' : '',
+                          border: selectedUser === user.name ? 'solid' : '',
+                          borderRadius: selectedUser === user.name ? '0.5rem' : '',
+                          borderWidth: selectedUser === user.name ? 'thin' : '',
+                        }}
+                      >
+                        {user.name}
+                        {user.globalScore !== null && ( <span className="float-right"> {' - '} {(user.globalScore * 100).toFixed(2)}% </span> )}
+                      </Dropdown.Item>
+                    ))}
+                  </DropdownButton>
+                </div>
+              </>
+            }
+            {fileList &&
+              <>
+                <div className="navFileSets">
+                  {/* File:<br/> */}
+                  <DropdownButton
+                    id="dropdown-basic-button"
+                    title={
+                      `File: ${structToLookFilesIn.data.find(user => user.name === selectedUser)?.files[indexFile]}`
+                      }
+                    onClick={toggleFile}
+                    className="individualSelect"
+                    style={{ paddingRight: '1rem' }}
+                    show={fileListVisible}
+                  >
+                    {fileList.map((file, index) => (
+                      <Dropdown.Item
+                        key={index}
+                        onClick={() => handleFileClick(index)}
+                        style={{
+                          backgroundColor: indexFile === index ? 'darkgrey' : '',
+                          color: indexFile === index ? 'white' : '',
+                          border: indexFile === index ? 'solid' : '',
+                          borderRadius: indexFile === index ? '0.5rem' : '',
+                          borderWidth: indexFile === index ? 'thin' : '',
+                        }}
+                      >
+                        {file}
+                      </Dropdown.Item>
+                    ))}
+                  </DropdownButton>
+                </div>
+              </>
+            }
           </div>
 
           <div className="ml-auto d-flex align-items-center">
             <div
               onClick={handleDownload}
-              className="btn btn-link text-decoration-none btn ml-3"
+              className="btn btn-link text-decoration-none ml-3"
               style={productsButtonStyle}
               onMouseOver={(e) => (e.currentTarget.style.color = "blue")}
               onMouseOut={(e) => (e.currentTarget.style.color = "initial")}

@@ -173,19 +173,10 @@ export default function Plagiarism() {
             /> */}
             <div>
               {/* Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. */}
-              <div
-                className='score_big mb-1'
-                style={{ 
-                  "width": "100%", 
-                  "color": "white", 
-                  "background-color": "red", 
-                  "padding": "0.25rem", 
-                  "font-size": "larger", 
-                  "border-radius": "0.25rem"
-                }}> 
+              <div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
                 {/* TODO set the name into a link to personal record? */}
                 Submission from <u>{selectedUser}</u><br/> 
-                User Plagiarism Score:{" "}{codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)} <br/>
+                User Plagiarism Score:{" "}{(100*codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore).toFixed(2)+"%"} <br/>
                 Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}
               </div>
             </div>

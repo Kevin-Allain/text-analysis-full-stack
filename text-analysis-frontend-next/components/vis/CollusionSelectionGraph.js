@@ -26,7 +26,12 @@ export default function CollusionSelectionGraph({ user, setOtherUser, otherUser 
     {/* "height": "45vh", */}
       <div className="card" style={{"margin": "0 0 1vh 0",  "width": "100%" }}>
         <div className="card-body" style={{"margin": "-2vh 0 0 0"}}>
-          <BarChartD3 data={processedData} selectBar={setOtherUser} hasYaxis={true} activeSelection={otherUser} />
+          <BarChartD3 
+            data={processedData} 
+            selectBar={setOtherUser} 
+            hasYaxis={true} 
+            activeSelection={otherUser} 
+          />
         </div>
       </div>
     </>
