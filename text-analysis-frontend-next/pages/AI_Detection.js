@@ -269,7 +269,7 @@ export default function AI_Detection(){
           feature={"AI_Detection"}
         />
         <div className="row">
-          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser}/>
           <div className="col-md-9">
               {/* <ProductFeatureTitle feature="AI Detection" product={formData?.product}/> */}
               {/* <ModularTitle title={"File Name: "+codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.files[indexFile]}/> */}
