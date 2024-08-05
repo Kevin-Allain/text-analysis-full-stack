@@ -47,16 +47,17 @@ export default function IndividualHistory(props) {
         <title>{selectedUser && selectedUser} - Individual History</title>
       </Head>
       <div className="container-fluid">
-        <Navbar />
+      {/* TODO make user selection possible...?! */}
+        <Navbar  />
         <div className="row">
-          <div className="col-md-2">
+          {/* <div className="col-md-2">
             <UserList
               users={users}
               selectedUser={selectedUser}
               handleUserClick={handleUserClick}
             />
-          </div>
-          <div className="col-md-10 scoreCardHistory">
+          </div> */}
+          <div className="col-md-12 scoreCardHistory">
             {/* <PagePDFExport/> */}
             <ProductFeatureTitle feature="Individual History" product={selectedUser}/>
             <DetailsHistoryIndividual selectedUser={selectedUser} setSelectedUser={setSelectedUser} />

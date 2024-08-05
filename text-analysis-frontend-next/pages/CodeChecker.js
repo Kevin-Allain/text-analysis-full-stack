@@ -62,9 +62,9 @@ const CodeChecker = () => {
         <Navbar />
         <div className="row">
           <div className="col-md-3 right_side">
-            <Sidebar />
+            {/* <Sidebar /> */}
           </div>
-          <div className="col-md-9">
+          <div className="col-md-12">
             {/* <h1 className="heading-section text-center">Code Checker</h1> */}
             <ProductFeatureTitle feature="Code Checker" />
             <NewCheckWindow product={"CodeChecker"} />

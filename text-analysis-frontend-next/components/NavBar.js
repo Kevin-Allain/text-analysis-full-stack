@@ -107,7 +107,8 @@ export default function Navbar(props) {
               {/* <div className="institutionSelect" style={{"padding-right":"1rem"}}> {institution} </div>
               <div className="moduleSelect" style={{"padding-left":"1rem", "padding-right":"1rem"}}> {module} </div>
               <div className="nameSelect" style={{"padding-left":"2rem", "padding-right":"1rem"}}> {name} </div> */}
-              <DropdownButton
+              {name && 
+                <DropdownButton
                     id="dropdown-basic-button"
                     title={`${institution} | ${module} | ${name}`} //  ${userListVisible ? <FaCaretUp /> : <FaCaretDown />}`
                     onClick={toggleInstitution}
@@ -166,7 +167,8 @@ export default function Navbar(props) {
                         {name}
                       </Dropdown.Item>
                     ))}
-                  </DropdownButton>
+              </DropdownButton>
+              }
             </div>
             {users && 
               <>
