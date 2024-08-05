@@ -18,8 +18,6 @@ import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection
 import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
-
-
 export default function Navbar(props) {
   const {users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile, feature} = props;
   console.log("Navbar | props: ",{users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile, feature});

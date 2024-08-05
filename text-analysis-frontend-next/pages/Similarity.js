@@ -164,7 +164,7 @@ export default function Similarity() {
   return (
     <>
       <Head>
-        <title>Code Checker - Check Results</title>
+        <title>Similarity</title>
       </Head>
       <div className="container-fluid">
         <Navbar 
@@ -175,7 +175,7 @@ export default function Similarity() {
             // fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile}
           />
         <div className="row">
-          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />
+          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser}/>
           <div className="col-md-9">
             {/* <ModularTitle title={`Similarity Scores of ${selectedUser}`} /> */}
             {(selectedUser !== null && codecheckerData_collusion.data) &&

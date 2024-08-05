@@ -134,7 +134,7 @@ export default function Plagiarism() {
           feature={"Plagiarism"}
         />
         <div className="row">
-          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} />        
+          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
           <div className="col-md-9 text_selec">
             {/* <ProductFeatureTitle feature="Plagiarism" product={formData?.product} /> */}
             {/* <ModularTitle title={"File Name: "+codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/> */}

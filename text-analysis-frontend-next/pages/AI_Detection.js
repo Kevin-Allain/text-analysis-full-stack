@@ -317,7 +317,7 @@ export default function AI_Detection(){
             {outputAI.average &&
               (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
                 Submission from <u>{selectedUser}</u>.{" "}<br />
-                AI Detection Score:{" "}{(100*outputAI.average).toFixed(2)+"%"} <br />
+                AI Detection Score:{" "}{(outputAI.average).toFixed(2)} <br />
                 Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
               </div>)
             }
