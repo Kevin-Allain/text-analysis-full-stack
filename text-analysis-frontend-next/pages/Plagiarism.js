@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { Dropdown, DropdownButton, Container, Row, Col } from 'react-bootstrap';
 import Head from 'next/head';
 import Navbar from '@/components/NavBar';
 import Sidebar from '@/components/Sidebar';
@@ -114,7 +115,7 @@ export default function Plagiarism() {
     zIndex: 10,
     height: "90vh",
     overflowY: "auto",
-    backgroundColor: "#f8f9fa", // Just for visibility
+    // backgroundColor: "#f8f9fa", // Just for visibility
   };
 
 
@@ -123,19 +124,28 @@ export default function Plagiarism() {
       <Head>
         <title>Code Checker - Check Results</title>
       </Head>
-      <div className="container-fluid">
-        <Navbar 
-          users={users}
-          selectedUser={selectedUser}
-          handleUserClick={handleUserClick}
-          fileList={fileList}
-          handleFileClick={handleFileClick}
-          indexFile={indexFile}
-          feature={"Plagiarism"}
-        />
-        <div className="row">
+      <Container fluid>
+        <Row>
+        <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"Plagiarism"} />
+
+        <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
+          <Col md={12} lg={10} className="content" style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            maxWidth: '1400px',  // Set a maximum width for large screens
+            paddingLeft: '15px',
+            paddingRight: '15px',
+          }}
+          >
+
+
+        {/* <div className="row"> */}
+        <Row>
           <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
-          <div className="col-md-9 text_selec">
+
+          <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >          
+          {/* <div className="col-md-9 text_selec"> */}
+
             {/* <ProductFeatureTitle feature="Plagiarism" product={formData?.product} /> */}
             {/* <ModularTitle title={"File Name: "+codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/> */}
 
@@ -160,17 +170,13 @@ export default function Plagiarism() {
                 </div>
               </div>
             </div>
-          </div>
-          <div style={stickyColumn} className="col-md-3">
-            {/* <Sidebar/>
-            <UserList
-              users={users}
-              selectedUser={selectedUser}
-              handleUserClick={handleUserClick}
-              fileList={fileList}
-              handleFileClick={handleFileClick}
-              indexFile={indexFile}
-            /> */}
+          
+          {/* </div> */}
+          </Col>
+
+          {/* <div style={stickyColumn} className="col-md-3"> */}
+          <Col lg={3} md={4} sm={12} className="smallerContent">
+
             <div>
               {/* Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. */}
               <div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
@@ -180,11 +186,6 @@ export default function Plagiarism() {
                 Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}
               </div>
             </div>
-
-            {/* <div className="user_listing">
-              <ul className="list-group"> {users.map((user, index) => ( <li key={index} className={`list-group-item d-flex justify-content-between ${selectedUser === user.name ? 'bg-secondary' : ''}  ${selectedUser === user.name ? 'text-white' : ''}`} onClick={() => handleUserClick(user)} > <span>{user.name}</span> <span>{(user.globalScore * 100).toFixed(2)}%</span> </li> ))} </ul>
-            </div> */}
-
             <div className="details_score" ref={detailsScoreRef}>
               {detailsPlagiarism.map((item, index) => (
                 <div key={index}>
@@ -214,9 +215,15 @@ export default function Plagiarism() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </div>
+
+          </Col>
+          {/* </div> */}
+
+              </Row>
+            </Col>
+          <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
+        </Row>
+      </Container>
     </>
   );
 }

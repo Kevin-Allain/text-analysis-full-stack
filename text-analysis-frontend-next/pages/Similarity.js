@@ -181,19 +181,18 @@ export default function Similarity() {
       <Container fluid>
         <Row>
           <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} feature={"Similarity"} />
-          <Col md={0} lg={1} className="d-none d-md-block emptyStuff" style={{ "backgroundColor": "yellow" }}></Col>
+          <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
           <Col md={12} lg={10} className="content" style={{
             marginLeft: 'auto',
             marginRight: 'auto',
             maxWidth: '1400px',  // Set a maximum width for large screens
             paddingLeft: '15px',
             paddingRight: '15px',
-            "backgroundColor": "green"
           }}
           >
             <Row>        
               <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser}/>      
-              <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" style={{ "backgroundColor": "red" }}>
+              <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >
                 {/* <ProductFeatureTitle feature="Individual History" product={selectedUser} /> */}
                 {(selectedUser !== null && codecheckerData_collusion.data) &&
                   <>
@@ -270,7 +269,7 @@ export default function Similarity() {
                   </div>
                 }
               </Col>
-              <Col lg={3} md={4} sm={12} className="smallerContent" style={{ "backgroundColor": "blue" }}>
+              <Col lg={3} md={4} sm={12} className="smallerContent">
                 {/* <Sidebar /> */}
                 {selectedUser &&
                   (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
@@ -282,159 +281,9 @@ export default function Similarity() {
               </Col>
             </Row>
           </Col>
-          <Col md={0} lg={1} className="d-none d-md-block emptyStuff" style={{ "backgroundColor": "orange" }}></Col>
+          <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
         </Row>
       </Container>
-      {/* <div className="container-fluid">
-        <Navbar 
-            users={users}
-            selectedUser={selectedUser}
-            handleUserClick={handleUserClick}
-            feature={"Similarity"}
-            // fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile}
-          />
-        <div className="row">
-          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser}/>
-          <div className="col-md-9">
-            {(selectedUser !== null && codecheckerData_collusion.data) &&
-              <>
-                <div className="otherUserSets">
-                  <DropdownButton
-                    id="dropdown-basic-button"
-                    title={
-                      `${otherUser? ("Similarity with "+otherUser) :"Select other user to compare similarity"}`
-                    }
-                    onClick={toggleOtherUser}
-                    isExpanded={true}
-                    className="btn otherIndividualSelect"
-                    // size="lg"
-                    // align={{ lg: 'end' }}
-                    style={{ "minWidth": '100% !important' }} // Ensures it takes priority
-                    show={showMenuOtherUser}
-                  >
-                    {codecheckerData_collusion.data.find(user => user.name === selectedUser)
-                      .scoreDetails.relations.map((relation, index) => (
-                      <Dropdown.Item
-                        key={index}
-                        onClick={() => setOtherUser(relation.name)}
-                        style={{
-                          backgroundColor: relation.name === otherUser ? 'darkgrey' : '',
-                          color: relation.name === otherUser ? 'white' : '',
-                          border: relation.name === otherUser ? 'solid' : '',
-                          borderRadius: relation.name === otherUser ? '0.5rem' : '',
-                          borderWidth: relation.name === otherUser ? 'thin' : '',
-                          width:"100%"
-                        }}
-                      >
-                        {relation.name}
-                      </Dropdown.Item>
-                    ))}
-                  </DropdownButton>
-                </div>
-              </>
-            }
-            {otherUser &&
-              <div className="card" >
-                <div className="card-body">
-                  <p>Details about similarity scores for each files combination with {otherUser}.</p>
-                  <p>Select a row in the table to compare two files.</p>
-                  {otherUser &&
-                    <>
-                      <TableComponent
-                        inputString={
-                          JSON.stringify(codecheckerData_collusion.data
-                            .find(user => user.name === selectedUser)
-                            .scoreDetails
-                            .relations
-                            .filter(a => a.name === otherUser)[0]
-                            .collusionScores
-                          )}
-                        setFileSimilarity1={setFileSimilarity1}
-                        setFileSimilarity2={setFileSimilarity2}
-                      />
-                      {(fileSimilarity1 && fileSimilarity2) &&
-                        <div className="d-flex justify-content-between mx-3">
-                          <div className="w-50">
-                            <b>Filename:{" "} {fileSimilarity1}</b><hr />
-                            {(contentSimilarity1 !== null) && contentSimilarity1 }
-                          </div>
-                          <div className="vertical-separator" style={{ width: '1px', backgroundColor: '#000', height: '100%', margin: '0 10px' }}></div>
-                          <div className="w-50">
-                            <b>Filename:{" "} {fileSimilarity2}</b><hr />
-                            {(contentSimilarity2 !== null) && contentSimilarity2 }
-                          </div>
-                        </div>
-                      }
-                    </>
-                  }
-                </div>
-              </div>
-            }
-          </div>
-          <div className="col-md-3 right_side">
-          {selectedUser &&
-              (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
-                Submission from <u>{selectedUser}</u>.{" "}<br />
-                Worst Similarity Score:{" "}{(100*codecheckerData_collusion.data.find(user => user.name === selectedUser)?.globalScore).toFixed(2)+"%"} <br />
-                Number of submissions: {codecheckerData_collusion.data.find(user => user.name === selectedUser)?.numSubmissions}.
-              </div>)
-            }
-          </div>
-        </div>
-      </div> */}
     </>
   )
 }
-
-{/* <CollusionSelectionGraph user={codecheckerData_collusion.data.find(user => user.name === selectedUser)} setOtherUser={setOtherUser} otherUser={otherUser} /> */ }
-{/* <div dangerouslySetInnerHTML={parseAndGenerateHTMLTable(JSON.stringify(codecheckerData_collusion.data.find(user => user.name === selectedUser).scoreDetails.relations.filter(a => a.name === otherUser)[0].collusionScores))} /> */ }
-{/* <Sidebar /> <UserList users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} /> */ }
-
-// TODO consider this code for fix of width of button for selection of other user. Quite annoying
-// {(selectedUser !== null && codecheckerData_collusion.data) &&
-//   <>
-//     <div className="otherUserSets">
-//       <DropdownButton
-//         id="dropdown-basic-button"
-//         title={
-//           `${otherUser? ("Similarity with "+otherUser) :"Select other user to compare similarity"}`
-//         }
-//         onClick={toggleOtherUser}
-//         isExpanded={true}
-//         className="otherIndividualSelect"
-//         // size="lg"
-//         // align={{ lg: 'end' }}
-//         // style={{ "minWidth": '100% !important' }} // Ensures it takes priority
-//         style={{
-//           "backgroundColor":"#0d6efd", // TODO find cleaner fix
-//           "borderRadius":"0.25rem",
-//           width:"100%"
-//           }}
-//         show={showMenuOtherUser}
-//       >
-//         {codecheckerData_collusion.data.find(user => user.name === selectedUser)
-//           .scoreDetails.relations.map((relation, index) => (
-//           <Dropdown.Item
-//             key={index}
-//             onClick={() => setOtherUser(relation.name)}
-//             // className="w-100"
-//             style={{
-//               backgroundColor: relation.name === otherUser ? 'darkgrey' : '',
-//               color: relation.name === otherUser ? 'white' : '',
-//               border: relation.name === otherUser ? 'solid' : '',
-//               borderRadius: relation.name === otherUser ? '0.5rem' : '',
-//               borderWidth: relation.name === otherUser ? 'thin' : '',
-//             }}
-//           >
-//             {relation.name}
-//           </Dropdown.Item>
-//         ))}
-//       </DropdownButton>
-//     </div>
-//     {/* <CollusionSelectionGraph
-//       user={codecheckerData_collusion.data.find(user => user.name === selectedUser)}
-//       setOtherUser={setOtherUser}
-//       otherUser={otherUser}
-//     /> */}
-//   </>
-// }
