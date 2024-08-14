@@ -33,9 +33,12 @@ const HorizontalNav = ( props ) => {
     score1 = features[1]==="AI_Detection"?aiScoreUser:features[1]==="Plagiarism"?plagiarismScoreUser:similarityScoreUser;
     score2 = features[2]==="AI_Detection"?aiScoreUser:features[2]==="Plagiarism"?plagiarismScoreUser:similarityScoreUser;
 
-    color0 = score0 < 0.33 ? colorLowRisk : score0 < 0.66 ? colorMediumRisk : colorHighRisk;
-    color1 = score1 < 0.33 ? colorLowRisk : score1 < 0.66 ? colorMediumRisk : colorHighRisk;
-    color2 = score2 < 0.33 ? colorLowRisk : score2 < 0.66 ? colorMediumRisk : colorHighRisk;
+    const numScore0 = Number(score0.split("%")[0])/100, numScore1 = Number(score1.split("%")[0])/100, numScore2 = Number(score2.split("%")[0])/100;
+    console.log({numScore0, numScore1, numScore2});
+
+    color0 = numScore0 < 0.33 ? colorLowRisk : numScore0 < 0.66 ? colorMediumRisk : colorHighRisk;
+    color1 = numScore1 < 0.33 ? colorLowRisk : numScore1 < 0.66 ? colorMediumRisk : colorHighRisk;
+    color2 = numScore2 < 0.33 ? colorLowRisk : numScore2 < 0.66 ? colorMediumRisk : colorHighRisk;
   }
 
   const circleStyle = (color) => ({
