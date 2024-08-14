@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import credentials from '../public/credentials.json';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { FormDataContext } from '@/components/context/FormDataContext';
 
 

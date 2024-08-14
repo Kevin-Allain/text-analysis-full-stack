@@ -126,9 +126,8 @@ export default function Plagiarism() {
       </Head>
       <Container fluid>
         <Row>
-        <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"Plagiarism"} />
-
-        <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
+          <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"Plagiarism"} />
+          <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
           <Col md={12} lg={10} className="content" style={{
             marginLeft: 'auto',
             marginRight: 'auto',
@@ -137,90 +136,63 @@ export default function Plagiarism() {
             paddingRight: '15px',
           }}
           >
-
-
-        {/* <div className="row"> */}
-        <Row>
-          <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
-
-          <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >          
-          {/* <div className="col-md-9 text_selec"> */}
-
-            {/* <ProductFeatureTitle feature="Plagiarism" product={formData?.product} /> */}
-            {/* <ModularTitle title={"File Name: "+codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]}/> */}
-
-            {/* <Breadcrumb /> */}
-            {/* <h5>
-              <div
-                className='score_big'
-                style={{ "width": "fit-content", "color": "white", "background-color": "red", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem"
-                }}>User Plagiarism Score:{" "}{codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore.toFixed(2)}</div>
-              Filename:{" "}
-              {(selectedUser && codecheckerData_plagiarism.data) &&
-                codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.files[indexFile]
-              }
-            </h5> */}
-
-            {/* Used to be fine, but if we want to export output, then we need everything in one page...? */}
-            {/* <div className="card overflow-y-scroll" style={{ "height": "75vh" }}> */}
-            <div className="card">
-              <div className="card-body">
-                <div className="text-content">
-                  <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
-                </div>
-              </div>
-            </div>
-          
-          {/* </div> */}
-          </Col>
-
-          {/* <div style={stickyColumn} className="col-md-3"> */}
-          <Col lg={3} md={4} sm={12} className="smallerContent">
-
-            <div>
-              {/* Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. */}
-              <div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
-                {/* TODO set the name into a link to personal record? */}
-                Submission from <u>{selectedUser}</u><br/> 
-                User Plagiarism Score:{" "}{(100*codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore).toFixed(2)+"%"} <br/>
-                Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}
-              </div>
-            </div>
-            <div className="details_score" ref={detailsScoreRef}>
-              {detailsPlagiarism.map((item, index) => (
-                <div key={index}>
-                  <div
-                    className={`detail-item ${item.className}`}
-                    style={{ backgroundColor: item.color }}
-                    onClick={() => handleDetailClick(item)}
-                  >
-                    {item.text}
-                  </div>
-                  {selectedDetail === item.className && (
-                    <div className="detail-indications">
-                      {(selectedUser && codecheckerData_plagiarism.data) &&
-                        <>
-                          <a href={codecheckerData_plagiarism.data.find(user => user.name === selectedUser)
-                            ?.scoreDetails[indexFile].find(sc => sc.type === item.className)?.source} target="_blank" rel="noopener noreferrer">
-                            {codecheckerData_plagiarism.data
-                              .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
-                              .find(sc => sc.type === item.className)?.source}
-                          </a>
-                          <hr />
-                        </>
-                      }
-                      {item.indications}
+            <Row>
+              <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
+              <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >
+                {/* Used to be fine, but if we want to export output, then we need everything in one page...? */}
+                <div className="card overflow-y-scroll" style={{ "height": "75vh" }}>
+                  {/* <div className="card"> */}
+                  <div className="card-body">
+                    <div className="text-content">
+                      <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
                     </div>
-                  )}
+                  </div>
                 </div>
-              ))}
-            </div>
-
+                {/* </div> */}
+              </Col>
+              {/* <div style={stickyColumn} className="col-md-3"> */}
+              <Col lg={3} md={4} sm={12} className="smallerContent">
+                <div>
+                  {/* Submission from {selectedUser} with a score of {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore}. */}
+                  <div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
+                    {/* TODO set the name into a link to personal record? */}
+                    Submission from <u>{selectedUser}</u><br />
+                    User Plagiarism Score:{" "}{(100 * codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.globalScore).toFixed(2) + "%"} <br />
+                    Number of submissions: {codecheckerData_plagiarism.data.find(user => user.name === selectedUser)?.numSubmissions}
+                  </div>
+                </div>
+                <div className="details_score" ref={detailsScoreRef}>
+                  {detailsPlagiarism.map((item, index) => (
+                    <div key={index}>
+                      <div
+                        className={`detail-item ${item.className}`}
+                        style={{ backgroundColor: item.color }}
+                        onClick={() => handleDetailClick(item)}
+                      >
+                        {item.text}
+                      </div>
+                      {selectedDetail === item.className && (
+                        <div className="detail-indications">
+                          {(selectedUser && codecheckerData_plagiarism.data) &&
+                            <>
+                              <a href={codecheckerData_plagiarism.data.find(user => user.name === selectedUser)
+                                ?.scoreDetails[indexFile].find(sc => sc.type === item.className)?.source} target="_blank" rel="noopener noreferrer">
+                                {codecheckerData_plagiarism.data
+                                  .find(user => user.name === selectedUser)?.scoreDetails[indexFile]
+                                  .find(sc => sc.type === item.className)?.source}
+                              </a>
+                              <hr />
+                            </>
+                          }
+                          {item.indications}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Col>
+            </Row>
           </Col>
-          {/* </div> */}
-
-              </Row>
-            </Col>
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
         </Row>
       </Container>

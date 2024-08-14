@@ -46,7 +46,8 @@ const ScoreCardPlural = ({
         Records <MdOutlineWorkHistory />
       </div>
       <div style={scoresContainerStyle}>
-        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/AI_Detection", name)} onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/AI_Detection", name)} 
+          onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
           onMouseOut={(e) => e.currentTarget.style.color = 'initial'}
         >
           <span >AI Detection</span>
@@ -54,7 +55,8 @@ const ScoreCardPlural = ({
             {score_ai === "X" ? <LuLoader className="loader-icon" /> : <>{score_ai}</>}
           </div>
         </div>
-        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/Plagiarism", name)} onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/Plagiarism", name)} 
+          onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
           onMouseOut={(e) => e.currentTarget.style.color = 'initial'}
         >
           <span>Plagiarism</span>
@@ -62,7 +64,8 @@ const ScoreCardPlural = ({
             {score_plagiarism === "X" ? <LuLoader className="loader-icon" /> : <>{score_plagiarism}</>}
           </div>
         </div>
-        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/Similarity", name)} onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
+        <div style={scoreItemStyle} onClick={() => handleClickNavigation("/Similarity", name)} 
+          onMouseOver={(e) => e.currentTarget.style.color = 'blue'}
           onMouseOut={(e) => e.currentTarget.style.color = 'initial'}
         >
           <span>Similarity</span>

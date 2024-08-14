@@ -18,30 +18,16 @@ import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection
 import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
+import NavBarMajorButtons from "@/components/NavBarMajorButtons";
+
 export default function Navbar(props) {
   const {users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile, feature} = props;
   console.log("Navbar | props: ",{users, selectedUser, handleUserClick, fileList, handleFileClick, indexFile, feature});
   const { formData } = useContext(FormDataContext);
   const { institution, module, name, files } = formData;
   console.log("Navbar | formData stuff: ", {institution, module, name, files});
+
   const router = useRouter();
-  const [showProducts, setShowProducts] = useState(false);
-  const timerRef = useRef(null);
-
-  const handleLogoClick = () => { router.push("/"); };
-
-  const handleContactClick = () => { router.push("https://aiaware.io/contact"); };
-
-  const handleMouseEnter = () => {
-    clearTimeout(timerRef.current);
-    setShowProducts(true);
-  };
-
-  const handleMouseLeave = () => {
-    timerRef.current = setTimeout(() => {
-      setShowProducts(false);
-    }, 300); // delay before hiding the dropdown
-  };
 
   const [institutionListVisible, setInstitutionListVisible] = useState(false);
   const [moduleListVisible, setModuleListVisible] = useState(false);
@@ -49,34 +35,8 @@ export default function Navbar(props) {
   const [userListVisible, setUserListVisible] = useState(false);
   const [fileListVisible, setFileListVisible] = useState(false);
 
-  const productsButtonStyle = {
-    display: "flex", flexDirection: "column", alignItems: "center", textDecoration: "none", color: "black", cursor: "pointer", fontSize: "1.25rem",
-  };
   const iconStyle = {
     fontSize: "1.5rem", marginBottom: "5px", // Set a fixed size for all icons
-  };
-
-  // Could be updated differently later...?
-  const handleDownload = () => { saveAsPDF(); }
-  const saveAsPDF = () => {
-    html2canvas(document.body).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210; // A4 size in mm
-      const pageHeight = 297;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-      pdf.save('page.pdf');
-    });
   };
 
   // TODO feels dirty because only one element...
@@ -89,6 +49,9 @@ export default function Navbar(props) {
 
   const structToLookFilesIn = feature==="AI_Detection"?codecheckerData_ai_detection:feature==="Similarity"?codecheckerData_collusion:codecheckerData_plagiarism;
 
+  const handleLogoClick = () => { router.push("/"); };
+
+
   return (
     <Container fluid>
       {/* Row for smaller screens */}
@@ -99,21 +62,17 @@ export default function Navbar(props) {
         <Col
           xs={12}
           className="align-items-center justify-content-evenly"
-          // d-flex
         >
-          <div className="navFolderSets mb-2" style={{ width: "100%" }}>
+          <div className="navFolderSets mb-2" style={{ width: "fit-content" }}>
             {name && (
+              // {/* {`${institution} | ${module} | ${name}`} */}
               <DropdownButton
                 id="dropdown-basic-button"
-                title={
-                  <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-block", maxWidth: "100%" }}>
-                    {/* {`${institution} | ${module} | ${name}`} */}
-                    Folder Set
-                  </span>
-                }
+                title={"Folder Set"}
+                variant="outline-dark" // Set variant to light
                 onClick={toggleInstitution}
-                className="individualSelect"
-                style={{ width: "100%" }}
+                className="individualSelect custom-dropdown"
+                style={{ width: "auto" }}
                 show={institutionListVisible}
               >
                 <Dropdown.ItemText>
@@ -168,13 +127,15 @@ export default function Navbar(props) {
             )}
           </div>
           {users && (
-            <div className="navPeopleSets mb-2" style={{ width: "100%" }}>
+            <div className="navPeopleSets mb-2" style={{ width: "fit-content" }}>
               <DropdownButton
                 id="dropdown-basic-button"
                 title={`Individual: ${selectedUser}`}
+                variant="outline-dark" // Set variant to light
+
                 onClick={toggleUser}
-                className="individualSelect responsive-dropdown"
-                style={{ width: "100%" }}
+                className="individualSelect responsive-dropdown custom-dropdown"
+                style={{ width: "fit-content" }}
                 show={userListVisible}
               >
                 {users.map((user, index) => (
@@ -202,7 +163,7 @@ export default function Navbar(props) {
             </div>
           )}
           {fileList && (
-            <div className="navFileSets" style={{ width: "100%" }}>
+            <div className="navFileSets" style={{ width: "fit-content" }}>
               <DropdownButton
                 id="dropdown-basic-button"
                 title={`File: ${structToLookFilesIn.data.find(
@@ -210,8 +171,10 @@ export default function Navbar(props) {
                 )?.files[indexFile]
                   }`}
                 onClick={toggleFile}
-                className="individualSelect responsive-dropdown"
-                style={{ width: "100%" }}
+                className="individualSelect responsive-dropdown custom-dropdown"
+                variant="outline-dark" // Set variant to light
+
+                style={{ width: "fit-content" }}
                 show={fileListVisible}
               >
                 {fileList.map((file, index) => (
@@ -235,105 +198,14 @@ export default function Navbar(props) {
         </Col>
         <Col
           xs={12}
-          className="d-flex align-items-center align-items-center"
+          // className="d-flex align-items-center align-items-center"
+          // style={{display:"inline-flex", justifyContent:"end"}}
         >
-          <Button
-            variant="link"
-            className="d-flex align-items-center button-responsive"
-            onClick={handleDownload}
-            style={productsButtonStyle}
-          >
-            <LuDownload className="icon-responsive" />
-            Download
-          </Button>
-          <div
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            className="position-relative"
-          >
-            <Button
-              variant="link"
-              className="d-flex align-items-center button-responsive"
-              style={productsButtonStyle}
-            >
-              <AiOutlineProduct className="icon-responsive" />
-              Products
-            </Button>
-            {showProducts && (
-              <div className="products-dropdown position-absolute mt-2 d-flex flex-column">
-                <Link href="/TextAnalysis" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Text Analysis
-                  </div>
-                </Link>
-                <Link href="/CodeChecker" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Code Checker
-                  </div>
-                </Link>
-                <Link href="/MediaChecker" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Media Checker
-                  </div>
-                </Link>
-                <Link href="/WebsiteChecker" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Website Checker
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-          <Button
-            variant="link"
-            className="d-flex align-items-center button-responsive"
-            onClick={handleContactClick}
-            style={productsButtonStyle}
-          >
-            <IoIosHelpCircleOutline className="icon-responsive" />
-            Contact
-          </Button>
+          <NavBarMajorButtons/>
         </Col>
       </Row>
       {/* Row for larger screens */}
-      <Row className="w-100 d-none d-md-flex align-items-center" 
-      >
+      <Row className="w-100 d-none d-md-flex align-items-center" >
         <Col
           xs={2}
           md={2}
@@ -348,19 +220,17 @@ export default function Navbar(props) {
           md={6}
           className="d-flex flex-column align-items-start mt-1 mb-1"
         >
-          <div className="navFolderSets mb-2" style={{ width: "100%" }}>
+          <div className="navFolderSets mb-2" style={{ width: "fit-content" }}>
             {name && (
+              // {/* {`${institution} | ${module} | ${name}`} */}
               <DropdownButton
                 id="dropdown-basic-button"
-                title={
-                  <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-block", maxWidth: "100%" }}>
-                    {/* {`${institution} | ${module} | ${name}`} */}
-                    Folder Set
-                  </span>
-                }
+                title={ "Folder Set" }
                 onClick={toggleInstitution}
-                className="individualSelect"
-                style={{ width: "100%" }}
+                className="individualSelect custom-dropdown"
+                variant="outline-dark" // Set variant to light
+
+                style={{ width: "fit-content" }}
                 show={institutionListVisible}
               >
                 <Dropdown.ItemText>
@@ -415,13 +285,15 @@ export default function Navbar(props) {
             )}
           </div>
           {users && (
-            <div className="navPeopleSets mb-2" style={{ width: "100%" }}>
+            <div className="navPeopleSets mb-2" style={{ width: "fit-content" }}>
               <DropdownButton
                 id="dropdown-basic-button"
                 title={`Individual: ${selectedUser}`}
                 onClick={toggleUser}
-                className="individualSelect responsive-dropdown"
-                style={{ width: "100%" }}
+                className="individualSelect responsive-dropdown custom-dropdown"
+                variant="outline-dark" // Set variant to light
+
+                style={{ width: "fit-content" }} 
                 show={userListVisible}
               >
                 {users.map((user, index) => (
@@ -449,7 +321,7 @@ export default function Navbar(props) {
             </div>
           )}
           {fileList && (
-            <div className="navFileSets" style={{ width: "100%" }}>
+            <div className="navFileSets" style={{ width: "fit-content" }}>
               <DropdownButton
                 id="dropdown-basic-button"
                 title={`File: ${structToLookFilesIn.data.find(
@@ -457,8 +329,10 @@ export default function Navbar(props) {
                 )?.files[indexFile]
                   }`}
                 onClick={toggleFile}
-                className="individualSelect responsive-dropdown"
-                style={{ width: "100%" }}
+                className="individualSelect responsive-dropdown custom-dropdown"
+                style={{ width: "fit-content" }}
+                variant="outline-dark"
+
                 show={fileListVisible}
               >
                 {fileList.map((file, index) => (
@@ -480,131 +354,34 @@ export default function Navbar(props) {
             </div>
           )}
         </Col>
+        {/* // className="d-flex justify-content-end align-items-center flex-wrap" */}
         <Col
           xs={4}
           md={4}
-          className="d-flex justify-content-end align-items-center flex-wrap"
+          style={{display:"inline-flex", justifyContent:"end"}}
         >
-          <Button
-            variant="link"
-            className="d-flex align-items-center button-responsive"
-            onClick={handleDownload}
-            style={productsButtonStyle}
-          >
-            <LuDownload className="icon-responsive" />
-            Download
-          </Button>
-          <div
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            className="position-relative"
-          >
-            <Button
-              variant="link"
-              className="d-flex align-items-center button-responsive"
-              style={productsButtonStyle}
-            >
-              <AiOutlineProduct className="icon-responsive" />
-              Products
-            </Button>
-            {showProducts && (
-              <div className="products-dropdown position-absolute mt-2 d-flex flex-column">
-                <Link href="/TextAnalysis" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Text Analysis
-                  </div>
-                </Link>
-                <Link href="/CodeChecker" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Code Checker
-                  </div>
-                </Link>
-                <Link href="/MediaChecker" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Media Checker
-                  </div>
-                </Link>
-                <Link href="/WebsiteChecker" passHref>
-                  <div
-                    className="btn btn-link text-decoration-none mx-1"
-                    style={{
-                      borderBottomStyle: "double",
-                      borderBottomColor: "inherit",
-                      borderBottomRightRadius: "0rem",
-                      borderBottomLeftRadius: "0rem",
-                      borderBottomWidth: "medium",
-                    }}
-                  >
-                    Website Checker
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-          <Button
-            variant="link"
-            className="d-flex align-items-center button-responsive"
-            onClick={handleContactClick}
-            style={productsButtonStyle}
-          >
-            <IoIosHelpCircleOutline className="icon-responsive" />
-            Contact
-          </Button>
+          <NavBarMajorButtons/>
         </Col>
       </Row>
       <style jsx>{`
+        .custom-dropdown .dropdown-toggle {
+          background-color: white !important; /* Override default styles */
+          color: #000; /* Default text color */
+          border: none;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .custom-dropdown .dropdown-toggle:hover {
+          background-color: #f0f0f0 !important; /* Light gray on hover */
+        }
+        .custom-color .dropdown-toggle {
+          background-color: var(--custom-color) !important; /* Use a CSS variable */
+          color: #fff;
+        }
+        .custom-color .dropdown-toggle:hover {
+          filter: brightness(85%);
+        }
         .ml-auto {
           margin-left: auto;
-        }
-        .btn-link {
-          color: black;
-          cursor: pointer;
-          font-size: 1.2rem;
-        }
-        .btn-link:hover {
-          color: blue;
-        }
-        .products-dropdown {
-          background: white;
-          border: 1px solid #ddd;
-          padding: 10px;
-          z-index: 1000;
-        }
-        .products-dropdown .btn-link {
-          margin: 5px 0;
-        }
-        .btn-link.text-decoration-none:hover {
-          color: blue;
-        }
-        .position-relative:hover .products-dropdown {
-          display: flex;
         }
       .button-responsive {
         font-size: 1.2rem;

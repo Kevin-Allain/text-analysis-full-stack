@@ -1,0 +1,29 @@
+.products-dropdown {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000;
+    color: black;
+}
+
+.products-dropdown .btn-link {
+    margin: 5px 0;
+}
+
+.btn-link {
+    color: black;
+    cursor: pointer;
+    /* font-size: 1.2rem; */
+}
+
+.btn-link:hover {
+    color: blue;
+}
+
+.btn-link.text-decoration-none:hover {
+    color: blue;
+}
+
+.position-relative:hover .products-dropdown {
+    display: flex;
+}

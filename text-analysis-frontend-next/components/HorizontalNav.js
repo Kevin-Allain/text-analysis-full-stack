@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useContext } from 'react';
+import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { FormDataContext } from '@/components/context/FormDataContext';
 
@@ -16,6 +17,10 @@ const HorizontalNav = ( props ) => {
   let curFeature = router.pathname.replace('/','');
   const handleNavigation = (page) => { router.push(`/${page}`); };
   let score0=null, score1=null, score2=null;
+  let color0 = null, color1 = null, color2 = null;
+  const colorLowRisk = "#3cc343"; // green
+  const colorMediumRisk = "#d97826"; // orange
+  const colorHighRisk = "#d2342d"; // red
 
   if (selectedUser) {
     const aiFilesUser = codecheckerData_ai_detection.data.find(u => u.name === selectedUser).files;
@@ -27,39 +32,79 @@ const HorizontalNav = ( props ) => {
     score0 = features[0]==="AI_Detection"?aiScoreUser:features[0]==="Plagiarism"?plagiarismScoreUser:similarityScoreUser;
     score1 = features[1]==="AI_Detection"?aiScoreUser:features[1]==="Plagiarism"?plagiarismScoreUser:similarityScoreUser;
     score2 = features[2]==="AI_Detection"?aiScoreUser:features[2]==="Plagiarism"?plagiarismScoreUser:similarityScoreUser;
+
+    color0 = score0 < 0.33 ? colorLowRisk : score0 < 0.66 ? colorMediumRisk : colorHighRisk;
+    color1 = score1 < 0.33 ? colorLowRisk : score1 < 0.66 ? colorMediumRisk : colorHighRisk;
+    color2 = score2 < 0.33 ? colorLowRisk : score2 < 0.66 ? colorMediumRisk : colorHighRisk;
   }
 
+  const circleStyle = (color) => ({
+    backgroundColor: color, borderRadius: '50%', width: '40px', height: '40px', minWidth: '40px', minHeight: '40px',
+    aspectRatio: '1 / 1', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontWeight: 'bold', cursor: 'pointer',    
+  });
+
+
+
+  // TODO adapt button to React Bootstrap button to have the variant 
   return (
     <div className="container mb-1">
       <div className="d-flex justify-content-center" >
         <div className="btn-group" role="group" aria-label="Horizontal navigation" style={{"width":"100%"}}>
-          <button 
-            type="button" 
-            className={`btn ${curFeature===features[0]? "btn-secondary" : "btn-primary"}`}
+          <Button 
+            // type="button" 
+            // className={`btn ${curFeature===features[0]? "btn-secondary" : "btn-primary"}`}
+            variant={`${curFeature===features[0]? "outline-secondary": "outline-dark"}`}
             onClick={() => handleNavigation(features[0])}
             disabled = {curFeature===features[0]}
+            style={{
+              "display": "inline-flex",
+              "align-items": "center",
+              "justify-content": "space-evenly"
+            }}
           >
             {features[0].replace('_',' ')}
-            {score0 && ` - ${score0}`}
-          </button>
-          <button 
-            type="button" 
-            className={`btn ${curFeature===features[1]? "btn-secondary" : "btn-primary"}`}
+            {score0 && 
+              <div style={circleStyle(color0)} >
+                {score0 === "X" ? <LuLoader className="loader-icon" /> : <>{score0}</>}
+              </div>}
+          </Button>
+          <Button 
+            // type="button"
+            // className={`btn ${curFeature===features[1]? "btn-secondary" : "btn-primary"}`}
+            variant={`${curFeature===features[1]? "outline-secondary": "outline-dark"}`}
             onClick={() => handleNavigation(features[1])}
             disabled = {curFeature===features[1]}
+            style={{
+              "display": "inline-flex",
+              "align-items": "center",
+              "justify-content": "space-evenly"
+            }}
           >
             {features[1].replace('_',' ')}
-            {score1 && ` - ${score1}`}
-          </button>
-          <button 
-            type="button" 
-            className={`btn ${curFeature===features[2]? "btn-secondary" : "btn-primary"}`}
+            {score1 && 
+              <div style={circleStyle(color1)} >
+                {score1 === "X" ? <LuLoader className="loader-icon" /> : <>{score1}</>}
+              </div>}
+          </Button>
+          <Button 
+            // type="button" 
+            // className={`btn ${curFeature===features[2]? "btn-secondary" : "btn-primary"}`}
+            variant={`${curFeature===features[2]? "outline-secondary": "outline-dark"}`}            
             onClick={() => handleNavigation(features[2])}
             disabled = {curFeature===features[2]}
+            style={{
+              "display": "inline-flex",
+              "align-items": "center",
+              "justify-content": "space-evenly"
+            }}
           >
             {features[2].replace('_',' ')}
-            {score2 && ` - ${score2}`}
-          </button>
+            {score2 && 
+              <div style={circleStyle(color2)} >
+                {score2 === "X" ? <LuLoader className="loader-icon" /> : <>{score2}</>}
+              </div>
+            }
+          </Button>
         </div>
       </div>
     </div>
