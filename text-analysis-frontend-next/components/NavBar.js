@@ -71,7 +71,8 @@ export default function Navbar(props) {
                 title={"Folder Set"}
                 variant="outline-dark" // Set variant to light
                 onClick={toggleInstitution}
-                className="individualSelect custom-dropdown"
+                // custom-dropdown
+                // className="individualSelect"
                 style={{ width: "auto" }}
                 show={institutionListVisible}
               >
@@ -134,7 +135,8 @@ export default function Navbar(props) {
                 variant="outline-dark" // Set variant to light
 
                 onClick={toggleUser}
-                className="individualSelect responsive-dropdown custom-dropdown"
+                // custom-dropdown
+                // className="individualSelect responsive-dropdown"
                 style={{ width: "fit-content" }}
                 show={userListVisible}
               >
@@ -171,7 +173,8 @@ export default function Navbar(props) {
                 )?.files[indexFile]
                   }`}
                 onClick={toggleFile}
-                className="individualSelect responsive-dropdown custom-dropdown"
+                // custom-dropdown
+                // className="individualSelect responsive-dropdown"
                 variant="outline-dark" // Set variant to light
 
                 style={{ width: "fit-content" }}
@@ -224,12 +227,12 @@ export default function Navbar(props) {
             {name && (
               // {/* {`${institution} | ${module} | ${name}`} */}
               <DropdownButton
-                id="dropdown-basic-button"
+                // id="dropdown-basic-button"
                 title={ "Folder Set" }
                 onClick={toggleInstitution}
-                className="individualSelect custom-dropdown"
+                // custom-dropdown
+                // className="individualSelect"
                 variant="outline-dark" // Set variant to light
-
                 style={{ width: "fit-content" }}
                 show={institutionListVisible}
               >
@@ -290,9 +293,9 @@ export default function Navbar(props) {
                 id="dropdown-basic-button"
                 title={`Individual: ${selectedUser}`}
                 onClick={toggleUser}
-                className="individualSelect responsive-dropdown custom-dropdown"
+                // custom-dropdown
+                // className="individualSelect responsive-dropdown "
                 variant="outline-dark" // Set variant to light
-
                 style={{ width: "fit-content" }} 
                 show={userListVisible}
               >
@@ -307,6 +310,8 @@ export default function Navbar(props) {
                       borderRadius: selectedUser === user.name ? "0.5rem" : "",
                       borderWidth: selectedUser === user.name ? "thin" : "",
                     }}
+                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
+                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
                   >
                     {user.name}
                     {user.globalScore !== null && (
@@ -329,10 +334,10 @@ export default function Navbar(props) {
                 )?.files[indexFile]
                   }`}
                 onClick={toggleFile}
-                className="individualSelect responsive-dropdown custom-dropdown"
+                // custom-dropdown
+                // className="individualSelect responsive-dropdown"
                 style={{ width: "fit-content" }}
                 variant="outline-dark"
-
                 show={fileListVisible}
               >
                 {fileList.map((file, index) => (
@@ -346,6 +351,8 @@ export default function Navbar(props) {
                       borderRadius: indexFile === index ? "0.5rem" : "",
                       borderWidth: indexFile === index ? "thin" : "",
                     }}
+                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
+                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
                   >
                     {file}
                   </Dropdown.Item>

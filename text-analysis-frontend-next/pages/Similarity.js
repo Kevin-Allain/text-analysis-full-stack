@@ -195,41 +195,40 @@ export default function Similarity() {
               <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >
                 {/* <ProductFeatureTitle feature="Individual History" product={selectedUser} /> */}
                 {(selectedUser !== null && codecheckerData_collusion.data) &&
-                  <>
-                    <div className="otherUserSets">
-                      <DropdownButton
-                        id="dropdown-basic-button"
-                        title={
-                          `${otherUser ? ("Similarity with " + otherUser) : "Select other user to compare similarity"}`
-                        }
-                        onClick={toggleOtherUser}
-                        isExpanded={true}
-                        className="btn otherIndividualSelect"
-                        // size="lg"
-                        // align={{ lg: 'end' }}
-                        style={{ "minWidth": '100% !important' }} // Ensures it takes priority
-                        show={showMenuOtherUser}
-                      >
-                        {codecheckerData_collusion.data.find(user => user.name === selectedUser)
-                          .scoreDetails.relations.map((relation, index) => (
-                            <Dropdown.Item
-                              key={index}
-                              onClick={() => setOtherUser(relation.name)}
-                              style={{
-                                backgroundColor: relation.name === otherUser ? 'darkgrey' : '',
-                                color: relation.name === otherUser ? 'white' : '',
-                                border: relation.name === otherUser ? 'solid' : '',
-                                borderRadius: relation.name === otherUser ? '0.5rem' : '',
-                                borderWidth: relation.name === otherUser ? 'thin' : '',
-                                width: "100%"
-                              }}
-                            >
-                              {relation.name}
-                            </Dropdown.Item>
-                          ))}
-                      </DropdownButton>
-                    </div>
-                  </>
+                  <DropdownButton
+                    // id="dropdown-basic-button"
+                    title={
+                      `${otherUser ? ("Similarity with " + otherUser) : "Select other user to compare similarity"}`
+                    }
+                    onClick={toggleOtherUser}
+                    isExpanded={true}
+                    // className="btn otherIndividualSelect"
+                    // size="lg"
+                    // align={{ lg: 'end' }}
+                    style={{ "width": 'fit-content' }}
+                    show={showMenuOtherUser}
+                    variant="outline-dark"                    
+                  >
+                    {codecheckerData_collusion.data.find(user => user.name === selectedUser)
+                      .scoreDetails.relations.map((relation, index) => (
+                        <Dropdown.Item
+                          key={index}
+                          onClick={() => setOtherUser(relation.name)}
+                          style={{
+                            backgroundColor: relation.name === otherUser ? 'darkgrey' : '',
+                            color: relation.name === otherUser ? 'white' : '',
+                            border: relation.name === otherUser ? 'solid' : '',
+                            borderRadius: relation.name === otherUser ? '0.5rem' : '',
+                            borderWidth: relation.name === otherUser ? 'thin' : '',
+                            width: "100%"
+                          }}
+                          onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
+                          onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
+                        >
+                          {relation.name}
+                        </Dropdown.Item>
+                      ))}
+                  </DropdownButton>
                 }
                 {otherUser &&
                   <div className="card" >
