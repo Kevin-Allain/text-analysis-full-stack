@@ -283,7 +283,7 @@ export default function AI_Detection(){
                         ) : (
                           outputAI.details && (
                         <>
-                          <div className="card">
+                          <div className="card overflow-y-scroll" style={{ "height": "75vh" }}>
                             <div className="card-body">
                               <div ref={textRef} className="text-content">
                                 <pre dangerouslySetInnerHTML={{ __html: fileContent }} />

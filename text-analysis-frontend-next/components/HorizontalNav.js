@@ -56,7 +56,7 @@ const HorizontalNav = ( props ) => {
           <Button 
             // type="button" 
             // className={`btn ${curFeature===features[0]? "btn-secondary" : "btn-primary"}`}
-            variant={`${curFeature===features[0]? "outline-secondary": "outline-dark"}`}
+            variant={`${curFeature===features[0]? "dark" : "outline-secondary"}`}
             onClick={() => handleNavigation(features[0])}
             disabled = {curFeature===features[0]}
             style={{
@@ -74,7 +74,7 @@ const HorizontalNav = ( props ) => {
           <Button 
             // type="button"
             // className={`btn ${curFeature===features[1]? "btn-secondary" : "btn-primary"}`}
-            variant={`${curFeature===features[1]? "outline-secondary": "outline-dark"}`}
+            variant={`${curFeature===features[1]? "dark": "outline-secondary"}`}
             onClick={() => handleNavigation(features[1])}
             disabled = {curFeature===features[1]}
             style={{
@@ -92,7 +92,7 @@ const HorizontalNav = ( props ) => {
           <Button 
             // type="button" 
             // className={`btn ${curFeature===features[2]? "btn-secondary" : "btn-primary"}`}
-            variant={`${curFeature===features[2]? "outline-secondary": "outline-dark"}`}            
+            variant={`${curFeature===features[2]? "dark": "outline-secondary"}`}
             onClick={() => handleNavigation(features[2])}
             disabled = {curFeature===features[2]}
             style={{
