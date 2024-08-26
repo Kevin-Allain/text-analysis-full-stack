@@ -27,3 +27,30 @@
 .position-relative:hover .products-dropdown {
     display: flex;
 }
+
+
+.alt-products-dropdown {
+    background: black;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000;
+    color: white;
+}
+
+.alt-products-dropdown .alt-btn-link {
+    margin: 5px 0;
+}
+
+.alt-btn-link {
+    color: white;
+    cursor: pointer;
+    /* font-size: 1.2rem; */
+}
+
+.alt-btn-link:hover {
+    color: lightgray;
+}
+
+.alt-btn-link.text-decoration-none:hover {
+    color: lightgray;
+}

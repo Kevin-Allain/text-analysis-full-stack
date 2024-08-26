@@ -13,6 +13,7 @@ import { fetchFileContent } from '@/utils/FileLoader';
 import UserList from '@/components/UserList';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 import ModularTitle from '@/components/ModularTitle';
+import BlackBar from '@/components/BlackBar';
 
 export default function Plagiarism() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -126,6 +127,7 @@ export default function Plagiarism() {
       </Head>
       <Container fluid>
         <Row>
+          <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"Plagiarism"} />
           <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"Plagiarism"} />
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
           <Col md={12} lg={10} className="content" style={{

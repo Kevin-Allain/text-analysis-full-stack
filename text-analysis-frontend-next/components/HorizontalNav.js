@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { FormDataContext } from '@/components/context/FormDataContext';
-
+import { LuLoader } from "react-icons/lu";
 import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
 import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';

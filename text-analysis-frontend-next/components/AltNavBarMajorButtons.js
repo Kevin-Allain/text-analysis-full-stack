@@ -10,7 +10,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import "@/styles/NavBarMajorButtons.css"
 
-export default function NavBarMajorButtons(props) {
+export default function AltNavBarMajorButtons(props) {
 
     const [fontSize, setFontSize] = useState('1.25rem');
     const [iconSize, setIconSize] = useState('1.5rem');
@@ -79,29 +79,31 @@ export default function NavBarMajorButtons(props) {
     };
 
     const productsButtonStyle = {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textDecoration: "none",
-        color: "black",
+        // display: "flex",
+        // flexDirection: "column",
+        // alignItems: "center",
+        // textDecoration: "none",
+        // color: "white",
         cursor: "pointer",
-        // fontSize: "1.25rem",
     };
 
     return (
         <div
-            className="NavBarMajorButtons"
-            style={{ "display": "inline-flex" }}
+            className="AltNavBarMajorButtons"
+            style={{ 
+                "display": "inline-flex", 
+                "color":"white",
+                "border":"solid",
+                "borderColor":"white" 
+            }}
         >
             {/* Download button */}
             <Button
                 variant="link"
-                className="d-flex align-items-center button-responsive"
+                className="d-flex button-responsive"
                 onClick={handleDownload}
-                style={productsButtonStyle}
             >
-                <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
-                Download
+                Download <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
             </Button>
 
             {/* Products */}
@@ -113,16 +115,14 @@ export default function NavBarMajorButtons(props) {
                 <Button
                     variant="link"
                     className="d-flex align-items-center button-responsive"
-                    style={productsButtonStyle}
                 >
-                    <AiOutlineProduct className="icon-responsive" style={{ fontSize: iconSize }} />
-                    Products
+                    Products <AiOutlineProduct className="icon-responsive" style={{ fontSize: iconSize }} />                    
                 </Button>
                 {showProducts && (
-                    <div className="products-dropdown position-absolute mt-2 d-flex flex-column">
+                    <div className="alt-products-dropdown position-absolute mt-2 d-flex flex-column">
                         <Link href="/TextAnalysis" passHref>
                             <div
-                                className="btn btn-link text-decoration-none mx-1"
+                                className="btn alt-btn-link text-decoration-none mx-1"
                                 style={{
                                     borderBottomStyle: "double",
                                     borderBottomColor: "inherit",
@@ -136,7 +136,7 @@ export default function NavBarMajorButtons(props) {
                         </Link>
                         <Link href="/CodeChecker" passHref>
                             <div
-                                className="btn btn-link text-decoration-none mx-1"
+                                className="btn alt-btn-link text-decoration-none mx-1"
                                 style={{
                                     borderBottomStyle: "double",
                                     borderBottomColor: "inherit",
@@ -150,7 +150,7 @@ export default function NavBarMajorButtons(props) {
                         </Link>
                         <Link href="/MediaChecker" passHref>
                             <div
-                                className="btn btn-link text-decoration-none mx-1"
+                                className="btn alt-btn-link text-decoration-none mx-1"
                                 style={{
                                     borderBottomStyle: "double",
                                     borderBottomColor: "inherit",
@@ -164,7 +164,7 @@ export default function NavBarMajorButtons(props) {
                         </Link>
                         <Link href="/WebsiteChecker" passHref>
                             <div
-                                className="btn btn-link text-decoration-none mx-1"
+                                className="btn alt-btn-link text-decoration-none mx-1"
                                 style={{
                                     borderBottomStyle: "double",
                                     borderBottomColor: "inherit",
@@ -187,100 +187,10 @@ export default function NavBarMajorButtons(props) {
                 onClick={handleContactClick}
                 style={productsButtonStyle}
             >
-                <IoIosHelpCircleOutline className="icon-responsive" style={{ fontSize: iconSize }} />
-                Contact
+                Contact <IoIosHelpCircleOutline className="icon-responsive" style={{ fontSize: iconSize }} />
+                
             </Button>
-            <style jsx>{`
-        .custom-dropdown .dropdown-toggle {
-          background-color: white !important; /* Override default styles */
-          color: #000; /* Default text color */
-          border: none;
-          transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .custom-dropdown .dropdown-toggle:hover {
-          background-color: #f0f0f0 !important; /* Light gray on hover */
-        }
-        .custom-color .dropdown-toggle {
-          background-color: var(--custom-color) !important; /* Use a CSS variable */
-          color: #fff;
-        }
-        .custom-color .dropdown-toggle:hover {
-          filter: brightness(85%);
-        }
-        .ml-auto {
-          margin-left: auto;
-        }
-      .button-responsive {
-        font-size: 1.2rem;
-        transition: font-size 0.3s, padding 0.3s;
-      }
-      .icon-responsive {
-        font-size: 1.5rem;
-        transition: font-size 0.3s;
-      }
-      @media (max-width: 992px) {
-        .button-responsive {
-          font-size: 1rem;
-          padding: 0.25rem 0.5rem;
-        }
-        .icon-responsive {
-          font-size: 1.2rem;
-        }
-      }
-      @media (max-width: 768px) {
-        .button-responsive {
-          font-size: 0.9rem;
-          padding: 0.2rem 0.4rem;
-        }
-        .icon-responsive {
-          font-size: 1rem;
-        }
-      }
-      @media (max-width: 576px) {
-        .button-responsive {
-          font-size: 0.8rem;
-          padding: 0.15rem 0.3rem;
-        }
-        .icon-responsive {
-          font-size: 0.8rem;
-        }
-      }
-      .btn-link {
-        color: black;
-        cursor: pointer;
-        font-size: 1.2rem;
-      }
-      .btn-link:hover {
-        color: blue;
-      }
-      .products-dropdown {
-        background: white;
-        border: 1px solid #ddd;
-        padding: 10px;
-        z-index: 1000;
-      }
-      .products-dropdown .btn-link {
-        margin: 5px 0;
-      }
-      .btn-link.text-decoration-none:hover {
-        color: blue;
-      }
-      .position-relative:hover .products-dropdown {
-        display: flex;
-      }
-      .responsive-dropdown {
-        width: 100%;
-        @media (min-width: 576px) {
-          max-width: 250px; // Adjust for sm screens (similar to xs)
-        }
-        @media (min-width: 768px) {
-          max-width: 300px; // Adjust for md screens
-        }
-        @media (min-width: 992px) {
-          max-width: 350px; // Adjust for lg screens
-        }
-      }
-      `}</style>
+
         </div>
     )
 }
