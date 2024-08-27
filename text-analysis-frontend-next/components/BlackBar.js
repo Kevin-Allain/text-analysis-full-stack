@@ -188,8 +188,10 @@ export default function BlackBar(props) {
           <NavBarMajorButtons/>
         </Col>
       </Row> */}
-      <Row className="w-100 d-md-flex align-items-center" >
-        <Col className="d-flex mt-1 mb-1" >
+      <Row className="w-100 align-items-center mt-1 mb-1" >
+        <Col  
+            style={{display:"inline-flex"}}
+        >
           <div className="navFolderSets" style={{ width: "fit-content" }}>
             {name && (
               <DropdownButton
@@ -326,8 +328,7 @@ export default function BlackBar(props) {
             </div>
           )}
         </Col>
-        <Col style={{display:"inline-flex", justifyContent:"end"}}
-        >
+        <Col style={{display:"inline-flex", justifyContent:"end"}}>
           <AltNavBarMajorButtons/>
         </Col>
       </Row>

@@ -88,20 +88,14 @@ export default function AltNavBarMajorButtons(props) {
     };
 
     return (
-        <div
-            className="AltNavBarMajorButtons"
-            style={{ 
-                "display": "inline-flex", 
-                "color":"white",
-                "border":"solid",
-                "borderColor":"white" 
-            }}
-        >
+        <>
             {/* Download button */}
             <Button
-                variant="link"
                 className="d-flex button-responsive"
                 onClick={handleDownload}
+                variant="outline-light" 
+                size={"sm"}
+                style={{"alignItems":"center"}}
             >
                 Download <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
             </Button>
@@ -113,8 +107,10 @@ export default function AltNavBarMajorButtons(props) {
                 className="position-relative"
             >
                 <Button
-                    variant="link"
+                    variant="outline-light"
                     className="d-flex align-items-center button-responsive"
+                    size={"sm"}                   
+                    style={{"alignItems":"center"}}                     
                 >
                     Products <AiOutlineProduct className="icon-responsive" style={{ fontSize: iconSize }} />                    
                 </Button>
@@ -182,15 +178,16 @@ export default function AltNavBarMajorButtons(props) {
 
             {/* Contact */}
             <Button
-                variant="link"
+                variant="outline-light"
                 className="d-flex align-items-center button-responsive"
                 onClick={handleContactClick}
-                style={productsButtonStyle}
+                size={"sm"}
+                style={{"alignItems":"center"}}                
             >
                 Contact <IoIosHelpCircleOutline className="icon-responsive" style={{ fontSize: iconSize }} />
                 
             </Button>
 
-        </div>
+        </>
     )
 }

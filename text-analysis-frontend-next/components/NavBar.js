@@ -361,13 +361,14 @@ export default function Navbar(props) {
           )}
         </Col> */}
 
-        <Col
+
+        {/* <Col
           xs={4}
           md={4}
           style={{display:"inline-flex", justifyContent:"end"}}
         >
           <NavBarMajorButtons/>
-        </Col>
+        </Col> */}
       </Row>
       <style jsx>{`
         .custom-dropdown .dropdown-toggle {
