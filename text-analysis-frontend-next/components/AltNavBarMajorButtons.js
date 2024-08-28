@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-import { Button } from 'react-bootstrap';
+import { Button, DropdownButton, Dropdown } from 'react-bootstrap';
 import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import { LuDownload } from "react-icons/lu";
@@ -40,6 +40,11 @@ export default function AltNavBarMajorButtons(props) {
             pdf.save('page.pdf');
         });
     };
+    // TODO
+    const handleClickProductChange = (name) =>{
+        console.log("handleClickProductChange : ",name);
+
+    }
 
     // TODO NOT WORKING
     useEffect(() => {
@@ -89,19 +94,52 @@ export default function AltNavBarMajorButtons(props) {
 
     return (
         <>
-            {/* Download button */}
-            <Button
-                className="d-flex button-responsive"
-                onClick={handleDownload}
-                variant="outline-light" 
-                size={"sm"}
-                style={{"alignItems":"center"}}
-            >
-                Download <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
-            </Button>
 
             {/* Products */}
-            <div
+            <DropdownButton
+                title={"Products"}
+                // onClick={toggleInstitution}
+                // variant="outline-dark" // Set variant to light
+                variant="outline-light"
+                style={{ width: "fit-content", "alignItems": "center" }}
+                size={"sm"}
+            >
+                <Dropdown.Item
+                    key={"product_text_analysis"}
+                    onClick={() => handleClickProductChange("text_analysis")}
+                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
+                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
+                >
+                    <u>Text Analysis</u>
+                </Dropdown.Item>
+                <Dropdown.Item
+                    key={"product_code_checker"}
+                    onClick={() => handleClickProductChange("code_checker")}
+                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
+                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
+                >
+                    <u>Code Checker</u>
+                </Dropdown.Item>
+                <Dropdown.Item
+                    key={"product_media_checker"}
+                    onClick={() => handleClickProductChange("media_checker")}
+                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
+                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
+                >
+                    <u>Media Checker</u>
+                </Dropdown.Item>                
+                <Dropdown.Item
+                    key={"product_website_checker"}
+                    onClick={() => handleClickProductChange("website_checker")}
+                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
+                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
+                >
+                    <u>Website Checker</u>
+                </Dropdown.Item>
+            </DropdownButton>
+
+
+            {/* <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 className="position-relative"
@@ -174,7 +212,18 @@ export default function AltNavBarMajorButtons(props) {
                         </Link>
                     </div>
                 )}
-            </div>
+            </div> */}
+
+            {/* Download button */}
+            <Button
+                className="d-flex button-responsive"
+                onClick={handleDownload}
+                variant="outline-light" 
+                size={"sm"}
+                style={{"alignItems":"center"}}
+            >
+                Download <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
+            </Button>
 
             {/* Contact */}
             <Button

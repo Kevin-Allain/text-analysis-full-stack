@@ -14,6 +14,7 @@ import UserList from '@/components/UserList';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 import ModularTitle from '@/components/ModularTitle';
 import BlackBar from '@/components/BlackBar';
+import FooterBar from "@/components/FooterBar"
 
 export default function Plagiarism() {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -197,6 +198,7 @@ export default function Plagiarism() {
           </Col>
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
         </Row>
+        <FooterBar/>
       </Container>
     </>
   );
