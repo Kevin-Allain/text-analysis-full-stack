@@ -17,7 +17,10 @@ import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_d
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
 import UserList from '@/components/UserList';
+import BlackBar from '@/components/BlackBar';
 import { calculateOpacity, getBinFromScore } from '@/utils/UtilsMath';
+
+import RectGraphScore from '@/components/RectGraphScore'
 
 export default function AI_Detection(){
   // ---- useState
@@ -39,6 +42,16 @@ export default function AI_Detection(){
   // const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
   const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
+
+  const dataRect = [
+    { text: 'A', value: 5 },
+    { text: 'B', value: 10 },
+    { text: 'C', value: 20 },
+    { text: '\n', value: null },  // This will trigger a new line
+    { text: 'D', value: 15 },
+    { text: 'E', value: 0 },
+  ];
+  
 
   // ---- functions
   const fetchFileContent = async (fileName, scoreDetails, usePreload = true) => {
@@ -260,6 +273,7 @@ export default function AI_Detection(){
       </Head>
       <Container fluid>
         <Row>
+          <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />        
           <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} feature={"AI_Detection"} />
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
           <Col md={12} lg={10} className="content" style={{
@@ -270,7 +284,13 @@ export default function AI_Detection(){
             paddingRight: '15px',
           }}
           >
-            <Row>        
+            <Row>
+            <RectGraphScore 
+              data={dataRect} 
+              width="400px" 
+              height="200px"
+              padding={4}
+            />
               <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser}/>
               <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >
                       {isLoadingAI ? (
@@ -323,7 +343,7 @@ export default function AI_Detection(){
                     </div>
                     <div>
                     </div>
-                    </Col>
+                  </Col>
                 </Row>
                 </Col>
                 <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>

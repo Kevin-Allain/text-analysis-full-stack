@@ -38,6 +38,8 @@ export default function FooterBar(props) {
   const iconStyle = {
     fontSize: "1.5rem", marginBottom: "5px", // Set a fixed size for all icons
   };
+  const [iconSize, setIconSize] = useState('1.5rem');
+
 
   // TODO feels dirty because only one element...
   const toggleInstitution = () => { setInstitutionListVisible(!institutionListVisible);  }
@@ -47,289 +49,47 @@ export default function FooterBar(props) {
   const toggleUser = () => { setUserListVisible(!userListVisible);  }
   const toggleFile = () => { setFileListVisible(!fileListVisible);  }
 
+    // Could be updated differently later...?
+    const handleDownload = () => { saveAsPDF(); }
+    const saveAsPDF = () => {
+        html2canvas(document.body).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgWidth = 210; // A4 size in mm
+            const pageHeight = 297;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            pdf.save('page.pdf');
+        });
+    };
+
+
   const structToLookFilesIn = feature==="AI_Detection"?codecheckerData_ai_detection:feature==="Similarity"?codecheckerData_collusion:codecheckerData_plagiarism;
 
   return (
-    <Container fluid style={{background:"black", color:"white"}}>
-      {/* Row for smaller screens */}
-      {/* <Row className="d-flex d-md-none w-100">
-        <Col
-          xs={12}
-          className="align-items-center justify-content-evenly"
-        >
-          <div className="navFolderSets mb-2" style={{ width: "fit-content" }}>
-            {name && (
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={"Folder Set"}
-                variant="outline-dark" // Set variant to light
-                onClick={toggleInstitution}
-                style={{ width: "auto" }}
-                show={institutionListVisible}
-              >
-                <Dropdown.ItemText>
-                  <u>Institution</u>
-                </Dropdown.ItemText>
-                {[institution].map((institution, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {institution}
-                  </Dropdown.Item>
-                ))}
-                <Dropdown.ItemText>
-                  <u>Module</u>
-                </Dropdown.ItemText>
-                {[module].map((module, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {module}
-                  </Dropdown.Item>
-                ))}
-                <Dropdown.ItemText>
-                  <u>Name</u>
-                </Dropdown.ItemText>
-                {[name].map((name, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {name}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            )}
-          </div>
-          {users && (
-            <div className="navPeopleSets mb-2" style={{ width: "fit-content" }}>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={`Individual: ${selectedUser}`}
-                variant="outline-dark" // Set variant to light
-                onClick={toggleUser}
-                style={{ width: "fit-content" }}
-                show={userListVisible}
-              >
-                {users.map((user, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleUserClick(user)}
-                    style={{
-                      backgroundColor: selectedUser === user.name ? "darkgrey" : "",
-                      color: selectedUser === user.name ? "white" : "",
-                      border: selectedUser === user.name ? "solid" : "",
-                      borderRadius: selectedUser === user.name ? "0.5rem" : "",
-                      borderWidth: selectedUser === user.name ? "thin" : "",
-                    }}
-                  >
-                    {user.name}
-                    {user.globalScore !== null && (
-                      <span className="float-right">
-                        {" - "}
-                        {(user.globalScore * 100).toFixed(2)}%
-                      </span>
-                    )}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
-          )}
-          {fileList && (
-            <div className="navFileSets" style={{ width: "fit-content" }}>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={`File: ${structToLookFilesIn.data.find(
-                  (user) => user.name === selectedUser
-                )?.files[indexFile]
-                  }`}
-                onClick={toggleFile}
-                variant="outline-dark" // Set variant to light
-                style={{ width: "fit-content" }}
-                show={fileListVisible}
-              >
-                {fileList.map((file, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleFileClick(index)}
-                    style={{
-                      backgroundColor: indexFile === index ? "darkgrey" : "",
-                      color: indexFile === index ? "white" : "",
-                      border: indexFile === index ? "solid" : "",
-                      borderRadius: indexFile === index ? "0.5rem" : "",
-                      borderWidth: indexFile === index ? "thin" : "",
-                    }}
-                  >
-                    {file}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
-          )}
-        </Col>
-        <Col xs={12}>
-          <NavBarMajorButtons/>
-        </Col>
-      </Row> */}
-      <Row className="w-100 align-items-center mt-1 mb-1" >
-        <Col  
-            style={{display:"inline-flex"}}
-        >
-          <div className="navFolderSets" style={{ width: "fit-content" }}>
-            {name && (
-              <DropdownButton
-                title={ "Folder Set" }
-                onClick={toggleInstitution}
-                // variant="outline-dark" // Set variant to light
-                variant="outline-light"
-                style={{ width: "fit-content" }}
-                show={institutionListVisible}
+    <Container fluid >
+      <Row className="align-items-center" >
+        <Col style={{display:"inline-flex", justifyContent:"center"}}>
+            {/* Download button */}
+            <Button
+                className="d-flex button-responsive"
+                onClick={handleDownload}
+                variant="outline-dark" 
                 size={"sm"}
-              >
-                <Dropdown.ItemText>
-                  <u>Institution</u>
-                </Dropdown.ItemText>
-                {[institution].map((institution, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {institution}
-                  </Dropdown.Item>
-                ))}
-                <Dropdown.ItemText>
-                  <u>Module</u>
-                </Dropdown.ItemText>
-                {[module].map((module, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {module}
-                  </Dropdown.Item>
-                ))}
-                <Dropdown.ItemText>
-                  <u>Name</u>
-                </Dropdown.ItemText>
-                {[name].map((name, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {name}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            )}
-          </div>
-          {users && (
-            <div className="navPeopleSets" style={{ width: "fit-content" }}>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={`Individual: ${selectedUser}`}
-                onClick={toggleUser}
-                // variant="outline-dark" // Set variant to light
-                variant="outline-light"
-                style={{ width: "fit-content" }} 
-                show={userListVisible}
-                size={"sm"}
-              >
-                {users.map((user, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleUserClick(user)}
-                    style={{
-                      backgroundColor: selectedUser === user.name ? "darkgrey" : "",
-                      color: selectedUser === user.name ? "white" : "",
-                      border: selectedUser === user.name ? "solid" : "",
-                      borderRadius: selectedUser === user.name ? "0.5rem" : "",
-                      borderWidth: selectedUser === user.name ? "thin" : "",
-                    }}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                  >
-                    {user.name}
-                    {user.globalScore !== null && (
-                      <span className="float-right">
-                        {" - "}
-                        {(user.globalScore * 100).toFixed(2)}%
-                      </span>
-                    )}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
-          )}
-          {fileList && (
-            <div className="navFileSets" style={{ width: "fit-content" }}>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={`File: ${structToLookFilesIn.data.find(
-                  (user) => user.name === selectedUser
-                )?.files[indexFile]
-                  }`}
-                onClick={toggleFile}
-                style={{ width: "fit-content" }}
-                // variant="outline-dark" // Set variant to light
-                variant="outline-light"
-                show={fileListVisible}
-                size={"sm"}
-              >
-                {fileList.map((file, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleFileClick(index)}
-                    style={{
-                      backgroundColor: indexFile === index ? "darkgrey" : "",
-                      color: indexFile === index ? "white" : "",
-                      border: indexFile === index ? "solid" : "",
-                      borderRadius: indexFile === index ? "0.5rem" : "",
-                      borderWidth: indexFile === index ? "thin" : "",
-                    }}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                  >
-                    {file}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
-          )}
-        </Col>
-        <Col style={{display:"inline-flex", justifyContent:"end"}}>
-          <AltNavBarMajorButtons/>
+                style={{"alignItems":"center"}}
+            >
+                Download PDF <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
+            </Button>
+          
         </Col>
       </Row>
     </Container>

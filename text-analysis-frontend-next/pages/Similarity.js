@@ -14,6 +14,7 @@ import UserList from '@/components/UserList';
 import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 import ModularTitle from '@/components/ModularTitle';
+import BlackBar from '@/components/BlackBar';
 
 export default function Similarity() {
   const { formData, setFormData } = useContext(FormDataContext);
@@ -45,6 +46,12 @@ export default function Similarity() {
     setOtherUser(null);
     setIndexFile(0); // Reset to the first file
   };
+
+  const handleFileClick = (index) => {
+    console.log("File clicked:", index);
+    setIndexFile(index);
+  };
+
   const TableComponent = ({ inputString, setFileSimilarity1, setFileSimilarity2 }) => {
     const tableHTML = parseAndGenerateHTMLTable(inputString);
     useEffect(() => {
@@ -180,6 +187,7 @@ export default function Similarity() {
       </Head>
       <Container fluid>
         <Row>
+          <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"Similarity"} />
           <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} feature={"Similarity"} />
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
           <Col md={12} lg={10} className="content" style={{

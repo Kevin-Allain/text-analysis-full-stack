@@ -215,7 +215,7 @@ export default function AltNavBarMajorButtons(props) {
             </div> */}
 
             {/* Download button */}
-            <Button
+            {/* <Button
                 className="d-flex button-responsive"
                 onClick={handleDownload}
                 variant="outline-light" 
@@ -224,7 +224,7 @@ export default function AltNavBarMajorButtons(props) {
             >
                 Download <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
             </Button>
-
+ */}
             {/* Contact */}
             <Button
                 variant="outline-light"
@@ -233,7 +233,8 @@ export default function AltNavBarMajorButtons(props) {
                 size={"sm"}
                 style={{"alignItems":"center"}}                
             >
-                Contact <IoIosHelpCircleOutline className="icon-responsive" style={{ fontSize: iconSize }} />
+                Contact 
+                {/* <IoIosHelpCircleOutline className="icon-responsive" style={{ fontSize: iconSize }} /> */}
                 
             </Button>
 
