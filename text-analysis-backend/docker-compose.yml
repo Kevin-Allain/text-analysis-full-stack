@@ -1,0 +1,31 @@
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: h%40ppyAI42 
+      MYSQL_DATABASE: admin_
+      MYSQL_USER: admin_user
+      MYSQL_PASSWORD: admin_password  
+    ports:
+      - "3306:3306"
+    networks:
+      - backend_network
+
+  flask_app:
+    build: .
+    environment:
+      FLASK_APP: main.py
+      MYSQL_HOST: mysql
+      MYSQL_USER: admin_user
+      MYSQL_PASSWORD: admin_password
+      
+      MYSQL_DB: admin_
+    ports:
+      - "5001:5000"
+    depends_on:
+      - mysql
+    networks:
+      - backend_network
+
+networks:
+  backend_network:

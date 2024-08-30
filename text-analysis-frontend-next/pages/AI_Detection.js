@@ -288,8 +288,8 @@ export default function AI_Detection(){
               {outputAI.details &&
                 <ScrollGraph
                   data={outputAI.details}
-                  width="400px"
-                  height="600px"
+                  width="400"
+                  height="600"
                   padding={4}
                 />}
               <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />

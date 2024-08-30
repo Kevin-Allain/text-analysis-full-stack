@@ -1,91 +1,62 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
-const ScollGraph = ({ data, width = '100%', height = '100%' }) => {
-  // Split data into rows based on newline characters
-  console.log("ScrollGraph | data: ", data);
-  const rows = [];
-  let currentRow = [];
+const ScollGraph = ({ data, width = 400, height = 200 }) => {
+  const canvasRef = useRef(null);
 
-  data.forEach((item) => {
-    if (item.text.includes('Ċ')){
-      item.text='\n';
-    }
-    if (item.text === '\n') {
-      rows.push(currentRow);
-      currentRow = [];
-    } else {
-      currentRow.push(item);
-    }
-  });
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    // Split data into rows based on newline characters
+    const rows = [];
+    let currentRow = [];
 
-  // Add the last row if there is no newline at the end
-  if (currentRow.length > 0) {
-    rows.push(currentRow);
-  }
+    data.forEach((item) => {
+      if (item.text.includes('Ċ')){ item.text = '\n'; }
+      if (item.text === '\n') {
+        rows.push(currentRow);
+        currentRow = [];
+      } else { currentRow.push(item); }
+    });
 
-  // Determine the maximum number of items in a row
-  const maxColumns = Math.max(...rows.map(row => row.length));
+    // Add the last row if there is no newline at the end
+    if (currentRow.length > 0) { rows.push(currentRow); }
+    // Determine the maximum number of items in a row
+    const maxColumns = Math.max(...rows.map(row => row.length));
+    // Calculate the size of each square based on the container size
+    const squareWidth = width / maxColumns;
+    const squareHeight = height / rows.length;
+    // Find the max value to normalize the color gradient
+    const maxValue = Math.max(...data.filter(item => item.value !== null).map(item => item.value));
 
-  // Pad rows with empty items to ensure consistent column count
-  const paddedRows = rows.map(row => {
-    if (row.length < maxColumns) {
-      return [
-        ...row,
-        ...Array.from({ length: maxColumns - row.length }).map(() => ({
-          text: '',
-          value: null
-        }))
-      ];
-    }
-    return row;
-  });
+    // Helper function to map value to a color
+    const getColor = (value) => {
+      if (value === null) return 'white';
+      const intensity = (value / maxValue);
+      return `rgba(0,110, 0, ${intensity})`;  // Green color intensity
+    };
 
-  // Calculate the size of each square based on the container size
-  const squareWidth = `calc(100% / ${maxColumns})`;
-  const squareHeight = `calc(${height} / ${paddedRows.length})`;
+    // Clear the canvas
+    ctx.clearRect(0, 0, width, height);
 
-  // Find the max value to normalize the color gradient
-  const maxValue = Math.max(...data.filter(item => item.value !== null).map(item => item.value));
-
-  // Helper function to map value to a color
-  const getColor = (value) => {
-    if (value === null) return 'transparent';
-    const intensity = (value / maxValue);
-    return `rgb(0, 100, 0, ${intensity})`;  // Green color intensity
-  };
+    // Draw the grid on the canvas
+    rows.forEach((row, rowIndex) => {
+      row.forEach((item, colIndex) => {
+        const x = colIndex * squareWidth;
+        const y = rowIndex * squareHeight;
+        ctx.fillStyle = getColor(item.value);
+        ctx.fillRect(x, y, squareWidth, squareHeight);
+      });
+    });
+    console.log("ScrollGraph | width: ",width,", height: ",height);
+  }, [data, width, height]);
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${maxColumns}, 1fr)`,
-        gridTemplateRows: `repeat(${paddedRows.length}, 1fr)`,
-        width: width,
-        height: height,
-        boxSizing: 'border-box',
-        border: "solid",
-      }}
-    >
-      {paddedRows.flat().map((item, index) => (
-        <div
-          key={index}
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: item.text ? getColor(item.value) : 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: 0,
-            border: 'none',
-            color: 'black',
-            fontSize: '1rem',
-          }}
-        >
-          {/* {item.text} */}
-        </div>
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      width={width}
+      height={height}
+      style={{ border: '1px solid black' }}
+    />
   );
 };
 
