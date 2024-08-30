@@ -20,7 +20,7 @@ import UserList from '@/components/UserList';
 import BlackBar from '@/components/BlackBar';
 import { calculateOpacity, getBinFromScore } from '@/utils/UtilsMath';
 
-import RectGraphScore from '@/components/RectGraphScore'
+import ScrollGraph from '@/components/ScrollGraph'
 
 export default function AI_Detection(){
   // ---- useState
@@ -44,12 +44,12 @@ export default function AI_Detection(){
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
 
   const dataRect = [
-    { text: 'A', value: 5 },
-    { text: 'B', value: 10 },
-    { text: 'C', value: 20 },
-    { text: '\n', value: null },  // This will trigger a new line
-    { text: 'D', value: 15 },
-    { text: 'E', value: 0 },
+    { text: 'A', value: 5 }, { text: 'B', value: 10 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'C', value: 20 }, { text: '\n', value: null }, 
+    { text: 'E', value: 0 }, { text: 'E', value: 0 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'F', value: 15 },{ text: '\n', value: null }, 
+    { text: 'D', value: 15 }, { text: 'E', value: 0 }, { text: '\n', value: null }, 
+    { text: 'E', value: 0 }, { text: '\n', value: null }, 
+    { text: 'E', value: 0 }, { text: 'E', value: 0 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'F', value: 15 },{ text: '\n', value: null }, 
+    { text: 'B', value: 10 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 },
   ];
   
 
@@ -167,7 +167,7 @@ export default function AI_Detection(){
       const opacity = calculateOpacity(score.toFixed(2), minScore, maxScore, binning, numBin);
       const binIndex = binning ? getBinFromScore(score.toFixed(2), minScore, maxScore, numBin) : 0;
       const binClass = "bin_" + binIndex;
-      const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} style="background-color: rgba(255, 0, 0, ${opacity});">`;
+      const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} style="background-color: rgba(0, 100, 0, ${opacity});">`; // change from red to dark green
       const highlightEnd = "</span>";
       const start = range[0];
       const end = range[1];
@@ -285,13 +285,14 @@ export default function AI_Detection(){
           }}
           >
             <Row>
-            <RectGraphScore 
-              data={dataRect} 
-              width="400px" 
-              height="200px"
-              padding={4}
-            />
-              <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser}/>
+              {outputAI.details &&
+                <ScrollGraph
+                  data={outputAI.details}
+                  width="400px"
+                  height="600px"
+                  padding={4}
+                />}
+              <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
               <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >
                       {isLoadingAI ? (
                         <>
