@@ -270,7 +270,7 @@ export default function AI_Detection(){
       const targetElement = childElements[targetIndex];
 
       // Scroll the target element into view
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
 
