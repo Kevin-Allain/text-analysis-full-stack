@@ -42,15 +42,6 @@ export default function AI_Detection(){
   // const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
   const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
-
-  const dataRect = [
-    { text: 'A', value: 5 }, { text: 'B', value: 10 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'C', value: 20 }, { text: '\n', value: null }, 
-    { text: 'E', value: 0 }, { text: 'E', value: 0 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'F', value: 15 },{ text: '\n', value: null }, 
-    { text: 'D', value: 15 }, { text: 'E', value: 0 }, { text: '\n', value: null }, 
-    { text: 'E', value: 0 }, { text: '\n', value: null }, 
-    { text: 'E', value: 0 }, { text: 'E', value: 0 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'F', value: 15 },{ text: '\n', value: null }, 
-    { text: 'B', value: 10 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 }, { text: 'A', value: 5 },
-  ];
   
 
   // ---- functions
@@ -221,6 +212,7 @@ export default function AI_Detection(){
   useEffect(() => {
     console.log("textRef.current: ", textRef.current);
     if (textRef.current) {
+      console.log('ParentComponent | Initial scrollHeight:', textRef.current.scrollHeight);
       const highlights = textRef.current.querySelectorAll('.highlight');
       highlights.forEach(span => {
         span.addEventListener('click', (e) => {
@@ -265,6 +257,23 @@ export default function AI_Detection(){
     }
   },[outputAI])
 
+  const handleScrollPositionChange = (relativePosition) => {
+    const textElement = textRef.current;
+    console.log("handleScrollPositionChange | relativePosition: ", relativePosition);
+    // Find all the elements inside the pre tag
+    const preElement = textElement.querySelector('pre');
+    const childElements = Array.from(preElement.children);
+
+    if (childElements.length > 0) {
+      // Determine which element to scroll to based on relativePosition
+      const targetIndex = Math.floor(relativePosition * (childElements.length - 1));
+      const targetElement = childElements[targetIndex];
+
+      // Scroll the target element into view
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
 
   return (
     <>
@@ -285,37 +294,39 @@ export default function AI_Detection(){
           }}
           >
             <Row>
-              {outputAI.details &&
-                <ScrollGraph
-                  data={outputAI.details}
-                  width="400"
-                  height="600"
-                  padding={4}
-                />}
               <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
-              <Col lg={9} md={8} sm={12} className="mb-3 biggerContent" >
-                      {isLoadingAI ? (
-                        <>
-                          <h5 className="heading-section text-center">
-                            Calculating AI Detection Score{" "}
-                          </h5>
-                          <div className="text-center"> <div className="spinner-border text-primary" role="status"/> </div>
-                        </>
-                        ) : (
-                          outputAI.details && (
-                        <>
-                          <div className="card overflow-y-scroll" style={{ "height": "75vh" }}>
-                            <div className="card-body">
-                              <div ref={textRef} className="text-content">
-                                <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
-                              </div>
-                            </div>
+              <Col lg={7} md={8} sm={12} className="mb-3 biggerContent" >
+                {isLoadingAI ? (
+                  <>
+                    <h5 className="heading-section text-center">
+                      Calculating AI Detection Score{" "}
+                    </h5>
+                    <div className="text-center"> <div className="spinner-border text-primary" role="status" /> </div>
+                  </>
+                ) : (
+                  outputAI.details && (
+                    <>
+                      <div className="card overflow-y-scroll" style={{ "height": "75vh", "maxHeight": "75vh" }}>
+                        <div className="card-body">
+                          <div ref={textRef} className="text-content">
+                            <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
                           </div>
-                        </>
-                        ))}
-
-                  </Col>
-                  <Col lg={3} md={4} sm={12} className="smallerContent">
+                        </div>
+                      </div>
+                    </>
+                  ))}
+              </Col>
+              {outputAI.details &&
+                <Col lg={2} md={1} sm={12} className="scrollContent" >
+                  <ScrollGraph
+                    data={outputAI.details}
+                    width="400"
+                    height="600"
+                    onScrollPositionChange={handleScrollPositionChange} 
+                  />
+                </Col>
+              }
+              <Col lg={3} md={3} sm={12} className="smallerContent">
                     {outputAI.average &&
                       (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
                         Submission from <u>{selectedUser}</u>.{" "}<br />
