@@ -257,23 +257,86 @@ export default function AI_Detection(){
     }
   },[outputAI])
 
+
+
+  // Update for ScrollGraph rectangle
+  const [scrollPosition, setScrollPosition] = useState(0);
+  // const handleScrollPositionChange = (relativePosition) => {
+  //   const textElement = textRef.current;
+  //   console.log("handleScrollPositionChange | relativePosition: ", relativePosition);
+  //   // Find all the elements inside the pre tag
+  //   const preElement = textElement.querySelector('pre');
+  //   const childElements = Array.from(preElement.children);
+  //   if (childElements.length > 0) {
+  //     const targetIndex = Math.floor(relativePosition * (childElements.length - 1));
+  //     const targetElement = childElements[targetIndex];
+  //     targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  //     // Calculate the position of the target element relative to the pre element
+  //     const elementRect = targetElement.getBoundingClientRect();
+  //     const preRect = preElement.getBoundingClientRect();
+  //     const elementPosition = (elementRect.top - preRect.top + textElement.scrollTop) / (textElement.scrollHeight - textElement.clientHeight);
+  //     console.log("Element position: ", elementPosition);
+  //     // Set the calculated position for the ScrollGraph
+  //     setScrollPosition(elementPosition);
+  //   }
+  // };
+
   const handleScrollPositionChange = (relativePosition) => {
-    const textElement = textRef.current;
-    console.log("handleScrollPositionChange | relativePosition: ", relativePosition);
-    // Find all the elements inside the pre tag
-    const preElement = textElement.querySelector('pre');
-    const childElements = Array.from(preElement.children);
-
-    if (childElements.length > 0) {
-      // Determine which element to scroll to based on relativePosition
-      const targetIndex = Math.floor(relativePosition * (childElements.length - 1));
-      const targetElement = childElements[targetIndex];
-
-      // Scroll the target element into view
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Find the main scrollable element by its class name
+    const textElement = document.querySelector('.card.overflow-y-scroll.mainContent');
+    if (!textElement) {
+        console.error("Main scrollable element is not available.");
+        return;
     }
+    // Use a slight delay to ensure the content is fully rendered
+    setTimeout(() => {
+        // Find the pre element within the main scrollable element
+        const preElement = textElement.querySelector('pre');
+        if (!preElement) { console.error("pre element is not available."); return; }
+        const childElements = Array.from(preElement.children);
+        if (childElements.length > 0) {
+            const targetIndex = Math.floor(relativePosition * (childElements.length - 1));
+            const targetElement = childElements[targetIndex];
+            // Scroll the target element into view
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Calculate the position of the target element relative to the main scrollable element
+            const elementRect = targetElement.getBoundingClientRect();
+            const textRect = textElement.getBoundingClientRect();
+            // Calculate the scrollable height safely
+            const scrollHeight = textElement.scrollHeight;
+            const clientHeight = textElement.clientHeight;
+            const scrollableHeight = scrollHeight - clientHeight;
+            if (scrollableHeight > 0) {
+                const elementPosition = (elementRect.top - textRect.top + textElement.scrollTop) / scrollableHeight;
+                console.log("Element position: ", elementPosition);
+                // Set the calculated position for the ScrollGraph
+                setScrollPosition(elementPosition);
+            } else { console.error("Content is not scrollable, cannot calculate element position."); }
+        } else { console.error("No child elements found inside pre."); }
+    }, 100); // Delay to ensure the content is fully rendered
+};
+ 
+
+  const handleScroll = () => {
+    const textElement = textRef.current;
+    const scrollTop = textElement.scrollTop;
+    const scrollHeight = textElement.scrollHeight - textElement.clientHeight;
+    const relativePosition = scrollTop / scrollHeight;
+    setScrollPosition(relativePosition);
   };
 
+  useEffect(() => {
+    const textElement = textRef.current;
+    if (textElement !== null) {
+      textElement.addEventListener('scroll', handleScroll);
+
+      // Clean up the event listener on component unmount
+      return () => {
+        textElement.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
 
   return (
     <>
@@ -306,7 +369,7 @@ export default function AI_Detection(){
                 ) : (
                   outputAI.details && (
                     <>
-                      <div className="card overflow-y-scroll" style={{ "height": "75vh", "maxHeight": "75vh" }}>
+                      <div className="card overflow-y-scroll mainContent" style={{ "height": "75vh", "maxHeight": "75vh" }}>
                         <div className="card-body">
                           <div ref={textRef} className="text-content">
                             <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
@@ -323,6 +386,7 @@ export default function AI_Detection(){
                     width="400"
                     height="600"
                     onScrollPositionChange={handleScrollPositionChange} 
+                    scrollPosition={scrollPosition}  // Pass the scroll position to the ScrollGraph
                   />
                 </Col>
               }
