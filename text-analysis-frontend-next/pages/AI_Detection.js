@@ -285,10 +285,7 @@ export default function AI_Detection(){
   const handleScrollPositionChange = (relativePosition) => {
     // Find the main scrollable element by its class name
     const textElement = document.querySelector('.card.overflow-y-scroll.mainContent');
-    if (!textElement) {
-        console.error("Main scrollable element is not available.");
-        return;
-    }
+    if (!textElement) { console.error("Main scrollable element is not available."); return; }
     // Use a slight delay to ensure the content is fully rendered
     setTimeout(() => {
         // Find the pre element within the main scrollable element
@@ -300,22 +297,21 @@ export default function AI_Detection(){
             const targetElement = childElements[targetIndex];
             // Scroll the target element into view
             targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Calculate the position of the target element relative to the main scrollable element
-            const elementRect = targetElement.getBoundingClientRect();
-            const textRect = textElement.getBoundingClientRect();
-            // Calculate the scrollable height safely
-            const scrollHeight = textElement.scrollHeight;
-            const clientHeight = textElement.clientHeight;
-            const scrollableHeight = scrollHeight - clientHeight;
-            if (scrollableHeight > 0) {
-                const elementPosition = (elementRect.top - textRect.top + textElement.scrollTop) / scrollableHeight;
-                console.log("Element position: ", elementPosition);
-                // Set the calculated position for the ScrollGraph
-                setScrollPosition(elementPosition);
-            } else { console.error("Content is not scrollable, cannot calculate element position."); }
+            // Wait for scroll to complete (using a timeout is not the best method, but it works for smooth scrolling)
+            setTimeout(() => {
+                // After scroll completes, calculate the scroll ratio
+                const scrollTop = textElement.scrollTop;
+                const scrollHeight = textElement.scrollHeight - textElement.clientHeight; // Scrollable height
+                if (scrollHeight > 0) {
+                    const scrollRatio = scrollTop / scrollHeight;
+                    console.log("Scroll ratio (after scrolling):", scrollRatio);
+                    // Set the calculated position for the ScrollGraph
+                    setScrollPosition(scrollRatio);
+                } else { console.error("Content is not scrollable, cannot calculate scroll ratio."); }
+            }, 500); // Wait for 500ms to ensure scrolling is done
         } else { console.error("No child elements found inside pre."); }
     }, 100); // Delay to ensure the content is fully rendered
-};
+  };
  
 
   const handleScroll = () => {
@@ -386,7 +382,7 @@ export default function AI_Detection(){
                     width="400"
                     height="600"
                     onScrollPositionChange={handleScrollPositionChange} 
-                    scrollPosition={scrollPosition}  // Pass the scroll position to the ScrollGraph
+                    scrollRatio={scrollPosition}
                   />
                 </Col>
               }
