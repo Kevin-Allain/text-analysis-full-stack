@@ -200,7 +200,7 @@ export default function BlackBar(props) {
           onClick={handleLogoClick}
           style={{ cursor: "pointer"}}
         >
-          <Image src={logo} alt="Logo" className="img-fluid" style={{ paddingBottom:"0.25rem",paddingTop:"0.25rem"}} />
+          <Image src={logo} alt="Logo" className="img-fluid" style={{ paddingBottom:"0.25rem",paddingTop:"0.25rem", width:"150px"}} />
         </Col>        
         <Col style={{display:"inline-flex", justifyContent:"end"}}>
           <AltNavBarMajorButtons/>
