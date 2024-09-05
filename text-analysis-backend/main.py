@@ -16,8 +16,15 @@ app = Flask(__name__)
 # CORS(app, resources={r"/*": {"origins": "*"}})
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:h@ppyAI42@localhost/admin_'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:h%40ppyAI42@localhost:3306/admin_'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:h%40ppyAI42@localhost:3306/admin_'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+f"mysql+pymysql://{os.getenv('MYSQL_USER')}:{os.getenv('MYSQL_PASSWORD')}"
+f"@{os.getenv('MYSQL_HOST')}:3306/{os.getenv('MYSQL_DB')}"
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db.init_app(app)
 
 # db = SQLAlchemy(app)

@@ -53,12 +53,9 @@ export default function Navbar(props) {
 
 
   return (
-    <Container fluid>
+    <Container fluid style={{marginTop:"0.5rem"}}>
       {/* Row for smaller screens */}
       <Row className="d-flex d-md-none w-100">
-        <Col xs={12} className="leftPic" >
-          <Image src={logo} alt="Logo" className="img-fluid" />
-        </Col>
         <Col
           xs={12}
           className="align-items-center justify-content-evenly"
@@ -199,41 +196,21 @@ export default function Navbar(props) {
             </div>
           )}
         </Col>
-        <Col
-          xs={12}
-          // className="d-flex align-items-center align-items-center"
-          // style={{display:"inline-flex", justifyContent:"end"}}
-        >
-          <NavBarMajorButtons/>
-        </Col>
+        <Col xs={12} > <NavBarMajorButtons/> </Col>
       </Row>
       {/* Row for larger screens */}
       <Row className="w-100 d-none d-md-flex align-items-center" >
-        <Col
-          xs={2}
-          md={2}
-          className="leftPic"
-          onClick={handleLogoClick}
-          style={{ cursor: "pointer"}}
-        >
-          <Image src={logo} alt="Logo" className="img-fluid" />
-        </Col>
-        {/* <Col
-          xs={6}
-          md={6}
-          className="d-flex flex-column align-items-start mt-1 mb-1"
-        >
-          <div className="navFolderSets mb-2" style={{ width: "fit-content" }}>
+      <Col style={{display:"inline-flex"}} >
             {name && (
+              <div className="navFolderSets" style={{ width: "fit-content" }}>
               <DropdownButton
-                // id="dropdown-basic-button"
-                title={ "Folder Set" }
+                title={"Folder Set"}
                 onClick={toggleInstitution}
-                // custom-dropdown
-                // className="individualSelect"
-                variant="outline-dark" // Set variant to light
+                variant="outline-dark"
+                // variant="outline-light"
                 style={{ width: "fit-content" }}
                 show={institutionListVisible}
+                size={"sm"}
               >
                 <Dropdown.ItemText>
                   <u>Institution</u>
@@ -284,19 +261,19 @@ export default function Navbar(props) {
                   </Dropdown.Item>
                 ))}
               </DropdownButton>
+              </div>              
             )}
-          </div>
           {users && (
-            <div className="navPeopleSets mb-2" style={{ width: "fit-content" }}>
+            <div className="navPeopleSets" style={{ width: "fit-content" }}>
               <DropdownButton
                 id="dropdown-basic-button"
                 title={`Individual: ${selectedUser}`}
                 onClick={toggleUser}
-                // custom-dropdown
-                // className="individualSelect responsive-dropdown "
-                variant="outline-dark" // Set variant to light
-                style={{ width: "fit-content" }} 
+                variant="outline-dark"
+                // variant="outline-light"
+                style={{ width: "fit-content" }}
                 show={userListVisible}
+                size={"sm"}
               >
                 {users.map((user, index) => (
                   <Dropdown.Item
@@ -333,11 +310,11 @@ export default function Navbar(props) {
                 )?.files[indexFile]
                   }`}
                 onClick={toggleFile}
-                // custom-dropdown
-                // className="individualSelect responsive-dropdown"
                 style={{ width: "fit-content" }}
                 variant="outline-dark"
+                // variant="outline-light"
                 show={fileListVisible}
+                size={"sm"}
               >
                 {fileList.map((file, index) => (
                   <Dropdown.Item
@@ -359,16 +336,8 @@ export default function Navbar(props) {
               </DropdownButton>
             </div>
           )}
-        </Col> */}
+        </Col>
 
-
-        {/* <Col
-          xs={4}
-          md={4}
-          style={{display:"inline-flex", justifyContent:"end"}}
-        >
-          <NavBarMajorButtons/>
-        </Col> */}
       </Row>
       <style jsx>{`
         .custom-dropdown .dropdown-toggle {

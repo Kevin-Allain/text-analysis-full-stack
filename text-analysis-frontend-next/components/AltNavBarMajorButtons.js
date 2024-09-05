@@ -2,15 +2,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 import { Button, DropdownButton, Dropdown } from 'react-bootstrap';
+import { useRouter } from "next/router";
 import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosHelpCircleOutline } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import { LuDownload } from "react-icons/lu";
 import PagePDFExport from "@/components/export/PagePDFExport";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import "@/styles/NavBarMajorButtons.css"
 
+
+
 export default function AltNavBarMajorButtons(props) {
+    const router = useRouter();
 
     const [fontSize, setFontSize] = useState('1.25rem');
     const [iconSize, setIconSize] = useState('1.5rem');
@@ -40,204 +45,130 @@ export default function AltNavBarMajorButtons(props) {
             pdf.save('page.pdf');
         });
     };
-    // TODO
-    const handleClickProductChange = (name) =>{
-        console.log("handleClickProductChange : ",name);
 
+  // Toggle product dropdown visibility
+  const toggleProductDropdown = () => {
+    setShowProducts(!showProducts);
+  };
+
+  const handleClickProductChange = (name) => {
+    console.log("handleClickProductChange : ", name);
+    if (name === "code_checker") {
+      router.push("/CodeChecker");
+    } else if (name === "text_analysis") {
+      router.push("/TextAnalysis");
+    } else if (name === "media_checker") {
+      router.push("/MediaChecker");
+    } else {
+      router.push("/WebsiteChecker");
     }
+  };
 
-    // TODO NOT WORKING
-    useEffect(() => {
-        const handleResize = () => {
-            const width = window.innerWidth;
-            if (width < 576) {
-                setFontSize('0.9rem');
-                setIconSize('1.2rem');
-            } else if (width < 768) {
-                setFontSize('1rem');
-                setIconSize('1.3rem');
-            } else if (width < 992) {
-                setFontSize('1.1rem');
-                setIconSize('1.4rem');
-            } else {
-                setFontSize('1.25rem');
-                setIconSize('1.5rem');
-            }
-        };
+  const handleContactClick = () => {
+    router.push("https://aiaware.io/contact");
+  };
 
-        handleResize(); // Initial call to set sizes based on current window width
-        window.addEventListener('resize', handleResize);
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-
-    const handleContactClick = () => { router.push("https://aiaware.io/contact"); };
-    const handleMouseEnter = () => {
-        clearTimeout(timerRef.current);
-        setShowProducts(true);
-    };
-    const handleMouseLeave = () => {
-        timerRef.current = setTimeout(() => {
-            setShowProducts(false);
-        }, 300); // delay before hiding the dropdown
-    };
-
-    const productsButtonStyle = {
-        // display: "flex",
-        // flexDirection: "column",
-        // alignItems: "center",
-        // textDecoration: "none",
-        // color: "white",
-        cursor: "pointer",
-    };
-
-    return (
+  return (
         <>
+            {/* Products Dropdown */}
+            <div style={{ display: "inline-block", position: "relative" }}>
+                <div
+                    onClick={toggleProductDropdown}
+                    style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        padding: "10px",
+                        cursor: "pointer",
+                        borderRadius: "5px",
+                        textAlign: "center",
+                        width:"200px",
+                        border: showProducts ? "1px solid white" : "none", // Add conditional border here
+                    }}
+                    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                >
+                    Products <IoIosArrowDown />
+                </div>
 
-            {/* Products */}
-            <DropdownButton
-                title={"Products"}
-                // onClick={toggleInstitution}
-                // variant="outline-dark" // Set variant to light
-                variant="outline-light"
-                style={{ width: "fit-content", "alignItems": "center" }}
-                size={"sm"}
-            >
-                <Dropdown.Item
-                    key={"product_text_analysis"}
-                    onClick={() => handleClickProductChange("text_analysis")}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                >
-                    <u>Text Analysis</u>
-                </Dropdown.Item>
-                <Dropdown.Item
-                    key={"product_code_checker"}
-                    onClick={() => handleClickProductChange("code_checker")}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                >
-                    <u>Code Checker</u>
-                </Dropdown.Item>
-                <Dropdown.Item
-                    key={"product_media_checker"}
-                    onClick={() => handleClickProductChange("media_checker")}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                >
-                    <u>Media Checker</u>
-                </Dropdown.Item>                
-                <Dropdown.Item
-                    key={"product_website_checker"}
-                    onClick={() => handleClickProductChange("website_checker")}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                >
-                    <u>Website Checker</u>
-                </Dropdown.Item>
-            </DropdownButton>
-
-
-            {/* <div
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                className="position-relative"
-            >
-                <Button
-                    variant="outline-light"
-                    className="d-flex align-items-center button-responsive"
-                    size={"sm"}                   
-                    style={{"alignItems":"center"}}                     
-                >
-                    Products <AiOutlineProduct className="icon-responsive" style={{ fontSize: iconSize }} />                    
-                </Button>
+                {/* Dropdown menu (conditionally rendered) */}
                 {showProducts && (
-                    <div className="alt-products-dropdown position-absolute mt-2 d-flex flex-column">
-                        <Link href="/TextAnalysis" passHref>
-                            <div
-                                className="btn alt-btn-link text-decoration-none mx-1"
-                                style={{
-                                    borderBottomStyle: "double",
-                                    borderBottomColor: "inherit",
-                                    borderBottomRightRadius: "0rem",
-                                    borderBottomLeftRadius: "0rem",
-                                    borderBottomWidth: "medium",
-                                }}
-                            >
-                                Text Analysis
-                            </div>
-                        </Link>
-                        <Link href="/CodeChecker" passHref>
-                            <div
-                                className="btn alt-btn-link text-decoration-none mx-1"
-                                style={{
-                                    borderBottomStyle: "double",
-                                    borderBottomColor: "inherit",
-                                    borderBottomRightRadius: "0rem",
-                                    borderBottomLeftRadius: "0rem",
-                                    borderBottomWidth: "medium",
-                                }}
-                            >
-                                Code Checker
-                            </div>
-                        </Link>
-                        <Link href="/MediaChecker" passHref>
-                            <div
-                                className="btn alt-btn-link text-decoration-none mx-1"
-                                style={{
-                                    borderBottomStyle: "double",
-                                    borderBottomColor: "inherit",
-                                    borderBottomRightRadius: "0rem",
-                                    borderBottomLeftRadius: "0rem",
-                                    borderBottomWidth: "medium",
-                                }}
-                            >
-                                Media Checker
-                            </div>
-                        </Link>
-                        <Link href="/WebsiteChecker" passHref>
-                            <div
-                                className="btn alt-btn-link text-decoration-none mx-1"
-                                style={{
-                                    borderBottomStyle: "double",
-                                    borderBottomColor: "inherit",
-                                    borderBottomRightRadius: "0rem",
-                                    borderBottomLeftRadius: "0rem",
-                                    borderBottomWidth: "medium",
-                                }}
-                            >
-                                Website Checker
-                            </div>
-                        </Link>
+                    <div
+                        style={{
+                            backgroundColor: "black",
+                            position: "absolute",
+                            top: "100%",
+                            left: "0",
+                            zIndex: 1,
+                            boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+                            padding: "10px",
+                            borderRadius: "5px",
+                            width: "200px",
+                        }}
+                    >
+                        <div
+                            key={"product_text_analysis"}
+                            style={{ color: "white", padding: "10px", cursor: "pointer" }}
+                            onClick={() => handleClickProductChange("text_analysis")}
+                            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseDown={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseUp={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                        >
+                            <u>Text Analysis</u>
+                        </div>
+                        <div
+                            key={"product_code_checker"}
+                            style={{ color: "white", padding: "10px", cursor: "pointer" }}
+                            onClick={() => handleClickProductChange("code_checker")}
+                            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseDown={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseUp={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                        >
+                            <u>Code Checker</u>
+                        </div>
+                        <div
+                            key={"product_media_checker"}
+                            style={{ color: "white", padding: "10px", cursor: "pointer" }}
+                            onClick={() => handleClickProductChange("media_checker")}
+                            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseDown={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseUp={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                        >
+                            <u>Media Checker</u>
+                        </div>
+                        <div
+                            key={"product_website_checker"}
+                            style={{ color: "white", padding: "10px", cursor: "pointer" }}
+                            onClick={() => handleClickProductChange("website_checker")}
+                            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseDown={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                            onMouseUp={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                        >
+                            <u>Website Checker</u>
+                        </div>
                     </div>
                 )}
-            </div> */}
+            </div>
 
-            {/* Download button */}
-            {/* <Button
-                className="d-flex button-responsive"
-                onClick={handleDownload}
-                variant="outline-light" 
-                size={"sm"}
-                style={{"alignItems":"center"}}
-            >
-                Download <LuDownload className="icon-responsive" style={{ fontSize: iconSize }} />
-            </Button>
- */}
-            {/* Contact */}
-            <Button
-                variant="outline-light"
-                className="d-flex align-items-center button-responsive"
+            {/* Contact Button */}
+            <div
+                style={{
+                    backgroundColor: "black",
+                    color: "white",
+                    padding: "10px",
+                    cursor: "pointer",
+                    borderRadius: "5px",
+                    textAlign: "center",
+                }}
+                onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+                onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
                 onClick={handleContactClick}
-                size={"sm"}
-                style={{"alignItems":"center"}}                
             >
-                Contact 
-                {/* <IoIosHelpCircleOutline className="icon-responsive" style={{ fontSize: iconSize }} /> */}
-                
-            </Button>
-
+                Contact
+            </div>
         </>
-    )
+    );
 }

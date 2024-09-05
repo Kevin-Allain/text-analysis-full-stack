@@ -121,15 +121,18 @@ export default function AI_Detection(){
       console.log("window.location.href loadAIText: ", window.location.href);
       const is_localhost = window.location.href.indexOf("localhost");
       const is_127_0_0_1 = window.location.href.indexOf("127.0.0.1");
+
+      // Change of ports based on latest changes from Pravija
+      const portToReplace = '5001' // user to be 5000; Flask runs on port 5000 by default
+
       const strAnalyze = is_localhost
         ? window.location.href
-          .replace("TextAnalysis",'').replace("AI_Detection",'').replace("3000", "5000") 
+          .replace("TextAnalysis",'').replace("AI_Detection",'').replace("3000", portToReplace)
           + "api/analyze_t_b"
         : window.location
           .replace("TextAnalysis",'').replace("AI_Detection",'').href 
           + "api/analyze_t_b";
       console.log("strAnalyze AI Text: ", strAnalyze);
-      // Flask runs on port 5000 by default
       const response = await fetch(strAnalyze, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: textFile }),
       });
@@ -229,7 +232,7 @@ export default function AI_Detection(){
       // TODO check why can't be changed to codecheckerData_ai_detection without an error
       const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
       const fileName = userData.files[indexFile], scoreDetails = userData.scoreDetails[indexFile];
-      console.log("fetchFileContent |scoreDetails: ",scoreDetails);
+      console.log("useEffect [outputAI] |scoreDetails: ",scoreDetails);
 
       // TODO third, make transposition so that output can be highlighted
       // TODO ---- incorporate this code so that we make the transition from data.details to scoreDetails (we'll do highlighting after)     
@@ -258,30 +261,8 @@ export default function AI_Detection(){
   },[outputAI])
 
 
-
   // Update for ScrollGraph rectangle
   const [scrollPosition, setScrollPosition] = useState(0);
-  // const handleScrollPositionChange = (relativePosition) => {
-  //   const textElement = textRef.current;
-  //   console.log("handleScrollPositionChange | relativePosition: ", relativePosition);
-  //   // Find all the elements inside the pre tag
-  //   const preElement = textElement.querySelector('pre');
-  //   const childElements = Array.from(preElement.children);
-  //   if (childElements.length > 0) {
-  //     const targetIndex = Math.floor(relativePosition * (childElements.length - 1));
-  //     const targetElement = childElements[targetIndex];
-  //     targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-  //     // Calculate the position of the target element relative to the pre element
-  //     const elementRect = targetElement.getBoundingClientRect();
-  //     const preRect = preElement.getBoundingClientRect();
-  //     const elementPosition = (elementRect.top - preRect.top + textElement.scrollTop) / (textElement.scrollHeight - textElement.clientHeight);
-  //     console.log("Element position: ", elementPosition);
-  //     // Set the calculated position for the ScrollGraph
-  //     setScrollPosition(elementPosition);
-  //   }
-  // };
-
   const handleScrollPositionChange = (relativePosition) => {
     // Find the main scrollable element by its class name
     const textElement = document.querySelector('.card.overflow-y-scroll.mainContent');
@@ -342,7 +323,7 @@ export default function AI_Detection(){
       <Container fluid>
         <Row>
           <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />        
-          <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} feature={"AI_Detection"} />
+          <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
           <Col md={12} lg={10} className="content" style={{
             marginLeft: 'auto',
@@ -376,7 +357,7 @@ export default function AI_Detection(){
                   ))}
               </Col>
               {outputAI.details &&
-                <Col lg={2} md={1} sm={12} className="scrollContent" >
+                <Col lg={1} md={1} sm={12} className="scrollContent" >
                   <ScrollGraph
                     data={outputAI.details}
                     width="400"
@@ -386,7 +367,7 @@ export default function AI_Detection(){
                   />
                 </Col>
               }
-              <Col lg={3} md={3} sm={12} className="smallerContent">
+              <Col lg={4} md={3} sm={12} className="smallerContent">
                     {outputAI.average &&
                       (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
                         Submission from <u>{selectedUser}</u>.{" "}<br />
