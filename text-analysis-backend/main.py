@@ -12,8 +12,8 @@ from main_binoculars import analyze_binoculars
 from models import db, Individual
 
 app = Flask(__name__)
-# CORS(app)
-# CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:h@ppyAI42@localhost/admin_'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:h%40ppyAI42@localhost:3306/admin_'

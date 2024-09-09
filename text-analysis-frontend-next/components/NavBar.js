@@ -50,6 +50,9 @@ export default function Navbar(props) {
   const structToLookFilesIn = feature==="AI_Detection"?codecheckerData_ai_detection:feature==="Similarity"?codecheckerData_collusion:codecheckerData_plagiarism;
 
   const handleLogoClick = () => { router.push("/"); };
+  const handleResultsClick = () => {
+    router.push("/InitialResults")
+  }
 
 
   return (
@@ -199,6 +202,26 @@ export default function Navbar(props) {
         <Col xs={12} > <NavBarMajorButtons/> </Col>
       </Row>
       {/* Row for larger screens */}
+      <Row>
+        <div
+          style={{
+            backgroundColor: "#085b4d",
+            color: "white",
+            padding: "10px",
+            cursor: "pointer",
+            border: "solid 1px #fff",
+            textAlign: "center",
+            width:"170px",
+            height:"43px",
+            borderRadius: "21.5px",
+          }}
+          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
+          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
+          onClick={handleResultsClick}
+        >
+          Contact
+        </div>
+      </Row>
       <Row className="w-100 d-none d-md-flex align-items-center" >
       <Col style={{display:"inline-flex"}} >
             {name && (

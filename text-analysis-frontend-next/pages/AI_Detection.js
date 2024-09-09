@@ -45,7 +45,7 @@ export default function AI_Detection(){
   
 
   // ---- functions
-  const fetchFileContent = async (fileName, scoreDetails, usePreload = true) => {
+  const fetchFileContent = async (fileName, scoreDetails, usePreload = false) => {
     try {
       const response = await fetch(`/data/codechecker_files/${fileName}`);
       if (usePreload) {
@@ -125,13 +125,20 @@ export default function AI_Detection(){
       // Change of ports based on latest changes from Pravija
       const portToReplace = '5001' // user to be 5000; Flask runs on port 5000 by default
 
-      const strAnalyze = is_localhost
+      let strAnalyze = is_localhost
         ? window.location.href
           .replace("TextAnalysis",'').replace("AI_Detection",'').replace("3000", portToReplace)
           + "api/analyze_t_b"
         : window.location
           .replace("TextAnalysis",'').replace("AI_Detection",'').href 
           + "api/analyze_t_b";
+
+      if (strAnalyze.includes("?name")) {
+        console.log("name is included! strAnalyze: ",strAnalyze, ", typeof strAnalyze: ", (typeof strAnalyze));
+        let split = (strAnalyze.toString()).split("/")
+        strAnalyze = split[0] + '//' + split[2] + '/api/' + split[4]
+      }
+
       console.log("strAnalyze AI Text: ", strAnalyze);
       const response = await fetch(strAnalyze, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: textFile }),
@@ -322,7 +329,7 @@ export default function AI_Detection(){
       </Head>
       <Container fluid>
         <Row>
-          <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />        
+          <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
           <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
           <Col md={12} lg={10} className="content" style={{
@@ -333,7 +340,13 @@ export default function AI_Detection(){
             paddingRight: '15px',
           }}
           >
-            <Row>
+            <Row style={{
+              border:" solid #eae9e9 thin", 
+              borderRadius:"20px", 
+              backgroundColor:"#f1f1f1", 
+              margin: "28px 0 0 18px",
+              padding: "44px 65px 34px 50px"
+            }}>
               <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
               <Col lg={7} md={8} sm={12} className="mb-3 biggerContent" >
                 {isLoadingAI ? (
@@ -346,7 +359,7 @@ export default function AI_Detection(){
                 ) : (
                   outputAI.details && (
                     <>
-                      <div className="card overflow-y-scroll mainContent" style={{ "height": "75vh", "maxHeight": "75vh" }}>
+                      <div className="card overflow-y-scroll mainContent" style={{ "height": "65vh", "maxHeight": "65vh" }}>
                         <div className="card-body">
                           <div ref={textRef} className="text-content">
                             <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
@@ -362,46 +375,46 @@ export default function AI_Detection(){
                     data={outputAI.details}
                     width="400"
                     height="600"
-                    onScrollPositionChange={handleScrollPositionChange} 
+                    onScrollPositionChange={handleScrollPositionChange}
                     scrollRatio={scrollPosition}
                   />
                 </Col>
               }
               <Col lg={4} md={3} sm={12} className="smallerContent">
-                    {outputAI.average &&
-                      (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
-                        Submission from <u>{selectedUser}</u>.{" "}<br />
-                        AI Detection Score:{" "}{(outputAI.average).toFixed(2)} <br />
-                        Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
-                      </div>)
-                    }
-                    <div className='legend'>
-                      {(minScoreAI && maxScoreAI) &&
-                        <LegendBinned
-                          minScore={minScoreAI}
-                          maxScore={maxScoreAI}
-                          numBins={maxBin}
-                          onSelectBin={handleSelectBin}
-                          selectedBin={selectedBinIndex} />
-                      }
-                      {selectedBinIndex !== null && (
-                        <div className="mt-3">
-                          <h5>Selected Bin</h5>
-                          <p>
-                            Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
-                            {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
-                          </p>
-                        </div>
-                      )}
+                {outputAI.average &&
+                  (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
+                    Submission from <u>{selectedUser}</u>.{" "}<br />
+                    AI Detection Score:{" "}{(outputAI.average).toFixed(2)} <br />
+                    Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
+                  </div>)
+                }
+                <div className='legend'>
+                  {(minScoreAI && maxScoreAI) &&
+                    <LegendBinned
+                      minScore={minScoreAI}
+                      maxScore={maxScoreAI}
+                      numBins={maxBin}
+                      onSelectBin={handleSelectBin}
+                      selectedBin={selectedBinIndex} />
+                  }
+                  {selectedBinIndex !== null && (
+                    <div className="mt-3">
+                      <h5>Selected Bin</h5>
+                      <p>
+                        Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
+                        {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
+                      </p>
                     </div>
-                    <div>
-                    </div>
-                  </Col>
-                </Row>
-                </Col>
-                <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
+                  )}
+                </div>
+                <div>
+                </div>
+              </Col>
             </Row>
-          </Container>
+          </Col>
+          <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
+        </Row>
+      </Container>
     </>
   )
 }

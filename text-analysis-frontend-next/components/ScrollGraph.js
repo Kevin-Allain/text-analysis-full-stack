@@ -92,7 +92,7 @@ const ScrollGraph = ({ data, width = 400, height = 600, onScrollPositionChange, 
   const rectTop = Math.min(Math.max(scrollRatio * height - rectHeight / 2, 0), height - rectHeight);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '75vh' }}>
+    <div style={{ position: 'relative', width: '100%', height: '65vh' }}>
       <canvas
         ref={canvasRef}
         width={width}
