@@ -222,145 +222,146 @@ export default function Navbar(props) {
           Contact
         </div>
       </Row>
-      <Row className="w-100 d-none d-md-flex align-items-center" >
-      <Col style={{display:"inline-flex"}} >
+      <Row className="w-100 d-none d-md-flex justify-content-center align-items-center">
+        <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
+        <Col style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}>
+          <div className="interactionNavBar" style={{ textAlign: "center", display: "flex", alignItems: "center", gap: "10px", paddingLeft: "15px", paddingRight: "15px", marginLeft: "auto", marginRight: "auto" }}>
             {name && (
               <div className="navFolderSets" style={{ width: "fit-content" }}>
-              <DropdownButton
-                title={"Folder Set"}
-                onClick={toggleInstitution}
-                variant="outline-dark"
-                // variant="outline-light"
-                style={{ width: "fit-content" }}
-                show={institutionListVisible}
-                size={"sm"}
-              >
-                <Dropdown.ItemText>
-                  <u>Institution</u>
-                </Dropdown.ItemText>
-                {[institution].map((institution, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {institution}
-                  </Dropdown.Item>
-                ))}
-                <Dropdown.ItemText>
-                  <u>Module</u>
-                </Dropdown.ItemText>
-                {[module].map((module, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {module}
-                  </Dropdown.Item>
-                ))}
-                <Dropdown.ItemText>
-                  <u>Name</u>
-                </Dropdown.ItemText>
-                {[name].map((name, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    style={{
-                      backgroundColor: "darkgrey",
-                      color: "white",
-                      border: "solid",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    {name}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-              </div>              
+                <DropdownButton
+                  title={"Folder Set"}
+                  onClick={toggleInstitution}
+                  variant="outline-dark"
+                  style={{ width: "fit-content" }}
+                  show={institutionListVisible}
+                  size={"sm"}
+                >
+                  <Dropdown.ItemText>
+                    <u>Institution</u>
+                  </Dropdown.ItemText>
+                  {[institution].map((institution, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      style={{
+                        backgroundColor: "darkgrey",
+                        color: "white",
+                        border: "solid",
+                        borderRadius: "0.5rem",
+                      }}
+                    >
+                      {institution}
+                    </Dropdown.Item>
+                  ))}
+                  <Dropdown.ItemText>
+                    <u>Module</u>
+                  </Dropdown.ItemText>
+                  {[module].map((module, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      style={{
+                        backgroundColor: "darkgrey",
+                        color: "white",
+                        border: "solid",
+                        borderRadius: "0.5rem",
+                      }}
+                    >
+                      {module}
+                    </Dropdown.Item>
+                  ))}
+                  <Dropdown.ItemText>
+                    <u>Name</u>
+                  </Dropdown.ItemText>
+                  {[name].map((name, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      style={{
+                        backgroundColor: "darkgrey",
+                        color: "white",
+                        border: "solid",
+                        borderRadius: "0.5rem",
+                      }}
+                    >
+                      {name}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              </div>
             )}
-          {users && (
-            <div className="navPeopleSets" style={{ width: "fit-content" }}>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={`Individual: ${selectedUser}`}
-                onClick={toggleUser}
-                variant="outline-dark"
-                // variant="outline-light"
-                style={{ width: "fit-content" }}
-                show={userListVisible}
-                size={"sm"}
-              >
-                {users.map((user, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleUserClick(user)}
-                    style={{
-                      backgroundColor: selectedUser === user.name ? "darkgrey" : "",
-                      color: selectedUser === user.name ? "white" : "",
-                      border: selectedUser === user.name ? "solid" : "",
-                      borderRadius: selectedUser === user.name ? "0.5rem" : "",
-                      borderWidth: selectedUser === user.name ? "thin" : "",
-                    }}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                  >
-                    {user.name}
-                    {user.globalScore !== null && (
-                      <span className="float-right">
-                        {" - "}
-                        {(user.globalScore * 100).toFixed(2)}%
-                      </span>
-                    )}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
-          )}
-          {fileList && (
-            <div className="navFileSets" style={{ width: "fit-content" }}>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={`File: ${structToLookFilesIn.data.find(
-                  (user) => user.name === selectedUser
-                )?.files[indexFile]
-                  }`}
-                onClick={toggleFile}
-                style={{ width: "fit-content" }}
-                variant="outline-dark"
-                // variant="outline-light"
-                show={fileListVisible}
-                size={"sm"}
-              >
-                {fileList.map((file, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => handleFileClick(index)}
-                    style={{
-                      backgroundColor: indexFile === index ? "darkgrey" : "",
-                      color: indexFile === index ? "white" : "",
-                      border: indexFile === index ? "solid" : "",
-                      borderRadius: indexFile === index ? "0.5rem" : "",
-                      borderWidth: indexFile === index ? "thin" : "",
-                    }}
-                    onMouseDown={(e) => e.currentTarget.style.backgroundColor = 'black'}
-                    onMouseUp={(e) => e.currentTarget.style.backgroundColor = 'darkgrey'}
-                  >
-                    {file}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </div>
-          )}
+            <div style={{ display: "flex", alignItems: "center" }}>Results from:</div>
+            {users && (
+              <div className="navPeopleSets" style={{ width: "fit-content" }}>
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  title={`Individual: ${selectedUser}`}
+                  onClick={toggleUser}
+                  variant="outline-dark"
+                  style={{ width: "fit-content" }}
+                  show={userListVisible}
+                  size={"sm"}
+                >
+                  {users.map((user, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      onClick={() => handleUserClick(user)}
+                      style={{
+                        backgroundColor: selectedUser === user.name ? "darkgrey" : "",
+                        color: selectedUser === user.name ? "white" : "",
+                        border: selectedUser === user.name ? "solid" : "",
+                        borderRadius: selectedUser === user.name ? "0.5rem" : "",
+                        borderWidth: selectedUser === user.name ? "thin" : "",
+                      }}
+                      onMouseDown={(e) => e.currentTarget.style.backgroundColor = "black"}
+                      onMouseUp={(e) => e.currentTarget.style.backgroundColor = "darkgrey"}
+                    >
+                      {user.name}
+                      {user.globalScore !== null && (
+                        <span className="float-right">
+                          {" - "}
+                          {(user.globalScore * 100).toFixed(2)}%
+                        </span>
+                      )}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              </div>
+            )}
+            {fileList && (
+              <div className="navFileSets" style={{ width: "fit-content" }}>
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  title={`File: ${structToLookFilesIn.data.find(
+                    (user) => user.name === selectedUser
+                  )?.files[indexFile]
+                    }`}
+                  onClick={toggleFile}
+                  style={{ width: "fit-content" }}
+                  variant="outline-dark"
+                  show={fileListVisible}
+                  size={"sm"}
+                >
+                  {fileList.map((file, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      onClick={() => handleFileClick(index)}
+                      style={{
+                        backgroundColor: indexFile === index ? "darkgrey" : "",
+                        color: indexFile === index ? "white" : "",
+                        border: indexFile === index ? "solid" : "",
+                        borderRadius: indexFile === index ? "0.5rem" : "",
+                        borderWidth: indexFile === index ? "thin" : "",
+                      }}
+                      onMouseDown={(e) => e.currentTarget.style.backgroundColor = "black"}
+                      onMouseUp={(e) => e.currentTarget.style.backgroundColor = "darkgrey"}
+                    >
+                      {file}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              </div>
+            )}
+          </div>
         </Col>
-
+        <Col md={0} lg={1} className="d-none d-md-block emptyStuff"></Col>
       </Row>
       <style jsx>{`
         .custom-dropdown .dropdown-toggle {

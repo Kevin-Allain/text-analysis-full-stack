@@ -45,7 +45,7 @@ export default function AI_Detection(){
   
 
   // ---- functions
-  const fetchFileContent = async (fileName, scoreDetails, usePreload = false) => {
+  const fetchFileContent = async (fileName, scoreDetails, usePreload = true) => {
     try {
       const response = await fetch(`/data/codechecker_files/${fileName}`);
       if (usePreload) {
@@ -344,7 +344,7 @@ export default function AI_Detection(){
               border:" solid #eae9e9 thin", 
               borderRadius:"20px", 
               backgroundColor:"#f1f1f1", 
-              margin: "28px 0 0 18px",
+              margin: "10px 0 0 18px", // used to be "28px 0 0 18px",
               padding: "44px 65px 34px 50px"
             }}>
               <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
