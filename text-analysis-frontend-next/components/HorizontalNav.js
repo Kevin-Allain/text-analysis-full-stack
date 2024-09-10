@@ -47,70 +47,131 @@ const HorizontalNav = ( props ) => {
   });
 
 
+  const shortenedFeatures = {"AI_Detection":"AI", "Similarity":"SI","Plagiarism":"PL"}
 
   // TODO adapt button to React Bootstrap button to have the variant 
   return (
-    <div className="container mb-1">
-      <div className="d-flex justify-content-center" >
-        <div className="btn-group" role="group" aria-label="Horizontal navigation" style={{"width":"100%"}}>
-          <Button 
-            // type="button" 
-            // className={`btn ${curFeature===features[0]? "btn-secondary" : "btn-primary"}`}
-            variant={`${curFeature===features[0]? "dark" : "outline-secondary"}`}
-            onClick={() => handleNavigation(features[0])}
-            disabled = {curFeature===features[0]}
-            style={{
-              "display": "inline-flex",
-              "align-items": "center",
-              "justify-content": "space-evenly"
-            }}
-          >
-            {features[0].replace('_',' ')}
-            {score0 && 
-              <div style={circleStyle(color0)} >
-                {score0 === "X" ? <LuLoader className="loader-icon" /> : <>{score0}</>}
-              </div>}
-          </Button>
-          <Button 
-            // type="button"
-            // className={`btn ${curFeature===features[1]? "btn-secondary" : "btn-primary"}`}
-            variant={`${curFeature===features[1]? "dark": "outline-secondary"}`}
-            onClick={() => handleNavigation(features[1])}
-            disabled = {curFeature===features[1]}
-            style={{
-              "display": "inline-flex",
-              "align-items": "center",
-              "justify-content": "space-evenly"
-            }}
-          >
-            {features[1].replace('_',' ')}
-            {score1 && 
-              <div style={circleStyle(color1)} >
-                {score1 === "X" ? <LuLoader className="loader-icon" /> : <>{score1}</>}
-              </div>}
-          </Button>
-          <Button 
-            // type="button" 
-            // className={`btn ${curFeature===features[2]? "btn-secondary" : "btn-primary"}`}
-            variant={`${curFeature===features[2]? "dark": "outline-secondary"}`}
-            onClick={() => handleNavigation(features[2])}
-            disabled = {curFeature===features[2]}
-            style={{
-              "display": "inline-flex",
-              "align-items": "center",
-              "justify-content": "space-evenly"
-            }}
-          >
-            {features[2].replace('_',' ')}
-            {score2 && 
-              <div style={circleStyle(color2)} >
-                {score2 === "X" ? <LuLoader className="loader-icon" /> : <>{score2}</>}
-              </div>
-            }
-          </Button>
-        </div>
-      </div>
-    </div>
+    // <div className="container mb-1">
+    //   <div className="d-flex justify-content-center" >
+    //     <div className="btn-group" role="group" aria-label="Horizontal navigation" style={{"width":"30%"}}>
+    //       <Button 
+    //         variant={`${curFeature===features[0]? "dark" : "outline-secondary"}`}
+    //         onClick={() => handleNavigation(features[0])}
+    //         disabled = {curFeature===features[0]}
+    //         style={{
+    //           "display": "inline-flex",
+    //           "align-items": "center",
+    //           "justify-content": "space-evenly"
+    //         }}
+    //       >
+    //         {features[0].replace('_',' ')}
+    //             {score0 === "X" ? <LuLoader className="loader-icon" /> : <>{" "+score0}</>}
+    //       </Button>
+    //       <Button 
+    //         variant={`${curFeature===features[1]? "dark": "outline-secondary"}`}
+    //         onClick={() => handleNavigation(features[1])}
+    //         disabled = {curFeature===features[1]}
+    //         style={{
+    //           "display": "inline-flex",
+    //           "align-items": "center",
+    //           "justify-content": "space-evenly"
+    //         }}
+    //       >
+    //         {features[1].replace('_',' ')}
+    //             {score1 === "X" ? <LuLoader className="loader-icon" /> : <>{" "+score1}</>}
+    //       </Button>
+    //       <Button 
+    //         variant={`${curFeature===features[2]? "dark": "outline-secondary"}`}
+    //         onClick={() => handleNavigation(features[2])}
+    //         disabled = {curFeature===features[2]}
+    //         style={{
+    //           "display": "inline-flex",
+    //           "align-items": "center",
+    //           "justify-content": "space-evenly"
+    //         }}
+    //       >
+    //         {features[2].replace('_',' ')}
+    //             {score2 === "X" ? <LuLoader className="loader-icon" /> : <>{" "+score2}</>}
+    //       </Button>
+    //     </div>
+    //   </div>
+    // </div>
+<div className="btn-group" role="group" aria-label="Horizontal navigation" style={{"width":"100%", height:"60px", "position": "relative", "display": "flex", "justifyContent": "center"}}>
+  <button 
+    onClick={() => handleNavigation(features[0])}
+    disabled={curFeature === features[0]}
+    style={{
+      "width": "13%",
+      "marginLeft": "34%",
+      // "padding": "10px 20px",
+      "padding-top": "10px",
+      "padding-right": "20px",
+      "padding-bottom": "10px",
+      "padding-left": "20px",      
+      "borderRadius": "30px",
+      "border": curFeature === features[0] ? "2px solid black" : "1px solid #ccc",
+      "backgroundColor": curFeature === features[0] ? "#f8f9fa" : "#fff",
+      "cursor": curFeature === features[0] ? "not-allowed" : "pointer",
+      "position": "absolute",
+      "left": "0",  // Move to the left side of the container
+      "zIndex": curFeature === features[0] ? "10" : "1",
+      "boxShadow": curFeature === features[0] ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+      // "fontWeight": "bold"
+    }}
+  >
+    {shortenedFeatures[features[0]]} {score0 === "X" ? <LuLoader className="loader-icon" /> : <>{": " + score0}</>}
+  </button>
+  
+  <button 
+    onClick={() => handleNavigation(features[1])}
+    disabled={curFeature === features[1]}
+    style={{
+      "width": "13%",
+      // "padding": "10px 20px",
+      "padding-top": "10px",
+      "padding-right": "20px",
+      "padding-bottom": "10px",
+      "padding-left": "20px",
+      "borderRadius": "30px",
+      "border": curFeature === features[1] ? "2px solid black" : "1px solid #ccc",
+      "backgroundColor": curFeature === features[1] ? "#f8f9fa" : "#fff",
+      "cursor": curFeature === features[1] ? "not-allowed" : "pointer",
+      "position": "absolute",
+      // "left": "33%",  // Move this to the center of the container
+      "zIndex": curFeature === features[1] ? "10" : "2",
+      "boxShadow": curFeature === features[1] ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+      // "fontWeight": "bold"
+    }}
+  >
+    {shortenedFeatures[features[1]]} {score1 === "X" ? <LuLoader className="loader-icon" /> : <>{": " + score1}</>}
+  </button>
+  
+  <button 
+    onClick={() => handleNavigation(features[2])}
+    disabled={curFeature === features[2]}
+    style={{
+      "width": "13%",
+      "marginRight": "34%",
+      // "padding": "10px 20px",
+      "padding-top": "10px",
+      "padding-right": "20px",
+      "padding-bottom": "10px",
+      "padding-left": "20px",      
+      "borderRadius": "30px",
+      "border": curFeature === features[2] ? "2px solid black" : "1px solid #ccc",
+      "backgroundColor": curFeature === features[2] ? "#f8f9fa" : "#fff",
+      "cursor": curFeature === features[2] ? "not-allowed" : "pointer",
+      "position": "absolute",
+      "right": "0",  // Move this to the right side of the container
+      "zIndex": curFeature === features[2] ? "10" : "1",
+      "boxShadow": curFeature === features[2] ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+      // "fontWeight": "bold"
+    }}
+  >
+    {shortenedFeatures[features[2]]} {score2 === "X" ? <LuLoader className="loader-icon" /> : <>{": " + score2}</>}
+  </button>
+</div>
+
   );
 };
 
