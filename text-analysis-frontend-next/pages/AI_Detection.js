@@ -34,7 +34,7 @@ export default function AI_Detection(){
 
   const [minScoreAI,setMinScoreAI] = useState(null)
   const [maxScoreAI,setMaxScoreAI] = useState(null)
-  const [maxBin, setMaxBin] = useState(10);
+  const [maxBin, setMaxBin] = useState(4);
   const [selectedBinIndex, setSelectedBinIndex] = useState(null);
 
   const { formData, setFormData } = useContext(FormDataContext);
@@ -345,7 +345,7 @@ export default function AI_Detection(){
               borderRadius:"20px", 
               backgroundColor:"#f1f1f1", 
               margin: "10px 0 0 18px", // used to be "28px 0 0 18px",
-              padding: "44px 65px 34px 50px"
+              padding: "15px 15px 15px 15px" // used to be "44px 65px 34px 50px"
             }}>
               <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
               <Col lg={7} md={8} sm={12} className="mb-3 biggerContent" >
@@ -380,15 +380,124 @@ export default function AI_Detection(){
                   />
                 </Col>
               }
+              {/* Submission from <u>{selectedUser}</u>.{" "}<br /> */}
+              {/* Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}. */}
               <Col lg={4} md={3} sm={12} className="smallerContent">
-                {outputAI.average &&
-                  (<div className='score_big' style={{ "width": "100%", "color": "black", "background-color": "#f2f2f2", "padding": "0.5rem", "font-size": "larger", "border-radius": "0.5rem" }}>
-                    Submission from <u>{selectedUser}</u>.{" "}<br />
-                    AI Detection Score:{" "}{(outputAI.average).toFixed(2)} <br />
-                    Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}.
-                  </div>)
-                }
-                <div className='legend'>
+                {outputAI.average && (
+                  <div
+                    className='score_big'
+                    style={{
+                      width: "100%",
+                      color: "black",
+                      backgroundColor: "#f2f2f2",
+                      padding: "0.15rem",
+                      borderRadius: "0.5rem",
+                    }}
+                  >
+                    <Row style={{ height: "60px", fontSize: "40px" }}>
+                      <Col lg={8} md={8} style={{ alignContent: "center"}}>
+                        AI Score: {100*outputAI.average.toFixed(2)}
+                      </Col>
+                      <Col lg={4} md={4}>
+                        <div
+                          className="rectanglesScores"
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-end", // This ensures the rectangles start from the bottom
+                            gap: "2px",
+                            // width: "200px",
+                            height: "60px",
+                          }}
+                        >
+                          {[...Array(7)].map((_, i) => (
+                            <div
+                              key={`rect-${i}`}
+                              style={{
+                                width: "calc(100% / 7 - 2px)",
+                                height: `${(i + 1) / 7 * 100}%`,
+                                backgroundColor: `${Math.floor(outputAI.average.toFixed(2)*7)<=i? "#f1f1f1":"#115b4e"}`, // TODO adapt once we have some form of score within a range from 0 to 100
+                                border: "1px solid #115b4e",
+                                borderRadius: "4.5px"
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row style={{margin:"37px 15px 19px 40px"}}>The colours below represent the text that corresponds with the level of AI</Row>
+                    <Row>
+                      <div
+                        className="rectIndex"
+                        index={1}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "38px",
+                          margin: "5px 0px 5px 5px",
+                          padding: "5px",
+                          objectFit: "contain",
+                          borderRadius: "5px",
+                          border: "1px solid rgb(17, 91, 78)",
+                          backgroundColor: "rgb(255, 255, 255)"
+                        }}
+                      >
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: "#115b4e" }}></div> AI </div>
+                      <div
+                        className="rectIndex"
+                        index={2}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "38px",
+                          margin: "5px 0px 5px 5px",
+                          padding: "5px",
+                          objectFit: "contain",
+                          borderRadius: "5px",
+                          border: "1px solid rgb(17, 91, 78)",
+                          backgroundColor: "rgb(255, 255, 255)"
+                        }}
+                      >
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", opacity: 0.6, backgroundColor: "#115b4e" }}></div> Highly likely AI </div>
+                      <div
+                        className="rectIndex"
+                        index={3}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "38px",
+                          margin: "5px 0px 5px 5px",
+                          padding: "5px",
+                          objectFit: "contain",
+                          borderRadius: "5px",
+                          border: "1px solid rgb(17, 91, 78)",
+                          backgroundColor: "rgb(255, 255, 255)"
+                        }}
+                      >
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", opacity: 0.2, backgroundColor: "#115b4e"}} ></div> Ambiguous </div>
+                      <div
+                        className="rectIndex"
+                        index={4}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "38px",
+                          margin: "5px 0px 5px 5px",
+                          padding: "5px",
+                          objectFit: "contain",
+                          borderRadius: "5px",
+                          border: "1px solid rgb(17, 91, 78)",
+                          backgroundColor: "rgb(255, 255, 255)"
+                        }}
+                      >
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px",  }} ></div> Human </div>
+                    </Row>
+                  </div>
+                )}
+                {/* <div className='legend'>
                   {(minScoreAI && maxScoreAI) &&
                     <LegendBinned
                       minScore={minScoreAI}
@@ -406,7 +515,7 @@ export default function AI_Detection(){
                       </p>
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div>
                 </div>
               </Col>
