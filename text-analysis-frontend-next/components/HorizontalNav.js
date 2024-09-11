@@ -10,7 +10,7 @@ import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_d
 import codecheckerData_collusion from '@/public/data/codechecker_collusion_example.json';
 
 const HorizontalNav = ( props ) => {
-  const {features, selectedUser} = props;
+  const {features, selectedUser, colorBases} = props;
   console.log("HorizontalNav | ", {features, selectedUser});
   const router = useRouter();
   const { formData, setFormData } = useContext(FormDataContext);
@@ -18,6 +18,8 @@ const HorizontalNav = ( props ) => {
   const handleNavigation = (page) => { router.push(`/${page}`); };
   let score0=null, score1=null, score2=null;
   let color0 = null, color1 = null, color2 = null;
+  let opacity0=null,opacity1=null,opacity2=null;
+
   const colorLowRisk = "#3cc343"; // green
   const colorMediumRisk = "#d97826"; // orange
   const colorHighRisk = "#d2342d"; // red
@@ -36,9 +38,14 @@ const HorizontalNav = ( props ) => {
     const numScore0 = Number(score0.split("%")[0])/100, numScore1 = Number(score1.split("%")[0])/100, numScore2 = Number(score2.split("%")[0])/100;
     console.log({numScore0, numScore1, numScore2});
 
-    color0 = numScore0 < 0.33 ? colorLowRisk : numScore0 < 0.66 ? colorMediumRisk : colorHighRisk;
-    color1 = numScore1 < 0.33 ? colorLowRisk : numScore1 < 0.66 ? colorMediumRisk : colorHighRisk;
-    color2 = numScore2 < 0.33 ? colorLowRisk : numScore2 < 0.66 ? colorMediumRisk : colorHighRisk;
+    // color0 = numScore0 < 0.33 ? colorLowRisk : numScore0 < 0.66 ? colorMediumRisk : colorHighRisk;
+    // color1 = numScore1 < 0.33 ? colorLowRisk : numScore1 < 0.66 ? colorMediumRisk : colorHighRisk;
+    // color2 = numScore2 < 0.33 ? colorLowRisk : numScore2 < 0.66 ? colorMediumRisk : colorHighRisk;
+
+    // update based on 4 aggregates
+    color0 = numScore0 < 0.25 ? colorBases[0] : numScore0 < 0.5 ? colorBases[1] : numScore0 < 0.75 ? colorBases[2] : colorBases[3];
+    color1 = numScore1 < 0.25 ? colorBases[0] : numScore1 < 0.5 ? colorBases[1] : numScore1 < 0.75 ? colorBases[2] : colorBases[3];
+    color2 = numScore2 < 0.25 ? colorBases[0] : numScore2 < 0.5 ? colorBases[1] : numScore2 < 0.75 ? colorBases[2] : colorBases[3];
   }
 
   const circleStyle = (color) => ({
@@ -101,21 +108,23 @@ const HorizontalNav = ( props ) => {
     onClick={() => handleNavigation(features[0])}
     disabled={curFeature === features[0]}
     style={{
-      "width": "13%",
-      "marginLeft": "34%",
+      "width": "14%",
+      "marginLeft": "33%",
       // "padding": "10px 20px",
       "padding-top": "10px",
       "padding-right": "20px",
-      "padding-bottom": "10px",
+      "padding-bottom": curFeature === features[0] ? "9px" : "10px",
       "padding-left": "20px",      
       "borderRadius": "30px",
       "border": curFeature === features[0] ? "2px solid black" : "1px solid #ccc",
-      "backgroundColor": curFeature === features[0] ? "#f8f9fa" : "#fff",
+      // "backgroundColor": curFeature === features[0] ? "#f8f9fa" : "#fff",
+      backgroundColor: color0,
       "cursor": curFeature === features[0] ? "not-allowed" : "pointer",
       "position": "absolute",
       "left": "0",  // Move to the left side of the container
       "zIndex": curFeature === features[0] ? "10" : "1",
       "boxShadow": curFeature === features[0] ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+      color: color0==="white"? "black": color0===colorBases[1]? "black": "white",
       // "fontWeight": "bold"
     }}
   >
@@ -126,20 +135,22 @@ const HorizontalNav = ( props ) => {
     onClick={() => handleNavigation(features[1])}
     disabled={curFeature === features[1]}
     style={{
-      "width": "13%",
+      "width": "14%",
       // "padding": "10px 20px",
       "padding-top": "10px",
       "padding-right": "20px",
-      "padding-bottom": "10px",
+      "padding-bottom": curFeature === features[1] ? "9px" : "10px",
       "padding-left": "20px",
       "borderRadius": "30px",
       "border": curFeature === features[1] ? "2px solid black" : "1px solid #ccc",
-      "backgroundColor": curFeature === features[1] ? "#f8f9fa" : "#fff",
+      // "backgroundColor": curFeature === features[1] ? "#f8f9fa" : "#fff",
+      "backgroundColor": color1,
       "cursor": curFeature === features[1] ? "not-allowed" : "pointer",
       "position": "absolute",
       // "left": "33%",  // Move this to the center of the container
       "zIndex": curFeature === features[1] ? "10" : "2",
       "boxShadow": curFeature === features[1] ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+      color: color1==="white"? "black": color1===colorBases[1]? "black": "white",
       // "fontWeight": "bold"
     }}
   >
@@ -150,22 +161,24 @@ const HorizontalNav = ( props ) => {
     onClick={() => handleNavigation(features[2])}
     disabled={curFeature === features[2]}
     style={{
-      "width": "13%",
-      "marginRight": "34%",
+      "width": "14%",
+      "marginRight": "33%",
       // "padding": "10px 20px",
       "padding-top": "10px",
       "padding-right": "20px",
-      "padding-bottom": "10px",
+      "padding-bottom": curFeature === features[2] ? "9px" : "10px",
       "padding-left": "20px",      
       "borderRadius": "30px",
       "border": curFeature === features[2] ? "2px solid black" : "1px solid #ccc",
-      "backgroundColor": curFeature === features[2] ? "#f8f9fa" : "#fff",
+      // "backgroundColor": curFeature === features[2] ? "#f8f9fa" : "#fff",
+      "backgroundColor": color2,
       "cursor": curFeature === features[2] ? "not-allowed" : "pointer",
       "position": "absolute",
       "right": "0",  // Move this to the right side of the container
       "zIndex": curFeature === features[2] ? "10" : "1",
       "boxShadow": curFeature === features[2] ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
       // "fontWeight": "bold"
+      color: color2==="white"? "black": color2===colorBases[1]? "black": "white",
     }}
   >
     {shortenedFeatures[features[2]]} {score2 === "X" ? <LuLoader className="loader-icon" /> : <>{": " + score2}</>}

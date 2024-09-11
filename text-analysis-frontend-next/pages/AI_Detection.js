@@ -43,6 +43,7 @@ export default function AI_Detection(){
   const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
   
+  const colorBases = ["white","#d0dedc","#719c95","#115b4e"]
 
   // ---- functions
   const fetchFileContent = async (fileName, scoreDetails, usePreload = true) => {
@@ -347,7 +348,7 @@ export default function AI_Detection(){
               margin: "10px 0 0 18px", // used to be "28px 0 0 18px",
               padding: "15px 15px 15px 15px" // used to be "44px 65px 34px 50px"
             }}>
-              <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} />
+              <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} colorBases={colorBases} />
               <Col lg={7} md={8} sm={12} className="mb-3 biggerContent" >
                 {isLoadingAI ? (
                   <>
@@ -394,7 +395,7 @@ export default function AI_Detection(){
                       borderRadius: "0.5rem",
                     }}
                   >
-                    <Row style={{ height: "60px", fontSize: "40px" }}>
+                    <Row style={{ height: "60px", fontSize: "xx-large" }}>
                       <Col lg={8} md={8} style={{ alignContent: "center"}}>
                         AI Score: {100*outputAI.average.toFixed(2)}
                       </Col>
@@ -442,7 +443,7 @@ export default function AI_Detection(){
                           backgroundColor: "rgb(255, 255, 255)"
                         }}
                       >
-                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: "#115b4e" }}></div> AI </div>
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[3] }}></div> AI </div>
                       <div
                         className="rectIndex"
                         index={2}
@@ -459,7 +460,7 @@ export default function AI_Detection(){
                           backgroundColor: "rgb(255, 255, 255)"
                         }}
                       >
-                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", opacity: 0.6, backgroundColor: "#115b4e" }}></div> Highly likely AI </div>
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[2] }}></div> Highly likely AI </div>
                       <div
                         className="rectIndex"
                         index={3}
@@ -476,7 +477,7 @@ export default function AI_Detection(){
                           backgroundColor: "rgb(255, 255, 255)"
                         }}
                       >
-                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", opacity: 0.2, backgroundColor: "#115b4e"}} ></div> Ambiguous </div>
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px",  backgroundColor: colorBases[1]}} ></div> Ambiguous </div>
                       <div
                         className="rectIndex"
                         index={4}
@@ -493,7 +494,7 @@ export default function AI_Detection(){
                           backgroundColor: "rgb(255, 255, 255)"
                         }}
                       >
-                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px",  }} ></div> Human </div>
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[0]  }} ></div> Human </div>
                     </Row>
                   </div>
                 )}
