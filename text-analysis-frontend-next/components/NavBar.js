@@ -205,7 +205,7 @@ export default function Navbar(props) {
       <Row>
         <div
           style={{
-            backgroundColor: "#085b4d",
+            backgroundColor: "rgb(17, 91, 78)",
             color: "white",
             padding: "10px",
             cursor: "pointer",
@@ -215,11 +215,11 @@ export default function Navbar(props) {
             height:"43px",
             borderRadius: "21.5px",
           }}
-          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#6e7174")}
-          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "black")}
+          onMouseOver={(e) => (e.currentTarget.style.opacity = 0.9)}
+          onMouseOut={(e) => (e.currentTarget.style.opacity = 1)}
           onClick={handleResultsClick}
         >
-          Contact
+          Back to results
         </div>
       </Row>
       <Row className="w-100 d-none d-md-flex justify-content-center align-items-center">

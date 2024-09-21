@@ -60,7 +60,7 @@ export default function AI_Detection(){
         if (response.ok) {
           // first, load the file
           const textFile = await response.text();
-          // console.log("textFile: ",textFile);
+          console.log("textFile: ",textFile);
           // second, call the AI
           loadAIText(textFile);
         } else {
