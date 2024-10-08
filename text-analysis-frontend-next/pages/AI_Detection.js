@@ -10,10 +10,11 @@ import HorizontalNav from '@/components/HorizontalNav';
 import ProductFeatureTitle from '@/components/ProductFeatureTitle';
 import ModularTitle from '@/components/ModularTitle';
 import { FormDataContext } from '@/components/context/FormDataContext';
-// TODO update this to use codecheckerData_ai_detection
-import codecheckerData_plagiarism from '@/public/data/codechecker_plagiarism_example.json';
 import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection_example.json';
 import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
+
+import codecheckerData_ai_detection_News_article_results from '@/public/data/Daryl/Human/results/News_article_results.json';
+
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
 import UserList from '@/components/UserList';
@@ -44,16 +45,28 @@ export default function AI_Detection(){
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
   
   const colorBases = ["white","#d0dedc","#719c95","#115b4e"]
+  const foldersWithResults = ['Anthropic', 'Anthropic_dp','GPT 4o','GPT 4o_dp','Human'];
 
   // ---- functions
-  const fetchFileContent = async (fileName, scoreDetails, usePreload = true) => {
+  const fetchFileContent = async (fileName, usePreload = true) => {
+    console.log("fetchFileContent | fileName: ",fileName);
+    const old_baseFolders = fileName.indexOf("/")!== -1? `Daryl/` : 'codechecker_files';
+    console.log("old_baseFolders: ",old_baseFolders);
     try {
-      const response = await fetch(`/data/codechecker_files/${fileName}`);
+      const response = await fetch(`/data/${old_baseFolders}/${fileName}`);
       if (usePreload) {
         console.log("codecheckerData_ai_detection_preload: ", codecheckerData_ai_detection_preload,", fileName: ",fileName);
+
+        console.log("¬ ¬ ¬ codecheckerData_ai_detection_News_article_results: ", codecheckerData_ai_detection_News_article_results);
+
         // select preloaded output
         // TODO we make the assumption of a single file. Later it will have to be based on unique identifier.
         let ai_preload_file = codecheckerData_ai_detection_preload.filter(a => a.fileName === fileName)[0]; 
+        // TODO this is a test. We will update later
+        if (fileName.indexOf("/")!== -1){
+          console.log("need to check the second part of filename. the fileName.split is: ", fileName.split);
+          ai_preload_file = codecheckerData_ai_detection_News_article_results.filter(a => a.fileName === fileName.split('/')[1])[0];
+        }
         console.log("ai_preload_file: ",ai_preload_file);
         setOutputAI(ai_preload_file);
       } else {
@@ -122,7 +135,6 @@ export default function AI_Detection(){
       console.log("window.location.href loadAIText: ", window.location.href);
       const is_localhost = window.location.href.indexOf("localhost");
       const is_127_0_0_1 = window.location.href.indexOf("127.0.0.1");
-
       // Change of ports based on latest changes from Pravija
       const portToReplace = '5001' // user to be 5000; Flask runs on port 5000 by default
 
@@ -160,7 +172,7 @@ export default function AI_Detection(){
   const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
     let highlightedText = text;
     let sizeOffset = 0;
-    console.log("Plagiarism / highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
+    console.log("highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
     let allScores = scoreDetails.map(a => a.score);
     let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
 
@@ -190,17 +202,6 @@ export default function AI_Detection(){
   const handleHighlightClick = (e,className) => { console.log("handleHighlightClick | e: ",e,"className: ",className); };
   const handleFileClick = (index) => { setIndexFile(index); };
 
-  const handleSelectBin = (binIndex) => {
-    console.log("handleSelectBin | binIndex: ",binIndex);
-    setSelectedBinIndex(binIndex);
-    // Remove borders from all highlighted spans
-    const allSpans = textRef.current.querySelectorAll('.highlight');
-    allSpans.forEach(span => { span.style.border = 'none'; });
-    // Add a solid border to the selected bin's spans
-    const selectedSpans = textRef.current.querySelectorAll(`.bin_${binIndex}`);
-    selectedSpans.forEach(span => { span.style.border = '2px solid black'; });
-  };
-
   // ---- useEffect
   const textRef = useRef(null);
   const detailsScoreRef = useRef(null);
@@ -210,11 +211,11 @@ export default function AI_Detection(){
 
   useEffect(() => {
     if (selectedUser) {
-      // TODO check why can't be changed to codecheckerData_ai_detection without an error
-      const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
+      const userData = codecheckerData_ai_detection.data.find(user => user.name === selectedUser);
+
       if (userData && userData.files.length > 0) {
         setFileList(userData.files);
-        fetchFileContent(userData.files[indexFile], userData.scoreDetails[indexFile]);
+        fetchFileContent(userData.files[indexFile]);
       }
     }
   }, [selectedUser, indexFile]);
@@ -235,12 +236,13 @@ export default function AI_Detection(){
 
   useEffect(() => {
     // fetchContent gets content, but then it's once the AI is loaded that we load fileContent with highlights and everything.
-    console.log("-- useEffect outputAI --");
+    console.log("-- useEffect outputAI -- selectedUser: ",selectedUser);
     if (selectedUser && outputAI && outputAI.details) {
       // TODO check why can't be changed to codecheckerData_ai_detection without an error
-      const userData = codecheckerData_plagiarism.data.find(user => user.name === selectedUser);
-      const fileName = userData.files[indexFile], scoreDetails = userData.scoreDetails[indexFile];
-      console.log("useEffect [outputAI] |scoreDetails: ",scoreDetails);
+      const userData = codecheckerData_ai_detection.data.find(user => user.name === selectedUser);
+      // const fileName = userData.files[indexFile], 
+      // let scoreDetails = userData.scoreDetails[indexFile];
+      // console.log("useEffect [outputAI] |scoreDetails: ",scoreDetails);
 
       // TODO third, make transposition so that output can be highlighted
       // TODO ---- incorporate this code so that we make the transition from data.details to scoreDetails (we'll do highlighting after)     
@@ -294,7 +296,6 @@ export default function AI_Detection(){
                 if (scrollHeight > 0) {
                     const scrollRatio = scrollTop / scrollHeight;
                     console.log("Scroll ratio (after scrolling):", scrollRatio);
-                    // Set the calculated position for the ScrollGraph
                     setScrollPosition(scrollRatio);
                 } else { console.error("Content is not scrollable, cannot calculate scroll ratio."); }
             }, 500); // Wait for 500ms to ensure scrolling is done
@@ -498,25 +499,6 @@ export default function AI_Detection(){
                     </Row>
                   </div>
                 )}
-                {/* <div className='legend'>
-                  {(minScoreAI && maxScoreAI) &&
-                    <LegendBinned
-                      minScore={minScoreAI}
-                      maxScore={maxScoreAI}
-                      numBins={maxBin}
-                      onSelectBin={handleSelectBin}
-                      selectedBin={selectedBinIndex} />
-                  }
-                  {selectedBinIndex !== null && (
-                    <div className="mt-3">
-                      <h5>Selected Bin</h5>
-                      <p>
-                        Bin {selectedBinIndex + 1}: {(minScoreAI + selectedBinIndex * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)} -{' '}
-                        {(minScoreAI + (selectedBinIndex + 1) * (maxScoreAI - minScoreAI) / maxBin).toFixed(2)}
-                      </p>
-                    </div>
-                  )}
-                </div> */}
                 <div>
                 </div>
               </Col>

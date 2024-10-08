@@ -97,11 +97,7 @@ const ScrollGraph = ({ data, width = 400, height = 600, onScrollPositionChange, 
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ 
-          height: '100%',  // Make the canvas take the full height of the container
-          width: '100%',   // Make the canvas take the full width of the container
-          cursor: 'pointer',
-        }}
+        style={{ height: '100%', width: '100%', cursor: 'pointer' }}
       />
       {/* Transparent rectangle with black borders */}
       <div
@@ -111,7 +107,7 @@ const ScrollGraph = ({ data, width = 400, height = 600, onScrollPositionChange, 
           left: 0,
           width: '100%',
           height: `${rectHeight}px`,
-          border: '2px solid black',
+          // border: '2px solid black', // TODO fix this hidden for now
           backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent background
           pointerEvents: 'none', // Ensure the rectangle does not block interactions with the canvas
         }}
