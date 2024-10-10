@@ -23,6 +23,7 @@ import BlackBar from '@/components/BlackBar';
 import { calculateOpacity, getBinFromScore } from '@/utils/UtilsMath';
 
 import ScrollGraph from '@/components/ScrollGraph'
+import ScrollGraphAggregate from '@/components/ScrollGraphAggregate';
 
 export default function AI_Detection(){
   // ---- useState
@@ -452,17 +453,22 @@ export default function AI_Detection(){
                     overflowY: 'auto' // Enable scrolling when content exceeds the height
                   }}
                 >
-                  <ScrollGraph
+                  {/* <ScrollGraph
                     data={outputAI.details}
                     width="400"
                     height="600"
                     onScrollPositionChange={handleScrollPositionChange}
                     scrollRatio={scrollPosition}
-                  />
+                  /> */}
+                  <ScrollGraphAggregate
+                    data={outputAI.details}
+                    width="400"
+                    height="600"
+                    onScrollPositionChange={handleScrollPositionChange}
+                    scrollRatio={scrollPosition}
+                  />                  
                 </Col>
               }
-              {/* Submission from <u>{selectedUser}</u>.{" "}<br /> */}
-              {/* Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}. */}
               <Col lg={3} md={3} sm={12} className="smallerContent"  style={{ display: 'flex', flexDirection: 'column' }}>
                 {outputAI.average && (
                   <div

@@ -330,10 +330,7 @@ export default function Navbar(props) {
                   id="dropdown-basic-button"
                   // title={`File: ${structToLookFilesIn.data.find((user) => user.name === selectedUser)?.files[indexFile]}`}
                   title={`File: ${(() => {
-                    const fileName = structToLookFilesIn.data.find(
-                      (user) => user.name === selectedUser
-                    )?.files[indexFile] || '';
-
+                    const fileName = structToLookFilesIn.data.find( (user) => user.name === selectedUser )?.files[indexFile] || '';
                     // Check if the file name contains a '/' and return the part after it
                     return fileName.includes('/')
                       ? fileName.split('/').pop() // Take the part after the last '/'
