@@ -14,6 +14,7 @@ import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection
 import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
 
 import codecheckerData_ai_detection_News_article_results from '@/public/data/Daryl/Human/results/News_article_results.json';
+import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results.json';
 
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
@@ -56,16 +57,19 @@ export default function AI_Detection(){
       const response = await fetch(`/data/${old_baseFolders}/${fileName}`);
       if (usePreload) {
         console.log("codecheckerData_ai_detection_preload: ", codecheckerData_ai_detection_preload,", fileName: ",fileName);
-
-        console.log("¬ ¬ ¬ codecheckerData_ai_detection_News_article_results: ", codecheckerData_ai_detection_News_article_results);
+        console.log("¬ ¬ ¬ codecheckerData_ai_detection_Daryl: ", codecheckerData_ai_detection_Daryl);
 
         // select preloaded output
         // TODO we make the assumption of a single file. Later it will have to be based on unique identifier.
         let ai_preload_file = codecheckerData_ai_detection_preload.filter(a => a.fileName === fileName)[0]; 
         // TODO this is a test. We will update later
         if (fileName.indexOf("/")!== -1){
-          console.log("need to check the second part of filename. the fileName.split is: ", fileName.split);
-          ai_preload_file = codecheckerData_ai_detection_News_article_results.filter(a => a.fileName === fileName.split('/')[1])[0];
+          let model = fileName.split('/')[0];
+          let actualFile = fileName.split('/')[1];
+          console.log("## fileName: ", fileName,", and model: ", model,", actualFile: ",actualFile);
+          console.log("need to check the second part of filename. the first fileName.split is: ", fileName.split('/')[1]);
+          // ai_preload_file = codecheckerData_ai_detection_News_article_results.filter(a => a.fileName === fileName.split('/')[1]);
+          ai_preload_file = codecheckerData_ai_detection_Daryl.filter(a => a.fileName === fileName.split('/')[1])[0];
         }
         console.log("ai_preload_file: ",ai_preload_file);
         setOutputAI(ai_preload_file);
@@ -89,7 +93,7 @@ export default function AI_Detection(){
   function contentFromAI(array) {
     console.log("contentFromAI(array :",array);
     // Helper function to replace special characters
-    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n').replace(/ĉ/g, '\t').replace(/č/g,''); };
+    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n').replace(/ĉ/g, '\t').replace(/č/g,'', /\u00e2\u0122/g,'"', /\u013e/g,'"'); };
     let resultString = '';
     array.forEach(item => { resultString += replaceSpecialCharacters(item.text); });
     return resultString;
@@ -97,7 +101,7 @@ export default function AI_Detection(){
   
   function transformDataToScoreDetails(name, numSubmissions, files, data, originalText) {
     // Helper function to replace special characters
-    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n').replace(/ĉ/g, '\t').replace(/č/g,''); };  
+    const replaceSpecialCharacters = (text) => { return text.replace(/Ġ/g, ' ').replace(/Ċ/g, '\n').replace(/ĉ/g, '\t').replace(/č/g,'', /\u00e2\u0122/g,'"', /\u013e/g,'"'); };  
     // Initialize the start of the range
     let previousEndIndex = -1;
   
@@ -312,6 +316,12 @@ export default function AI_Detection(){
     setScrollPosition(relativePosition);
   };
 
+  const blackBarRef = useRef(null);
+  const navbarRef = useRef(null);
+  const contentRef = useRef(null);
+  const [contentHeight, setContentHeight] = useState('auto');
+
+
   useEffect(() => {
     const textElement = textRef.current;
     if (textElement !== null) {
@@ -324,6 +334,34 @@ export default function AI_Detection(){
     }
   }, []);
 
+  // useEffect for vertical height of main component
+  useEffect(() => {
+    const updateContentHeight = () => {
+      // Get the height of BlackBar and Navbar
+      const blackBarHeight = blackBarRef.current ? blackBarRef.current.offsetHeight : 0;
+      const navbarHeight = navbarRef.current ? navbarRef.current.offsetHeight : 0;
+
+      // Calculate the available height for the content div
+      const totalHeight = window.innerHeight;
+      const remainingHeight = totalHeight - blackBarHeight - navbarHeight;
+      console.log("Calculated height: ",remainingHeight);
+      // Apply the calculated height to the content div
+      setContentHeight(`${remainingHeight}px`);
+    };
+
+    // Run on initial render and when the window is resized
+    updateContentHeight();
+    window.addEventListener('resize', updateContentHeight);
+    console.log("changing heights. contentHeight: ",contentHeight);
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', updateContentHeight);
+    };
+  }, []);
+
+
+
+
   return (
     <>
       <Head>
@@ -331,26 +369,49 @@ export default function AI_Detection(){
       </Head>
       <Container fluid>
         <Row>
-          <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
-          <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
+          <div ref={blackBarRef} style={{background:"black"}}>
+            <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
+          </div>
+          <div ref={navbarRef}>
+            <Navbar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
+          </div>
           <Col md={0} lg={1} className="d-none d-md-block emptyStuff" ></Col>
-          <Col md={12} lg={10} className="content" style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            maxWidth: '1400px',  // Set a maximum width for large screens
-            paddingLeft: '15px',
-            paddingRight: '15px',
-          }}
+          <Col 
+            md={12} 
+            lg={10} 
+            className="content" 
+            style={{
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              paddingLeft: '15px',
+              paddingRight: '15px',
+              height: contentHeight, // Dynamically set the height
+              maxHeight: contentHeight,
+              // overflowY: 'auto'
+            }}
+            ref={contentRef}
           >
             <Row style={{
               border:" solid #eae9e9 thin", 
               borderRadius:"20px", 
               backgroundColor:"#f1f1f1", 
               margin: "10px 0 0 18px", // used to be "28px 0 0 18px",
-              padding: "15px 15px 15px 15px" // used to be "44px 65px 34px 50px"
+              padding: "5px 5px 5px 5px", // used to be "44px 65px 34px 50px"
+              height:"95%",
+              // flexDirection: 'row', // Ensure the columns are aligned horizontally
+              // alignItems: 'stretch' // Stretch the height of the children to match the parent
             }}>
-              <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} colorBases={colorBases} />
-              <Col lg={7} md={8} sm={12} className="mb-3 biggerContent" >
+              {/* <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} colorBases={colorBases} /> */}
+              <Col lg={8} md={8} sm={12} className="mb-3 biggerContent" 
+                // style={{ display: 'flex', flexDirection: 'column' }}
+                style={{
+                  // height: mainContentHeight, // Dynamically set the height based on calculation
+                  // maxHeight: mainContentHeight, // Ensure the max height is the same as the calculated height
+                  // height: contentHeight, // Dynamically set the height
+                  // maxHeight: contentHeight,
+                  // overflowY: 'auto' // Enable scrolling when content exceeds the height
+                }}                
+              >
                 {isLoadingAI ? (
                   <>
                     <h5 className="heading-section text-center">
@@ -361,8 +422,19 @@ export default function AI_Detection(){
                 ) : (
                   outputAI.details && (
                     <>
-                      <div className="card overflow-y-scroll mainContent" style={{ "height": "65vh", "maxHeight": "65vh" }}>
-                        <div className="card-body">
+                      <div className="card overflow-y-scroll mainContent" 
+                        // style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+                        // style={{ flexGrow: 1, overflowY: 'auto' }}
+                        // style={{ "height": "65vh", "maxHeight": "65vh" }}
+                          style={{
+                            height: (0.93*Number(contentHeight.split("px")[0]))+"px", // Dynamically set the height
+                            maxHeight:(0.93*Number(contentHeight.split("px")[0]))+"px",
+                            overflowY: 'auto' // Enable scrolling when content exceeds the height
+                          }}
+                      >
+                        <div className="card-body" 
+                          // style={{ flexGrow: 1, overflowY: 'auto'  }}
+                          >
                           <div ref={textRef} className="text-content">
                             <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
                           </div>
@@ -372,7 +444,14 @@ export default function AI_Detection(){
                   ))}
               </Col>
               {outputAI.details &&
-                <Col lg={1} md={1} sm={12} className="scrollContent" >
+                <Col lg={1} md={1} sm={12} className="scrollContent"
+                  // style={{ display: 'flex', flexDirection: 'column' }} 
+                  style={{
+                    height: (0.93 * Number(contentHeight.split("px")[0])) + "px", // Dynamically set the height
+                    maxHeight: (0.93 * Number(contentHeight.split("px")[0])) + "px",
+                    overflowY: 'auto' // Enable scrolling when content exceeds the height
+                  }}
+                >
                   <ScrollGraph
                     data={outputAI.details}
                     width="400"
@@ -384,7 +463,7 @@ export default function AI_Detection(){
               }
               {/* Submission from <u>{selectedUser}</u>.{" "}<br /> */}
               {/* Number of submissions: {codecheckerData_ai_detection.data.find(user => user.name === selectedUser)?.numSubmissions}. */}
-              <Col lg={4} md={3} sm={12} className="smallerContent">
+              <Col lg={3} md={3} sm={12} className="smallerContent"  style={{ display: 'flex', flexDirection: 'column' }}>
                 {outputAI.average && (
                   <div
                     className='score_big'
@@ -408,6 +487,7 @@ export default function AI_Detection(){
                             alignItems: "flex-end", // This ensures the rectangles start from the bottom
                             gap: "2px",
                             // width: "200px",
+                            maxWidth:"100px",
                             height: "60px",
                           }}
                         >

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
+// TODO AVERAGE SCORE PER LINE
+
 const ScrollGraph = ({ data, width = 400, height = 600, onScrollPositionChange, scrollRatio }) => {
   const canvasRef = useRef(null);
   const rectHeight = 60; // Height of the scroll rectangle
@@ -43,7 +45,7 @@ const ScrollGraph = ({ data, width = 400, height = 600, onScrollPositionChange, 
     const getColor = (value) => {
       if (value === null) return 'white';
       const intensity = (value / maxValue);
-      return `rgba(0, 110, 0, ${0.25 + intensity})`;  // Green color intensity
+      return `rgba(0, 110, 0, ${intensity})`;  // Green color intensity (we used to set + 0.25 for visibility)
     };
 
     // Clear the canvas
@@ -92,12 +94,23 @@ const ScrollGraph = ({ data, width = 400, height = 600, onScrollPositionChange, 
   const rectTop = Math.min(Math.max(scrollRatio * height - rectHeight / 2, 0), height - rectHeight);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '65vh' }}>
+    <div style={{
+      position: 'relative', 
+      // width: '100%', height: '65vh',
+      height:"100%",
+      border: "solid",
+      "border-radius": ".25rem",
+      "border-width": "thin",
+      "border-color": "#115b4e",
+      overflow:"hidden",
+    }}>
       <canvas
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ height: '100%', width: '100%', cursor: 'pointer' }}
+        style={{ 
+          height: '100%', width: '100%', cursor: 'pointer' 
+        }}
       />
       {/* Transparent rectangle with black borders */}
       <div
@@ -106,7 +119,8 @@ const ScrollGraph = ({ data, width = 400, height = 600, onScrollPositionChange, 
           top: `${rectTop}px`,
           left: 0,
           width: '100%',
-          height: `${rectHeight}px`,
+          // height: `${rectHeight}px`,
+          height: '100%',
           // border: '2px solid black', // TODO fix this hidden for now
           backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent background
           pointerEvents: 'none', // Ensure the rectangle does not block interactions with the canvas

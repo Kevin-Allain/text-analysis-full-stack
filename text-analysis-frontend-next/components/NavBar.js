@@ -214,6 +214,7 @@ export default function Navbar(props) {
             width:"170px",
             height:"43px",
             borderRadius: "21.5px",
+            marginLeft:"10px",
           }}
           onMouseOver={(e) => (e.currentTarget.style.opacity = 0.9)}
           onMouseOut={(e) => (e.currentTarget.style.opacity = 1)}
