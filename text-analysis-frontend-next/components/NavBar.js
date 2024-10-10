@@ -173,8 +173,6 @@ export default function Navbar(props) {
                 )?.files[indexFile]
                   }`}
                 onClick={toggleFile}
-                // custom-dropdown
-                // className="individualSelect responsive-dropdown"
                 variant="outline-dark" // Set variant to light
 
                 style={{ width: "fit-content" }}
@@ -330,10 +328,17 @@ export default function Navbar(props) {
               <div className="navFileSets" style={{ width: "fit-content" }}>
                 <DropdownButton
                   id="dropdown-basic-button"
-                  title={`File: ${structToLookFilesIn.data.find(
-                    (user) => user.name === selectedUser
-                  )?.files[indexFile]
-                    }`}
+                  // title={`File: ${structToLookFilesIn.data.find((user) => user.name === selectedUser)?.files[indexFile]}`}
+                  title={`File: ${(() => {
+                    const fileName = structToLookFilesIn.data.find(
+                      (user) => user.name === selectedUser
+                    )?.files[indexFile] || '';
+
+                    // Check if the file name contains a '/' and return the part after it
+                    return fileName.includes('/')
+                      ? fileName.split('/').pop() // Take the part after the last '/'
+                      : fileName; // If no '/', return the full file name
+                  })()}`}
                   onClick={toggleFile}
                   style={{ width: "fit-content" }}
                   variant="outline-dark"
@@ -354,7 +359,7 @@ export default function Navbar(props) {
                       onMouseDown={(e) => e.currentTarget.style.backgroundColor = "black"}
                       onMouseUp={(e) => e.currentTarget.style.backgroundColor = "darkgrey"}
                     >
-                      {file}
+                      {file.split('/').length>1?file.split('/')[1]:file}
                     </Dropdown.Item>
                   ))}
                 </DropdownButton>
