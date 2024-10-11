@@ -24,6 +24,8 @@ import { calculateOpacity, getBinFromScore } from '@/utils/UtilsMath';
 
 import ScrollGraph from '@/components/ScrollGraph'
 import ScrollGraphAggregate from '@/components/ScrollGraphAggregate';
+import '@/styles/AI_Detection.css';
+
 
 export default function AI_Detection(){
   // ---- useState
@@ -46,7 +48,15 @@ export default function AI_Detection(){
   const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
   
-  const colorBases = ["white","#d0dedc","#719c95","#115b4e"]
+  // const colorBases = ["white","#d0dedc","#719c95","#115b4e"]
+  // const colorBases = ["white","rgba(208, 222, 220,.90)","rgba(113, 156, 149,.90)","rgba(17, 91, 78,.90)"]
+  const colorBases = [
+    "white",
+    "rgba(208, 222, 220,.90)",
+    "rgba(72,127,117,.90)",
+    // "rgba(13,119,100,.90)"
+    "rgba(17,152,127,0.90)"
+  ]
   const foldersWithResults = ['Anthropic', 'Anthropic_dp','GPT 4o','GPT 4o_dp','Human'];
 
   // ---- functions
@@ -174,22 +184,81 @@ export default function AI_Detection(){
     }
   };
 
-  const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
+  // const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
+  //   let highlightedText = text;
+  //   let sizeOffset = 0;
+  //   console.log("highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
+  //   let allScores = scoreDetails.map(a => a.score);
+  //   let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
+
+  //   scoreDetails.forEach(detail => {
+  //     const { type, range, score } = detail;
+  //     const opacity = calculateOpacity(score.toFixed(2), minScore, maxScore, binning, numBin);
+  //     const binIndex = binning ? getBinFromScore(score.toFixed(2), minScore, maxScore, numBin) : 0;
+  //     const binClass = "bin_" + binIndex;
+  //     const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} 
+  //       style="background-color: rgba(0, 100, 0, ${opacity});">`;
+  //     const highlightEnd = "</span>";
+  //     const start = range[0];
+  //     const end = range[1];
+  //     highlightedText =
+  //       highlightedText.slice(0, start + sizeOffset) +
+  //       highlightStart +
+  //       highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
+  //       highlightEnd +
+  //       highlightedText.slice(end + sizeOffset + 1);
+  //     sizeOffset += highlightStart.length + highlightEnd.length;
+  //   });
+  //   return highlightedText;
+  // };
+
+  const highlightText_quant_binned = (text, scoreDetails, binning = false, numBin = 4) => {
     let highlightedText = text;
     let sizeOffset = 0;
-    console.log("highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
+    console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin });
+    
+    // Extract all scores and find the minimum and maximum
     let allScores = scoreDetails.map(a => a.score);
-    let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
-
+    let minScore = Math.min(...allScores);
+    let maxScore = Math.max(...allScores);
+  
+    // Function to determine the background color based on the score
+    const getBinnedColor = (score) => {
+      // Define bin thresholds based on the min and max scores
+      const bin1 = maxScore * 0.75; // Highest bin
+      const bin2 = maxScore * 0.5;  // Mid-high bin
+      const bin3 = maxScore * 0.25; // Mid-low bin  
+      // Assign color based on which bin the score falls into
+      let whiteText=false;
+      if (score >= bin1) {
+        return colorBases[3]; // Dark green
+      } else if (score >= bin2) {
+        return colorBases[2]; // Mid green
+      } else if (score >= bin3) {
+        return colorBases[1]; // Light grey-green
+      } else {
+        return colorBases[0]; // Lowest scores
+      }
+    };
+  
     scoreDetails.forEach(detail => {
       const { type, range, score } = detail;
-      const opacity = calculateOpacity(score.toFixed(2), minScore, maxScore, binning, numBin);
-      const binIndex = binning ? getBinFromScore(score.toFixed(2), minScore, maxScore, numBin) : 0;
-      const binClass = "bin_" + binIndex;
-      const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} style="background-color: rgba(0, 100, 0, ${opacity});">`; // change from red to dark green
+      // Get the appropriate color based on the binned score
+      const backgroundColor = getBinnedColor(score);
+      // Create the highlight span with the appropriate background color
+      // const highlightStart = `<span class="highlight ${type}" score="${score}" style="background-color: ${backgroundColor}; ">`;
+      const highlightStart = `<span 
+        class="highlight ${type}" 
+        score="${score}" 
+        style="background-color: ${backgroundColor};" line-height: 1.15;" 
+        >`;
+        // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
+        // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
       const highlightEnd = "</span>";
       const start = range[0];
       const end = range[1];
+      
+      // Update the highlighted text by inserting the span tags
       highlightedText =
         highlightedText.slice(0, start + sizeOffset) +
         highlightStart +
@@ -200,6 +269,7 @@ export default function AI_Detection(){
     });
     return highlightedText;
   };
+  
 
   const handleUserClick = (user) => { 
     setSelectedUser(user.name); setIndexFile(0); 
@@ -262,9 +332,8 @@ export default function AI_Detection(){
       const resultScore = transformDataToScoreDetails(name, numSubmissions, files, outputAI, originalText);
       console.log("transformDataToScoreDetails resultScore: ",resultScore,", ¬ outputAI: ",outputAI);
       // fourth, apply highlight
-      setFileContent(
-        highlightText_quant(originalText, resultScore.scoreDetails, true, maxBin)
-      );
+      // setFileContent( highlightText_quant(originalText, resultScore.scoreDetails, true, maxBin) );
+      setFileContent( highlightText_quant_binned(originalText, resultScore.scoreDetails, true, maxBin) )
       let allScores = resultScore.scoreDetails.map(a => a.score);
       let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);  
       setMinScoreAI(minScore); 
@@ -388,7 +457,6 @@ export default function AI_Detection(){
               paddingRight: '15px',
               height: contentHeight, // Dynamically set the height
               maxHeight: contentHeight,
-              // overflowY: 'auto'
             }}
             ref={contentRef}
           >
@@ -399,20 +467,9 @@ export default function AI_Detection(){
               margin: "10px 0 0 18px", // used to be "28px 0 0 18px",
               padding: "5px 5px 5px 5px", // used to be "44px 65px 34px 50px"
               height:"95%",
-              // flexDirection: 'row', // Ensure the columns are aligned horizontally
-              // alignItems: 'stretch' // Stretch the height of the children to match the parent
             }}>
               {/* <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} colorBases={colorBases} /> */}
-              <Col lg={8} md={8} sm={12} className="mb-3 biggerContent" 
-                // style={{ display: 'flex', flexDirection: 'column' }}
-                style={{
-                  // height: mainContentHeight, // Dynamically set the height based on calculation
-                  // maxHeight: mainContentHeight, // Ensure the max height is the same as the calculated height
-                  // height: contentHeight, // Dynamically set the height
-                  // maxHeight: contentHeight,
-                  // overflowY: 'auto' // Enable scrolling when content exceeds the height
-                }}                
-              >
+              <Col lg={8} md={8} sm={12} className="mb-3 biggerContent" >
                 {isLoadingAI ? (
                   <>
                     <h5 className="heading-section text-center">
@@ -424,18 +481,12 @@ export default function AI_Detection(){
                   outputAI.details && (
                     <>
                       <div className="card overflow-y-scroll mainContent" 
-                        // style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
-                        // style={{ flexGrow: 1, overflowY: 'auto' }}
-                        // style={{ "height": "65vh", "maxHeight": "65vh" }}
                           style={{
-                            height: (0.93*Number(contentHeight.split("px")[0]))+"px", // Dynamically set the height
-                            maxHeight:(0.93*Number(contentHeight.split("px")[0]))+"px",
-                            overflowY: 'auto' // Enable scrolling when content exceeds the height
+                            height: (0.94*Number(contentHeight.split("px")[0]))+"px", // Dynamically set the height
+                            maxHeight:(0.94*Number(contentHeight.split("px")[0]))+"px",
                           }}
                       >
-                        <div className="card-body" 
-                          // style={{ flexGrow: 1, overflowY: 'auto'  }}
-                          >
+                        <div className="card-body" style={{ fontSize: '1.25rem' }} >
                           <div ref={textRef} className="text-content">
                             <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
                           </div>
@@ -446,7 +497,6 @@ export default function AI_Detection(){
               </Col>
               {outputAI.details &&
                 <Col lg={1} md={1} sm={12} className="scrollContent"
-                  // style={{ display: 'flex', flexDirection: 'column' }} 
                   style={{
                     height: (0.93 * Number(contentHeight.split("px")[0])) + "px", // Dynamically set the height
                     maxHeight: (0.93 * Number(contentHeight.split("px")[0])) + "px",
@@ -466,6 +516,7 @@ export default function AI_Detection(){
                     height="600"
                     onScrollPositionChange={handleScrollPositionChange}
                     scrollRatio={scrollPosition}
+                    colorBases={colorBases}
                   />                  
                 </Col>
               }

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const ScrollGraphAggregate = ({ data, width = 400, height = 600, onScrollPositionChange, scrollRatio }) => {
+const ScrollGraphAggregate = ({ data, width = 400, height = 600, onScrollPositionChange, scrollRatio, colorBases }) => {
   const canvasRef = useRef(null);
   const rectHeight = 60; // Height of the scroll rectangle
 
@@ -48,15 +48,16 @@ const ScrollGraphAggregate = ({ data, width = 400, height = 600, onScrollPositio
       const bin2 = maxValue * 0.5;  // Mid-high scores bin
       const bin3 = maxValue * 0.25; // Mid-low scores bin
 
+      // TODO update so that colours are passed
       // Assign color based on which bin the value falls into
       if (value >= bin1) {
-        return 'rgb(17, 91, 78)'; // Dark green
+        return colorBases[3]; // Dark green
       } else if (value >= bin2) {
-        return 'rgb(113, 156, 149)'; // Mid green
+        return colorBases[2]; // Mid green
       } else if (value >= bin3) {
-        return 'rgb(208, 222, 220)'; // Light grey-green
+        return colorBases[1]; // Light grey-green
       } else {
-        return 'white'; // Lowest scores
+        return colorBases[0]; // Lowest scores
       }
     };
 
@@ -131,7 +132,7 @@ const ScrollGraphAggregate = ({ data, width = 400, height = 600, onScrollPositio
           left: 0,
           width: '100%',
           height: '100%',
-          backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent background
+          // backgroundColor: colorBases[0],
           pointerEvents: 'none', // Ensure the rectangle does not block interactions with the canvas
         }}
       />

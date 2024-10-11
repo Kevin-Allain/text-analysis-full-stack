@@ -4,7 +4,7 @@
       "name": "Alice Black",
       "globalScore": null,
       "numSubmissions": 2,
-      "files": ["Addresses.py", "old_PredatorMovement.cs", "Human/News article.docx", "Anthropic_dp/Poem Claude 3.docx"],
+      "files": ["Human/News article.docx", "Anthropic_dp/Poem Claude 3.docx","Addresses.py", "old_PredatorMovement.cs"],
       "scoreDetails": null
     },
     {
@@ -18,42 +18,42 @@
       "name": "Charlie Meyers",
       "globalScore": null,
       "numSubmissions": 4,
-      "files": ["index.vue"],
+      "files": ["Human/English essay.docx","index.vue"],
       "scoreDetails": null
     },
     {
       "name": "David Wallace",
       "globalScore": null,
       "numSubmissions": 3,
-      "files": ["attack_paraphrase.py"],
+      "files": ["GPT 4o/Personal statement Chat GPT 4o.docx","attack_paraphrase.py"],
       "scoreDetails": null
     },
     {
       "name": "Ethan Drake",
       "globalScore": null,
       "numSubmissions": 5,
-      "files": ["ggplot_tips.R", "PreyEvading.cs"],
+      "files": ["Anthropic_dp/Scientific article Claude 3.docx","ggplot_tips.R", "PreyEvading.cs"],
       "scoreDetails": null
     },
     {
       "name": "Francis Croshaw",
       "globalScore": null,
       "numSubmissions": 7,
-      "files": ["attack_control.py"],
+      "files": ["Human/Short story 2.docx","Human/Poem 2.docx","attack_control.py"],
       "scoreDetails": null
     },
     {
       "name": "Gale Grimm",
       "globalScore": null,
       "numSubmissions": 1,
-      "files": ["INSTALL.txt"],
+      "files": ["Human/Scientific article.docx","INSTALL.txt"],
       "scoreDetails":  null
     },
     {
       "name": "Hugo Martin",
       "globalScore": null,
       "numSubmissions": 3,
-      "files": ["NLP_LBS1_answers.R"],
+      "files": ["GPT 4o/Scientific article GPT 4o.docx","NLP_LBS1_answers.R"],
       "scoreDetails":  null
     },
     {
