@@ -236,7 +236,6 @@ export default function AI_Detection(){
       const bin2 = maxScore * 0.5;  // Mid-high bin
       const bin3 = maxScore * 0.25; // Mid-low bin  
       // Assign color based on which bin the score falls into
-      let whiteText=false;
       if (score >= bin1) {
         return colorBases[3]; // Dark green
       } else if (score >= bin2) {
@@ -253,7 +252,6 @@ export default function AI_Detection(){
       // Get the appropriate color based on the binned score
       const backgroundColor = getBinnedColor(score);
       // Create the highlight span with the appropriate background color
-      // const highlightStart = `<span class="highlight ${type}" score="${score}" style="background-color: ${backgroundColor}; ">`;
       const highlightStart = `<span 
         class="highlight ${type}" 
         score="${score}" 
@@ -444,7 +442,7 @@ export default function AI_Detection(){
       <Head>
         <title>Code Checker - Check Results</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia"/>
-        {/* <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/> */}
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"/>
       </Head>
       <Container fluid style={{"overflow-y":"hidden"}}>
         <Row>
@@ -489,21 +487,31 @@ export default function AI_Detection(){
                 ) : (
                   outputAI.details && (
                     <>
-                      <div className="card overflow-y-scroll mainContent" 
+                      <div className="card overflow-x-scroll overflow-y-scroll mainContent" 
                           style={{
                             height: (0.94*Number(contentHeight.split("px")[0]))+"px", // Dynamically set the height
                             maxHeight:(0.94*Number(contentHeight.split("px")[0]))+"px",
                           }}
                         >
                           <div className="card-body" style={{
-                            fontSize: '25px', // or '1.25rem' if this was the original intent
-                            fontFamily: 'Poppins, sans-serif', // fallback to sans-serif in case Poppins isn't available
-                            fontWeight: 'Medium', // 'Medium' corresponds to 500
-                            letterSpacing: '-1.5px', // correct attribute for letter spacing
-                            color: '#252525' // color property
+                            fontSize: 25,
+                            fontFamily: 'Poppins', // could be 'Poppins-Medium'? Doesn't change. 
+                            fontWeight: 'Medium', 
+                            letterSpacing: '-1.5px', 
+                            color: '#252525'
                           }} >
                           <div ref={textRef} className="text-content">
-                            <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
+                              <pre
+                                style={{
+                                  fontFamily: 'Poppins, sans-serif', // Re-apply font settings to <pre>
+                                  fontSize: '25px', // Set explicitly to ensure consistency
+                                  fontWeight: '500', // Ensure medium weight here too
+                                  letterSpacing: '-1.5px', // Apply letter spacing
+                                  color: '#252525',
+                                  overflow: "visible"
+                                }}
+                                dangerouslySetInnerHTML={{ __html: fileContent }}
+                              />
                           </div>
                         </div>
                       </div>
@@ -562,7 +570,7 @@ export default function AI_Detection(){
                               style={{
                                 width: "calc(100% / 7 - 2px)",
                                 height: `${(i + 1) / 7 * 100}%`,
-                                backgroundColor: `${Math.floor(outputAI.average.toFixed(2)*7)<=i? "#f1f1f1":"#115b4e"}`, // TODO adapt once we have some form of score within a range from 0 to 100
+                                backgroundColor: `${Math.floor(outputAI.average.toFixed(2)*7)<=i? "#f1f1f1":"#115b4e"}`,
                                 border: "1px solid #115b4e",
                                 borderRadius: "4.5px"
                               }}
@@ -574,7 +582,6 @@ export default function AI_Detection(){
                     <Row style={{
                       margin:"37px 15px 19px 0px",
                       "font-size":"20px",
-                      // "font-family": '"Poppins", Times',
                     }}
                     >The colours below represent the text that corresponds with the level of AI</Row>
                     <Row style={{"font-size":"20px",}}>
