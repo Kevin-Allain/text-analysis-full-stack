@@ -27,6 +27,7 @@ import ScrollGraphAggregate from '@/components/ScrollGraphAggregate';
 import '@/styles/AI_Detection.css';
 
 
+
 export default function AI_Detection(){
   // ---- useState
   const [selectedUser, setSelectedUser] = useState(null);
@@ -50,12 +51,19 @@ export default function AI_Detection(){
   
   // const colorBases = ["white","#d0dedc","#719c95","#115b4e"]
   // const colorBases = ["white","rgba(208, 222, 220,.90)","rgba(113, 156, 149,.90)","rgba(17, 91, 78,.90)"]
+  // Change with light green
+  // const colorBases = [
+  //   "white",
+  //   "rgba(208, 222, 220,.90)",
+  //   "rgba(72,127,117,.90)",
+  //   // "rgba(13,119,100,.90)"
+  //   "rgba(17,152,127,0.90)"
+  // ]
   const colorBases = [
     "white",
-    "rgba(208, 222, 220,.90)",
-    "rgba(72,127,117,.90)",
-    // "rgba(13,119,100,.90)"
-    "rgba(17,152,127,0.90)"
+    "#d5e2e0",
+    "#9fbdb7",
+    "#528c82"
   ]
   const foldersWithResults = ['Anthropic', 'Anthropic_dp','GPT 4o','GPT 4o_dp','Human'];
 
@@ -63,7 +71,6 @@ export default function AI_Detection(){
   const fetchFileContent = async (fileName, usePreload = true) => {
     console.log("fetchFileContent | fileName: ",fileName);
     const old_baseFolders = fileName.indexOf("/")!== -1? `Daryl/` : 'codechecker_files';
-    console.log("old_baseFolders: ",old_baseFolders);
     try {
       const response = await fetch(`/data/${old_baseFolders}/${fileName}`);
       if (usePreload) {
@@ -436,8 +443,10 @@ export default function AI_Detection(){
     <>
       <Head>
         <title>Code Checker - Check Results</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia"/>
+        {/* <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/> */}
       </Head>
-      <Container fluid>
+      <Container fluid style={{"overflow-y":"hidden"}}>
         <Row>
           <div ref={blackBarRef} style={{background:"black"}}>
             <BlackBar users={users} selectedUser={selectedUser} handleUserClick={handleUserClick} fileList={fileList} handleFileClick={handleFileClick} indexFile={indexFile} feature={"AI_Detection"} />
@@ -485,8 +494,14 @@ export default function AI_Detection(){
                             height: (0.94*Number(contentHeight.split("px")[0]))+"px", // Dynamically set the height
                             maxHeight:(0.94*Number(contentHeight.split("px")[0]))+"px",
                           }}
-                      >
-                        <div className="card-body" style={{ fontSize: '1.25rem' }} >
+                        >
+                          <div className="card-body" style={{
+                            fontSize: '25px', // or '1.25rem' if this was the original intent
+                            fontFamily: 'Poppins, sans-serif', // fallback to sans-serif in case Poppins isn't available
+                            fontWeight: 'Medium', // 'Medium' corresponds to 500
+                            letterSpacing: '-1.5px', // correct attribute for letter spacing
+                            color: '#252525' // color property
+                          }} >
                           <div ref={textRef} className="text-content">
                             <pre dangerouslySetInnerHTML={{ __html: fileContent }} />
                           </div>
@@ -503,13 +518,7 @@ export default function AI_Detection(){
                     overflowY: 'auto' // Enable scrolling when content exceeds the height
                   }}
                 >
-                  {/* <ScrollGraph
-                    data={outputAI.details}
-                    width="400"
-                    height="600"
-                    onScrollPositionChange={handleScrollPositionChange}
-                    scrollRatio={scrollPosition}
-                  /> */}
+                  {/* <ScrollGraph data={outputAI.details} width="400" height="600" onScrollPositionChange={handleScrollPositionChange} scrollRatio={scrollPosition} /> */}
                   <ScrollGraphAggregate
                     data={outputAI.details}
                     width="400"
@@ -533,7 +542,7 @@ export default function AI_Detection(){
                     }}
                   >
                     <Row style={{ height: "60px", fontSize: "xx-large" }}>
-                      <Col lg={8} md={8} style={{ alignContent: "center"}}>
+                      <Col lg={8} md={8} style={{ alignContent: "center", fontSize: "2vw"}}>
                         AI Score: {100*outputAI.average.toFixed(2)}
                       </Col>
                       <Col lg={4} md={4}>
@@ -543,7 +552,6 @@ export default function AI_Detection(){
                             display: "flex",
                             alignItems: "flex-end", // This ensures the rectangles start from the bottom
                             gap: "2px",
-                            // width: "200px",
                             maxWidth:"100px",
                             height: "60px",
                           }}
@@ -563,15 +571,21 @@ export default function AI_Detection(){
                         </div>
                       </Col>
                     </Row>
-                    <Row style={{margin:"37px 15px 19px 40px"}}>The colours below represent the text that corresponds with the level of AI</Row>
-                    <Row>
+                    <Row style={{
+                      margin:"37px 15px 19px 0px",
+                      "font-size":"20px",
+                      // "font-family": '"Poppins", Times',
+                    }}
+                    >The colours below represent the text that corresponds with the level of AI</Row>
+                    <Row style={{"font-size":"20px",}}>
                       <div
                         className="rectIndex"
                         index={1}
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          width: "100%",
+                          width: "95%",
+                          maxWidth:"95%",
                           height: "38px",
                           margin: "5px 0px 5px 5px",
                           padding: "5px",
@@ -588,7 +602,8 @@ export default function AI_Detection(){
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          width: "100%",
+                          width: "95%",
+                          maxWidth:"95%",
                           height: "38px",
                           margin: "5px 0px 5px 5px",
                           padding: "5px",
@@ -605,7 +620,8 @@ export default function AI_Detection(){
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          width: "100%",
+                          width: "95%",
+                          maxWidth:"95%",
                           height: "38px",
                           margin: "5px 0px 5px 5px",
                           padding: "5px",
@@ -622,7 +638,8 @@ export default function AI_Detection(){
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          width: "100%",
+                          width: "95%",
+                          maxWidth:"95%",
                           height: "38px",
                           margin: "5px 0px 5px 5px",
                           padding: "5px",
