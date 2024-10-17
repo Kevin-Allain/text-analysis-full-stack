@@ -33,29 +33,11 @@ import ScrollGraphAggregate from '@/components/ScrollGraphAggregate';
 import '@/styles/AI_Detection.css';
 
 const numberBoxStyle = {
-  width: '32px',
-  height: '32px',
-  padding: '6px',
-  objectFit: 'contain',
-  borderRadius: '5px',
-  border: 'solid 1px #115b4e',
-  backgroundColor: '#252525',
-  color: 'white',
-  textAlign: 'center',
-  fontSize: '20px',
-  display: 'flex',               // Flexbox to center content
-  alignItems: 'center',           // Vertical centering
-  justifyContent: 'center',       // Horizontal centering
-  cursor: 'pointer'               // Change cursor on hover
+  width: '32px', height: '32px', padding: '6px', objectFit: 'contain', borderRadius: '5px', border: 'solid 1px #115b4e', backgroundColor: '#252525', color: 'white', textAlign: 'center', fontSize: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
 };
-
 const numberGridStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  width: '50%',
-  paddingTop: '1em'
+  display: 'flex', justifyContent: 'space-between', width: '50%', paddingTop: '1em'
 };
-
 
 export default function AI_Detection(){
   // ---- useState
@@ -66,12 +48,10 @@ export default function AI_Detection(){
   const [fileList, setFileList] = useState([]);
   const [outputAI, setOutputAI] = useState([]);
   const [isLoadingAI, setIsLoadingAI] = useState(false);
-
   const [minScoreAI,setMinScoreAI] = useState(null)
   const [maxScoreAI,setMaxScoreAI] = useState(null)
   const [maxBin, setMaxBin] = useState(4);
   const [selectedBinIndex, setSelectedBinIndex] = useState(null);
-
   const { formData, setFormData } = useContext(FormDataContext);
 
   // const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
@@ -81,19 +61,8 @@ export default function AI_Detection(){
   // const colorBases = ["white","#d0dedc","#719c95","#115b4e"]
   // const colorBases = ["white","rgba(208, 222, 220,.90)","rgba(113, 156, 149,.90)","rgba(17, 91, 78,.90)"]
   // Change with light green
-  // const colorBases = [
-  //   "white",
-  //   "rgba(208, 222, 220,.90)",
-  //   "rgba(72,127,117,.90)",
-  //   // "rgba(13,119,100,.90)"
-  //   "rgba(17,152,127,0.90)"
-  // ]
-  const colorBases = [
-    "white",
-    "#d5e2e0",
-    "#9fbdb7",
-    "#528c82"
-  ]
+  // const colorBases = ["white", "rgba(208, 222, 220,.90)", "rgba(72,127,117,.90)", "rgba(17,152,127,0.90)"]
+  const colorBases = [ "white", "#d5e2e0", "#9fbdb7", "#528c82" ]
   const foldersWithResults = ['Anthropic', 'Anthropic_dp','GPT 4o','GPT 4o_dp','Human'];
 
   // ---- functions
@@ -127,9 +96,7 @@ export default function AI_Detection(){
           console.log("textFile: ",textFile);
           // second, call the AI
           loadAIText(textFile);
-        } else {
-          setFileContent("Error loading file content.");
-        }
+        } else { setFileContent("Error loading file content."); }
       }
     } catch (error) {
       console.error("Error fetching file content:", error);
@@ -160,16 +127,11 @@ export default function AI_Detection(){
         startIndex = previousEndIndex + 1;
       } else {
         startIndex = originalText.indexOf(modifiedText, previousEndIndex + 1);
-        if (startIndex === -1) {
-          console.warn(`Text fragment "${modifiedText}" not found in the original text.`);
-          startIndex = previousEndIndex + 1;
-        }
+        if (startIndex === -1) { startIndex = previousEndIndex + 1; }
       }
       const endIndex = startIndex + modifiedText.length - 1;
       previousEndIndex = endIndex;  
-      return {
-        type: 'ai_detection', range: [startIndex, endIndex], score: detail.value, text: modifiedText
-      };
+      return { type: 'ai_detection', range: [startIndex, endIndex], score: detail.value, text: modifiedText };
     });
     // Construct the new object
     const scoreDetails = {
@@ -188,7 +150,6 @@ export default function AI_Detection(){
       const is_127_0_0_1 = window.location.href.indexOf("127.0.0.1");
       // Change of ports based on latest changes from Pravija
       const portToReplace = '5001' // user to be 5000; Flask runs on port 5000 by default
-
       let strAnalyze = is_localhost
         ? window.location.href
           .replace("TextAnalysis",'').replace("AI_Detection",'').replace("3000", portToReplace)
@@ -197,27 +158,15 @@ export default function AI_Detection(){
           .replace("TextAnalysis",'').replace("AI_Detection",'').href 
           + "api/analyze_t_b";
 
-      if (strAnalyze.includes("?name")) {
-        console.log("name is included! strAnalyze: ",strAnalyze, ", typeof strAnalyze: ", (typeof strAnalyze));
-        let split = (strAnalyze.toString()).split("/")
-        strAnalyze = split[0] + '//' + split[2] + '/api/' + split[4]
-      }
-
-      console.log("strAnalyze AI Text: ", strAnalyze);
-      const response = await fetch(strAnalyze, {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: textFile }),
-      });
+      if (strAnalyze.includes("?name")) { let split = (strAnalyze.toString()).split("/"); strAnalyze = split[0] + '//' + split[2] + '/api/' + split[4]; }
+      const response = await fetch(strAnalyze, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: textFile }), });
       if (!response.ok) throw new Error("Network response was not ok.");
+
       const data = await response.json();
-      console.log("data loadAIText: ", data);
       setOutputAI(data);
-      // setOutputAI(JSON.stringify(data, null, 2)); // Update your state or UI accordingly
-      console.log("odd structure type: ", typeof JSON.stringify(data, null, 2));
     } catch (error) {
       console.error("Error during API call:", error);
-    } finally {
-      setIsLoadingAI(false); // Stop loading regardless of the outcome
-    }
+    } finally { setIsLoadingAI(false); }
   };
 
   // const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
@@ -226,7 +175,6 @@ export default function AI_Detection(){
   //   console.log("highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
   //   let allScores = scoreDetails.map(a => a.score);
   //   let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
-
   //   scoreDetails.forEach(detail => {
   //     const { type, range, score } = detail;
   //     const opacity = calculateOpacity(score.toFixed(2), minScore, maxScore, binning, numBin);
@@ -250,11 +198,8 @@ export default function AI_Detection(){
 
   const highlightText_quant_binned = (text, scoreDetails, binning = false, numBin = 4) => {
     let highlightedText = text;
-    let sizeOffset = 0;
-    console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin });
-    
+    console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin });    
     // TODO update the code so that minScores and maxScores are based on all content!
-
     let scoresTotal = [];
     codecheckerData_ai_detection_Daryl.map(a => scoresTotal = scoresTotal.concat(a.details.map(b => b.value) ) );
     console.log("~~~~ scoresTotal: ", scoresTotal);
@@ -276,45 +221,28 @@ export default function AI_Detection(){
       const bin2 = maxScore * 0.5;  // Mid-high bin
       const bin3 = maxScore * 0.25; // Mid-low bin  
       // Assign color based on which bin the score falls into
-      if (score >= bin1) {
-        return colorBases[3]; // Dark green
-      } else if (score >= bin2) {
-        return colorBases[2]; // Mid green
-      } else if (score >= bin3) {
-        return colorBases[1]; // Light grey-green
-      } else {
-        return colorBases[0]; // Lowest scores
-      }
+      if (score >= bin1) { return colorBases[3]; } else if (score >= bin2) { return colorBases[2]; } else if (score >= bin3) { return colorBases[1]; } else { return colorBases[0]; }
     };
-  
-    scoreDetails.forEach(detail => {
+    // Create the highlight span with the appropriate background color
+    // const highlightStart = `<span class="highlight ${type}" score="${score}" style="background-color: ${backgroundColor};" line-height: 1.15;" "wrap-around:break-word" >`;
+    //   // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
+    //   // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
+    // const highlightEnd = "</span>";
+
+    let currentLine = 1;  // Start line numbering
+    let sizeOffset = 0;   // Track text size adjustment
+    scoreDetails.forEach((detail) => {
       const { type, range, score } = detail;
-      // Get the appropriate color based on the binned score
       const backgroundColor = getBinnedColor(score);
-      // Create the highlight span with the appropriate background color
-      // const highlightStart = `<span 
-      //   class="highlight ${type}" 
-      //   score="${score}" 
-      //   style="background-color: ${backgroundColor};" line-height: 1.15;" "wrap-around:break-word" 
-      //   >`;
-      //   // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
-      //   // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
-      // const highlightEnd = "</span>";
-
       const highlightStart = `<span 
-        class="highlight ${type}" 
+        class="highlight ${type} line-${currentLine}" 
         score="${score}" 
-            style="background-color: ${backgroundColor}; line-height: 1.15; word-wrap: break-word; word-break: break-word;"
-        >`;
-        // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
-        // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
+        style="background-color: ${backgroundColor}; line-height: 1.15; word-wrap: break-word; word-break: break-word;"
+      >`;
       const highlightEnd = "</span>";
-
-
       const start = range[0];
       const end = range[1];
-      
-      // Update the highlighted text by inserting the span tags
+      // Insert the highlight span into the text
       highlightedText =
         highlightedText.slice(0, start + sizeOffset) +
         highlightStart +
@@ -322,16 +250,35 @@ export default function AI_Detection(){
         highlightEnd +
         highlightedText.slice(end + sizeOffset + 1);
       sizeOffset += highlightStart.length + highlightEnd.length;
+      // Check the content between spans to detect line breaks or empty spans
+      const textBetween = highlightedText.slice(start + sizeOffset, end + sizeOffset);
+      // Check for actual line breaks (\n)
+      const newLineBreaks = textBetween.match(/(\r\n|\n|\r)/g) || [];
+      if (newLineBreaks.length > 0) {
+        currentLine += newLineBreaks.length;  // Increment by the number of line breaks found
+      } else {
+        // Check if the span is completely empty or contains only non-breaking spaces (&nbsp;)
+        const isEmptySpan = textBetween.trim() === '' || textBetween === '&nbsp;';
+        if (isEmptySpan) {
+          currentLine++;  // Only increment line number for empty spans or spans with only &nbsp;
+        }
+      }
     });
-    return highlightedText;
+    
+    return highlightedText;    
   };
   
 
-  const handleUserClick = (user) => { 
-    setSelectedUser(user.name); setIndexFile(0); 
-  };
+  
+  const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); };
   const handleHighlightClick = (e,className) => { console.log("handleHighlightClick | e: ",e,"className: ",className); };
   const handleFileClick = (index) => { setIndexFile(index); };
+  const scrollToLine = (lineNumber) => {
+    console.log("scrollToLine | lineNumber: ",lineNumber);
+    const lineElement = document.querySelector(`.line-${lineNumber}`);
+    console.log("scrollToLine | lineElement: ",lineElement);
+    if (lineElement) { lineElement.scrollIntoView({ behavior: 'smooth' }); }  
+  }
 
   // ---- useEffect
   const textRef = useRef(null);
@@ -718,11 +665,12 @@ export default function AI_Detection(){
                         highest density areas of AI-generated text.
                       </span>
                       <div style={numberGridStyle}>
-                        <div style={numberBoxStyle}>1</div>
-                        <div style={numberBoxStyle}>2</div>
-                        <div style={numberBoxStyle}>3</div>
-                        <div style={numberBoxStyle}>4</div>
-                        <div style={numberBoxStyle}>5</div>
+                      {/* TODO update with selection of worst lines */}
+                        <div style={numberBoxStyle} onClick={() => scrollToLine(1)}>1</div>
+                        <div style={numberBoxStyle} onClick={() => scrollToLine(2)}>2</div>
+                        <div style={numberBoxStyle} onClick={() => scrollToLine(3)}>3</div>
+                        <div style={numberBoxStyle} onClick={() => scrollToLine(4)}>4</div>
+                        <div style={numberBoxStyle} onClick={() => scrollToLine(5)}>5</div>
                       </div>
                     </Row>
                   </div>

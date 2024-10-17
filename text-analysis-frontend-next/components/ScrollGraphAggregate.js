@@ -15,16 +15,13 @@ const ScrollGraphAggregate = ({ data, globalData, width = 400, height = 600, onS
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-
     // Split data into rows based on newline characters
     const rows = [];
     let currentRow = [];
-
     data.forEach((item) => {
       if (item.text.includes('Ċ')) { item.text = '\n'; }
       if (item.text === '\n') { rows.push(currentRow); currentRow = []; } else { currentRow.push(item); }
     });
-
     // Add the last row if there is no newline at the end
     if (currentRow.length > 0) { rows.push(currentRow); }
 
@@ -37,11 +34,9 @@ const ScrollGraphAggregate = ({ data, globalData, width = 400, height = 600, onS
 
     // Find the max average value to normalize the bins
     const maxValue = Math.max(...averageValues.filter(value => value !== null));
-
     // Helper function to map average value to a binned color
     const getBinnedColor = (value) => {
       if (value === null) return 'white';
-
       // // Calculate bins based on the range of values
       // const bin1 = maxValue * 0.75; // Highest scores bin
       // const bin2 = maxValue * 0.5;  // Mid-high scores bin
@@ -53,20 +48,10 @@ const ScrollGraphAggregate = ({ data, globalData, width = 400, height = 600, onS
 
       // TODO update so that colours are passed
       // Assign color based on which bin the value falls into
-      if (value >= bin1) {
-        return colorBases[3]; // Dark green
-      } else if (value >= bin2) {
-        return colorBases[2]; // Mid green
-      } else if (value >= bin3) {
-        return colorBases[1]; // Light grey-green
-      } else {
-        return colorBases[0]; // Lowest scores
-      }
+      if (value >= bin1) { return colorBases[3]; /* Dark green */ } else if (value >= bin2) { return colorBases[2]; /* Mid green */} else if (value >= bin3) { return colorBases[1]; /* Light grey-green */ } else { return colorBases[0]; /* Lowest scores */ }
     };
-
     // Calculate the height of each square based on the number of rows
     const squareHeight = height / rows.length;
-
     // Clear the canvas
     ctx.clearRect(0, 0, width, height);
 
@@ -81,25 +66,20 @@ const ScrollGraphAggregate = ({ data, globalData, width = 400, height = 600, onS
     const handleCanvasClick = (event) => {
       const rect = canvas.getBoundingClientRect();
       const y = event.clientY - rect.top; // Y-coordinate of the click relative to the canvas top
-
       // Calculate the scrollRatio based on click position
       let clickRatio = y / rect.height;
-
       // Calculate where the middle of the rectangle should go
       let newScrollRatio = clickRatio;
-
       // Adjust the position to ensure the rectangle stays within bounds
       if (newScrollRatio * height - rectHeight / 2 < 0) {
         newScrollRatio = rectHeight / 2 / height; // Prevent the top from going over
       } else if (newScrollRatio * height + rectHeight / 2 > height) {
         newScrollRatio = (height - rectHeight / 2) / height; // Prevent the bottom from going under
       }
-
       onScrollPositionChange(newScrollRatio); // Pass the adjusted position to the parent
     };
 
     canvas.addEventListener('click', handleCanvasClick);
-
     // Cleanup event listener on component unmount
     return () => {
       canvas.removeEventListener('click', handleCanvasClick);
