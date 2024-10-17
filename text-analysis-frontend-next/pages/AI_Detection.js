@@ -14,7 +14,13 @@ import codecheckerData_ai_detection from '@/public/data/codechecker_ai_detection
 import codecheckerData_ai_detection_preload from '@/public/data/codechecker_ai_detection_preload.json';
 
 import codecheckerData_ai_detection_News_article_results from '@/public/data/Daryl/Human/results/News_article_results.json';
-import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results.json';
+// import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results.json';
+// import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_manually_altered.json';
+// FINE but we want to consider alternative transformation on detail as well
+// import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_inverted_tipped.json';
+// we try "value"
+// import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_inverted_tipped_detail.json';
+import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_inverted_tipped_detail_late.json';
 
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
@@ -26,6 +32,29 @@ import ScrollGraph from '@/components/ScrollGraph'
 import ScrollGraphAggregate from '@/components/ScrollGraphAggregate';
 import '@/styles/AI_Detection.css';
 
+const numberBoxStyle = {
+  width: '32px',
+  height: '32px',
+  padding: '6px',
+  objectFit: 'contain',
+  borderRadius: '5px',
+  border: 'solid 1px #115b4e',
+  backgroundColor: '#252525',
+  color: 'white',
+  textAlign: 'center',
+  fontSize: '20px',
+  display: 'flex',               // Flexbox to center content
+  alignItems: 'center',           // Vertical centering
+  justifyContent: 'center',       // Horizontal centering
+  cursor: 'pointer'               // Change cursor on hover
+};
+
+const numberGridStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '50%',
+  paddingTop: '1em'
+};
 
 
 export default function AI_Detection(){
@@ -224,10 +253,21 @@ export default function AI_Detection(){
     let sizeOffset = 0;
     console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin });
     
+    // TODO update the code so that minScores and maxScores are based on all content!
+
+    let scoresTotal = [];
+    codecheckerData_ai_detection_Daryl.map(a => scoresTotal = scoresTotal.concat(a.details.map(b => b.value) ) );
+    console.log("~~~~ scoresTotal: ", scoresTotal);
+    let averagesTotal = [];
+    codecheckerData_ai_detection_Daryl.map(a => averagesTotal = averagesTotal.concat([a.average]) );
+    console.log("~~~~ averagesTotal: ", averagesTotal);
+
     // Extract all scores and find the minimum and maximum
     let allScores = scoreDetails.map(a => a.score);
-    let minScore = Math.min(...allScores);
-    let maxScore = Math.max(...allScores);
+    // let minScore = Math.min(...allScores);
+    // let maxScore = Math.max(...allScores);
+    let maxScore = Math.max(...scoresTotal);
+    // let maxScore = Math.max(...averagesTotal);
   
     // Function to determine the background color based on the score
     const getBinnedColor = (score) => {
@@ -252,14 +292,25 @@ export default function AI_Detection(){
       // Get the appropriate color based on the binned score
       const backgroundColor = getBinnedColor(score);
       // Create the highlight span with the appropriate background color
+      // const highlightStart = `<span 
+      //   class="highlight ${type}" 
+      //   score="${score}" 
+      //   style="background-color: ${backgroundColor};" line-height: 1.15;" "wrap-around:break-word" 
+      //   >`;
+      //   // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
+      //   // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
+      // const highlightEnd = "</span>";
+
       const highlightStart = `<span 
         class="highlight ${type}" 
         score="${score}" 
-        style="background-color: ${backgroundColor};" line-height: 1.15;" 
+            style="background-color: ${backgroundColor}; line-height: 1.15; word-wrap: break-word; word-break: break-word;"
         >`;
         // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
         // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
       const highlightEnd = "</span>";
+
+
       const start = range[0];
       const end = range[1];
       
@@ -508,7 +559,9 @@ export default function AI_Detection(){
                                   fontWeight: '500', // Ensure medium weight here too
                                   letterSpacing: '-1.5px', // Apply letter spacing
                                   color: '#252525',
-                                  overflow: "visible"
+                                  overflow: "visible",
+                                  whiteSpace: "pre-wrap",
+                                  wrapAround:'break-word',
                                 }}
                                 dangerouslySetInnerHTML={{ __html: fileContent }}
                               />
@@ -529,6 +582,7 @@ export default function AI_Detection(){
                   {/* <ScrollGraph data={outputAI.details} width="400" height="600" onScrollPositionChange={handleScrollPositionChange} scrollRatio={scrollPosition} /> */}
                   <ScrollGraphAggregate
                     data={outputAI.details}
+                    globalData={codecheckerData_ai_detection_Daryl}
                     width="400"
                     height="600"
                     onScrollPositionChange={handleScrollPositionChange}
@@ -551,7 +605,7 @@ export default function AI_Detection(){
                   >
                     <Row style={{ height: "60px", fontSize: "xx-large" }}>
                       <Col lg={8} md={8} style={{ alignContent: "center", fontSize: "2vw"}}>
-                        AI Score: {100*outputAI.average.toFixed(2)}
+                        AI Score: {Math.floor(100*outputAI.average.toFixed(2))}
                       </Col>
                       <Col lg={4} md={4}>
                         <div
@@ -570,7 +624,7 @@ export default function AI_Detection(){
                               style={{
                                 width: "calc(100% / 7 - 2px)",
                                 height: `${(i + 1) / 7 * 100}%`,
-                                backgroundColor: `${Math.floor(outputAI.average.toFixed(2)*7)<=i? "#f1f1f1":"#115b4e"}`,
+                                backgroundColor: `${Math.round(outputAI.average.toFixed(2)*7)<=i? "#f1f1f1":"#115b4e"}`,
                                 border: "1px solid #115b4e",
                                 borderRadius: "4.5px"
                               }}
@@ -656,7 +710,20 @@ export default function AI_Detection(){
                           backgroundColor: "rgb(255, 255, 255)"
                         }}
                       >
-                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[0]  }} ></div> Human </div>
+                        <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[0] }} ></div> Human </div>
+                    </Row>
+                    <Row>
+                      <span style={{"font-size":"20px","padding-top":"1em"}} class="Click-the-numbers-below-to-see-the-top-5-highest-density-areas">
+                        Click the numbers below to see the top 5
+                        highest density areas of AI-generated text.
+                      </span>
+                      <div style={numberGridStyle}>
+                        <div style={numberBoxStyle}>1</div>
+                        <div style={numberBoxStyle}>2</div>
+                        <div style={numberBoxStyle}>3</div>
+                        <div style={numberBoxStyle}>4</div>
+                        <div style={numberBoxStyle}>5</div>
+                      </div>
                     </Row>
                   </div>
                 )}

@@ -1,8 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 
-const ScrollGraphAggregate = ({ data, width = 400, height = 600, onScrollPositionChange, scrollRatio, colorBases }) => {
+const ScrollGraphAggregate = ({ data, globalData, width = 400, height = 600, onScrollPositionChange, scrollRatio, colorBases }) => {
   const canvasRef = useRef(null);
   const rectHeight = 60; // Height of the scroll rectangle
+
+  console.log("ScrollGraphAggregate | globalData: ",globalData);
+  let scoresTotal = [];
+  globalData.map(a => scoresTotal = scoresTotal.concat(a.details.map(b => b.value) ) );
+  console.log("~~~~ ScrollGraphAggregate | scoresTotal: ", scoresTotal);
+  let maxScore = Math.max(...scoresTotal);
+
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -13,21 +21,12 @@ const ScrollGraphAggregate = ({ data, width = 400, height = 600, onScrollPositio
     let currentRow = [];
 
     data.forEach((item) => {
-      if (item.text.includes('Ċ')) {
-        item.text = '\n';
-      }
-      if (item.text === '\n') {
-        rows.push(currentRow);
-        currentRow = [];
-      } else {
-        currentRow.push(item);
-      }
+      if (item.text.includes('Ċ')) { item.text = '\n'; }
+      if (item.text === '\n') { rows.push(currentRow); currentRow = []; } else { currentRow.push(item); }
     });
 
     // Add the last row if there is no newline at the end
-    if (currentRow.length > 0) {
-      rows.push(currentRow);
-    }
+    if (currentRow.length > 0) { rows.push(currentRow); }
 
     // Calculate the average value for each row
     const averageValues = rows.map((row) => {
@@ -43,10 +42,14 @@ const ScrollGraphAggregate = ({ data, width = 400, height = 600, onScrollPositio
     const getBinnedColor = (value) => {
       if (value === null) return 'white';
 
-      // Calculate bins based on the range of values
-      const bin1 = maxValue * 0.75; // Highest scores bin
-      const bin2 = maxValue * 0.5;  // Mid-high scores bin
-      const bin3 = maxValue * 0.25; // Mid-low scores bin
+      // // Calculate bins based on the range of values
+      // const bin1 = maxValue * 0.75; // Highest scores bin
+      // const bin2 = maxValue * 0.5;  // Mid-high scores bin
+      // const bin3 = maxValue * 0.25; // Mid-low scores bin
+      // Updated with maxScore passed in JSON
+      const bin1 = maxScore * 0.75; // Highest scores bin
+      const bin2 = maxScore * 0.5;  // Mid-high scores bin
+      const bin3 = maxScore * 0.25; // Mid-low scores bin
 
       // TODO update so that colours are passed
       // Assign color based on which bin the value falls into
