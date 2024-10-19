@@ -35,8 +35,11 @@ import ScrollGraph from '@/components/ScrollGraph'
 import ScrollGraphAggregate from '@/components/ScrollGraphAggregate';
 import '@/styles/AI_Detection.css';
 
-const numberBoxStyle = {
+const numberButtonStyle = {
   width: '32px', height: '32px', padding: '6px', objectFit: 'contain', borderRadius: '5px', border: 'solid 1px #115b4e', backgroundColor: '#252525', color: 'white', textAlign: 'center', fontSize: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
+};
+const numberBoxStyle = {
+  width: '32px', height: '32px', padding: '6px', objectFit: 'contain', borderRadius: '5px', border: 'solid 1px #115b4e', backgroundColor: '#252525', color: 'white', textAlign: 'center', fontSize: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'
 };
 const numberGridStyle = {
   display: 'flex', justifyContent: 'space-between', width: '50%', paddingTop: '1em'
@@ -385,8 +388,38 @@ export default function AI_Detection(){
     }
 
     // Addition for markers
+    const adjustMarkerPositions = () => {
+      const markerElements = document.querySelectorAll('.markerArea div');
+      const lineElements = [
+        document.querySelector('.line-1'), 
+        document.querySelector('.line-2'), 
+        document.querySelector('.line-3'), 
+        document.querySelector('.line-4'), 
+        document.querySelector('.line-10'),
+      ];
 
-
+      // Adjust each marker's position based on the corresponding line's position
+      markerElements.forEach((marker, index) => {
+        const lineElement = lineElements[index];
+        if (lineElement) {
+          const lineTop = lineElement.offsetTop;  // Get the top position of the line
+          // Set marker's position relative to its corresponding line
+          marker.style.position = 'absolute';
+          marker.style.top = `${lineTop}px`;  // Position marker at the same y-position as the line
+        }
+      });
+    };
+    // Adjust markers after content is rendered
+    adjustMarkerPositions();
+    // Listen to window resize and scroll events to recalculate positions
+    window.addEventListener('resize', adjustMarkerPositions);
+    if (textRef.current) {
+      textRef.current.addEventListener('scroll', adjustMarkerPositions);
+      return () => {
+        window.removeEventListener('resize', adjustMarkerPositions);
+        textRef.current.removeEventListener('scroll', adjustMarkerPositions);
+      };
+    }
   }, [fileContent, maxScoreAI, textRef.current]); // seems like it is the textRef.current that needs to be called for the querySelector to work
 
   useEffect(() => {
@@ -408,21 +441,50 @@ export default function AI_Detection(){
       // dataTest is supposed to be like outputAI
       // const dataTest = { average: 0.599, details: [ { text: "Ċ", value: 0.79 }, { text: 'St', value: 0.76 }, { text: 'ories', value: 0.36 }, { text: "Ġof", value: 0.02 }, { text: "Ġfairy", value: 0.02 }, { text: "Ġtales", value: 0.02 }, { text: "Ġlike", value: 0.72 }, { text: "Ġthis", value: 0.02 }, { text: "Ġare", value: 0.02 }, { text: "Ġnice", value: 0.02 }, { text: "Ċ", value: 0.79 }, { text: "Ċ", value: 0.79 }, { text: 'Right?', value: 0.76 }, ] };
       // originalText is supposed to be like the content of the file
-      const originalText = contentFromAI(outputAI.details)
+      const originalText = contentFromAI(outputAI.details);
       const resultScore = transformDataToScoreDetails(name, numSubmissions, files, outputAI, originalText);
       console.log("transformDataToScoreDetails resultScore: ",resultScore,", ¬ outputAI: ",outputAI);
       // fourth, apply highlight
       // setFileContent( highlightText_quant(originalText, resultScore.scoreDetails, true, maxBin) );
-      setFileContent( highlightText_quant_binned(originalText, resultScore.scoreDetails, true, maxBin) )
+      setFileContent( highlightText_quant_binned(originalText, resultScore.scoreDetails, true, maxBin) );
       let allScores = resultScore.scoreDetails.map(a => a.score);
-      let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);  
-      setMinScoreAI(minScore); 
+      let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
+      setMinScoreAI(minScore);
       setMaxScoreAI(maxScore);
       console.log("useEffect | minScore: ", minScore,", maxScore: ",maxScore)
     } else {
       console.log("Check | selectedUser: ",selectedUser,", outputAI: ",outputAI,", outputAI.scoreDetails: ",outputAI.scoreDetails);
     }
   },[outputAI])
+
+
+
+  // // FOR MARKER POSITION
+  // useEffect(() => {
+  //   const adjustMarkerPositions = () => {
+  //     const markerElements = document.querySelectorAll('.markerArea div');
+  //     // TODO update for lines with worst scores
+  //     const lineElements = document.querySelectorAll('.line-1, .line-2, .line-3, .line-4, .line-5');      
+  //     let previousBottom = 0;
+  //     // Adjust each marker's position based on the corresponding line's position
+  //     markerElements.forEach((marker, index) => {
+  //       if (lineElements[index]) {
+  //         const lineTop = lineElements[index].offsetTop;          
+  //         // Calculate the margin-top by subtracting the previous marker's bottom position
+  //         const marginTop = lineTop - previousBottom;
+  //         marker.style.marginTop = `${marginTop}px`;
+  //         // Update the bottom position of the current marker for the next iteration
+  //         previousBottom = lineTop + marker.offsetHeight;
+  //       }
+  //     });
+  //   };
+  //   // Adjust markers after content is rendered
+  //   adjustMarkerPositions();
+  //   // Listen to window resize events to recalculate positions if the window is resized
+  //   window.addEventListener('resize', adjustMarkerPositions);
+  //   return () => { window.removeEventListener('resize', adjustMarkerPositions); };
+  // }, [fileContent]);  // Re-run whenever fileContent changes
+
 
 
   // Update for ScrollGraph rectangle
@@ -559,16 +621,13 @@ export default function AI_Detection(){
                           maxHeight: `${0.94 * Number(contentHeight.split("px")[0])}px`,
                         }}>
                           <div className="card-body" style={{ display: 'flex', fontSize: '25px', fontFamily: 'Poppins', fontWeight: 'Medium', letterSpacing: '-1.5px', color: '#252525' }}>
-
                             {/* Marker Area */}
                             <div className="markerArea" style={markerAreaStyle}>
-                              {/* Add marker content here, for example: */}
-                              {/* TODO this is actual line... and not line \n Need to adapt */}
-                              <div style={numberBoxStyle}>1</div>
-                              <div style={numberBoxStyle}>2</div>
-                              <div style={numberBoxStyle}>3</div>
-                              <div style={numberBoxStyle}>4</div>
-                              <div style={numberBoxStyle}>5</div>
+                              <div className="marker-1" style={numberBoxStyle}>1</div>
+                              <div className="marker-2" style={numberBoxStyle}>2</div>
+                              <div className="marker-3" style={numberBoxStyle}>3</div>
+                              <div className="marker-4" style={numberBoxStyle}>4</div>
+                              <div className="marker-10" style={numberBoxStyle}>10</div>
                             </div>
 
                             {/* Text Content Area */}
@@ -657,11 +716,11 @@ export default function AI_Detection(){
                         Click the numbers below to see the top 5 highest density areas of AI-generated text.
                       </span>
                       <div style={numberGridStyle}>
-                        <div style={numberBoxStyle} onClick={() => scrollToLine(1)}>1</div>
-                        <div style={numberBoxStyle} onClick={() => scrollToLine(2)}>2</div>
-                        <div style={numberBoxStyle} onClick={() => scrollToLine(3)}>3</div>
-                        <div style={numberBoxStyle} onClick={() => scrollToLine(4)}>4</div>
-                        <div style={numberBoxStyle} onClick={() => scrollToLine(5)}>5</div>
+                        <div style={numberButtonStyle} onClick={() => scrollToLine(1)}>1</div>
+                        <div style={numberButtonStyle} onClick={() => scrollToLine(2)}>2</div>
+                        <div style={numberButtonStyle} onClick={() => scrollToLine(3)}>3</div>
+                        <div style={numberButtonStyle} onClick={() => scrollToLine(4)}>4</div>
+                        <div style={numberButtonStyle} onClick={() => scrollToLine(10)}>10</div>
                       </div>
                     </Row>
                   </div>
