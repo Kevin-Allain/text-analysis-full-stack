@@ -20,7 +20,10 @@ import codecheckerData_ai_detection_News_article_results from '@/public/data/Dar
 // import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_inverted_tipped.json';
 // we try "value"
 // import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_inverted_tipped_detail.json';
+
 import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_inverted_tipped_detail_late.json';
+// TODO communicate about issue: all average are 0 or super close to 0
+// import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/dataset_results_filename_fix.json';
 
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
@@ -196,78 +199,149 @@ export default function AI_Detection(){
   //   return highlightedText;
   // };
 
+  // const highlightText_quant_binned = (text, scoreDetails, binning = false, numBin = 4) => {
+  //   let highlightedText = text;
+  //   console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin, text });
+  //   // TODO update the code so that minScores and maxScores are based on all content!
+  //   let scoresTotal = [];
+  //   codecheckerData_ai_detection_Daryl.map(a => scoresTotal = scoresTotal.concat(a.details.map(b => b.value) ) );
+  //   console.log("~~~~ scoresTotal: ", scoresTotal);
+  //   let averagesTotal = [];
+  //   codecheckerData_ai_detection_Daryl.map(a => averagesTotal = averagesTotal.concat([a.average]) );
+  //   console.log("~~~~ averagesTotal: ", averagesTotal);
+
+  //   // Extract all scores and find the minimum and maximum
+  //   let allScores = scoreDetails.map(a => a.score);
+  //   // let minScore = Math.min(...allScores);
+  //   // let maxScore = Math.max(...allScores);
+  //   let maxScore = Math.max(...scoresTotal);
+  //   // let maxScore = Math.max(...averagesTotal);
+  
+  //   // Function to determine the background color based on the score
+  //   const getBinnedColor = (score) => {
+  //     // Define bin thresholds based on the min and max scores
+  //     const bin1 = maxScore * 0.75; // Highest bin
+  //     const bin2 = maxScore * 0.5;  // Mid-high bin
+  //     const bin3 = maxScore * 0.25; // Mid-low bin  
+  //     // Assign color based on which bin the score falls into
+  //     if (score >= bin1) { return colorBases[3]; } else if (score >= bin2) { return colorBases[2]; } else if (score >= bin3) { return colorBases[1]; } else { return colorBases[0]; }
+  //   };
+  //   // Create the highlight span with the appropriate background color
+  //   // const highlightStart = `<span class="highlight ${type}" score="${score}" style="background-color: ${backgroundColor};" line-height: 1.15;" "wrap-around:break-word" >`;
+  //   //   // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
+  //   //   // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
+  //   // const highlightEnd = "</span>";
+
+  //   let currentLine = 1;  // Start line numbering
+  //   let sizeOffset = 0;   // Track text size adjustment
+  //   scoreDetails.forEach((detail) => {
+  //     const { type, range, score } = detail;
+  //     const backgroundColor = getBinnedColor(score);
+  //     const highlightStart = `<span 
+  //       class="highlight ${type} line-${currentLine}" 
+  //       score="${score}" 
+  //       style="background-color: ${backgroundColor}; line-height: 1.15; word-wrap: break-word; word-break: break-word;"
+  //     >`;
+  //     const highlightEnd = "</span>";
+  //     const start = range[0];
+  //     const end = range[1];
+
+  //     console.log("highlightedText.slice(start + sizeOffset, end + sizeOffset + 1): ", highlightedText.slice(start + sizeOffset, end + sizeOffset + 1));
+
+  //     // Insert the highlight span into the text
+  //     highlightedText =
+  //       highlightedText.slice(0, start + sizeOffset) +
+  //       highlightStart +
+  //       highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
+  //       highlightEnd +
+  //       highlightedText.slice(end + sizeOffset + 1);
+  //     sizeOffset += highlightStart.length + highlightEnd.length;
+  //     // Check the content between spans to detect line breaks or empty spans
+  //     const textBetween = highlightedText.slice(start + sizeOffset, end + sizeOffset);
+  //     // Check for actual line breaks (\n)
+  //     const newLineBreaks = textBetween.match(/(\r\n|\n|\r)/g) || [];
+  //     if (newLineBreaks.length > 0) {
+  //       currentLine += newLineBreaks.length;  // Increment by the number of line breaks found
+  //     } else {
+  //       // Check if the span is completely empty or contains only non-breaking spaces (&nbsp;)
+  //       const isEmptySpan = textBetween.trim() === '' || textBetween === '&nbsp;';
+  //       if (isEmptySpan) {
+  //         currentLine++;  // Only increment line number for empty spans or spans with only &nbsp;
+  //       }
+  //     }
+  //   });
+    
+  //   return highlightedText;    
+  // };
+
   const highlightText_quant_binned = (text, scoreDetails, binning = false, numBin = 4) => {
+    console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin });
+    let sizeOffset = 0;
     let highlightedText = text;
-    console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin });    
-    // TODO update the code so that minScores and maxScores are based on all content!
     let scoresTotal = [];
     codecheckerData_ai_detection_Daryl.map(a => scoresTotal = scoresTotal.concat(a.details.map(b => b.value) ) );
     console.log("~~~~ scoresTotal: ", scoresTotal);
     let averagesTotal = [];
     codecheckerData_ai_detection_Daryl.map(a => averagesTotal = averagesTotal.concat([a.average]) );
-    console.log("~~~~ averagesTotal: ", averagesTotal);
-
+    console.log("~~~~ averagesTotal: ", averagesTotal);  
     // Extract all scores and find the minimum and maximum
     let allScores = scoreDetails.map(a => a.score);
-    // let minScore = Math.min(...allScores);
-    // let maxScore = Math.max(...allScores);
     let maxScore = Math.max(...scoresTotal);
-    // let maxScore = Math.max(...averagesTotal);
-  
     // Function to determine the background color based on the score
     const getBinnedColor = (score) => {
-      // Define bin thresholds based on the min and max scores
-      const bin1 = maxScore * 0.75; // Highest bin
-      const bin2 = maxScore * 0.5;  // Mid-high bin
-      const bin3 = maxScore * 0.25; // Mid-low bin  
+      // 1- Highest bin // 2- Mid-high bin // 3- Mid-low bin
+      const bin1 = maxScore * 0.75; const bin2 = maxScore * 0.5; const bin3 = maxScore * 0.25; 
       // Assign color based on which bin the score falls into
       if (score >= bin1) { return colorBases[3]; } else if (score >= bin2) { return colorBases[2]; } else if (score >= bin3) { return colorBases[1]; } else { return colorBases[0]; }
     };
-    // Create the highlight span with the appropriate background color
-    // const highlightStart = `<span class="highlight ${type}" score="${score}" style="background-color: ${backgroundColor};" line-height: 1.15;" "wrap-around:break-word" >`;
-    //   // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
-    //   // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
-    // const highlightEnd = "</span>";
-
-    let currentLine = 1;  // Start line numbering
-    let sizeOffset = 0;   // Track text size adjustment
-    scoreDetails.forEach((detail) => {
+  
+    // Step 1: Detect all occurrences of \n in the text and store their indexes
+    let newLineIndexes = [];
+    for (let i = 0; i < highlightedText.length; i++) { if (highlightedText[i] === '\n') { newLineIndexes.push(i); } }  
+    // Add the last character position to newLineIndexes
+    if (highlightedText.length > 0) { newLineIndexes.push(highlightedText.length - 1); }  
+    console.log("Detected newline positions: ", newLineIndexes);
+    let spansWithNewLines = []; // To track spans that should contain \n
+    let lineNumber = 1;         // Initialize line number counter
+  
+    scoreDetails.forEach((detail, index) => {
       const { type, range, score } = detail;
       const backgroundColor = getBinnedColor(score);
+      // Step 2: Add a unique index to each span and add the line number to every span
+      let additionalClass = `span-index-${index} line-${lineNumber}`; // Unique index class and line number for each span
+      // Step 3: Check if the current span overlaps with a \n position
+      let spanContainsNewLine = newLineIndexes.some(newLineIndex => {
+        return newLineIndex >= range[0] && newLineIndex <= range[1]; // Check if \n is within the span's range
+      });
+  
+      // Add the "backslashNewLine" class and line number if the span contains a \n
+      if (spanContainsNewLine) {
+        additionalClass += ` backslashNewLine`;
+        spansWithNewLines.push(index);   // Keep track of which spans have the new line
+        lineNumber++;  // Increment line number for each new line detected
+      }
       const highlightStart = `<span 
-        class="highlight ${type} line-${currentLine}" 
-        score="${score}" 
+        class="highlight ${type} ${additionalClass}" score="${score}" 
         style="background-color: ${backgroundColor}; line-height: 1.15; word-wrap: break-word; word-break: break-word;"
       >`;
       const highlightEnd = "</span>";
       const start = range[0];
       const end = range[1];
-      // Insert the highlight span into the text
+  
+      // Update the highlighted text by inserting the span tags
       highlightedText =
         highlightedText.slice(0, start + sizeOffset) +
         highlightStart +
         highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
         highlightEnd +
         highlightedText.slice(end + sizeOffset + 1);
-      sizeOffset += highlightStart.length + highlightEnd.length;
-      // Check the content between spans to detect line breaks or empty spans
-      const textBetween = highlightedText.slice(start + sizeOffset, end + sizeOffset);
-      // Check for actual line breaks (\n)
-      const newLineBreaks = textBetween.match(/(\r\n|\n|\r)/g) || [];
-      if (newLineBreaks.length > 0) {
-        currentLine += newLineBreaks.length;  // Increment by the number of line breaks found
-      } else {
-        // Check if the span is completely empty or contains only non-breaking spaces (&nbsp;)
-        const isEmptySpan = textBetween.trim() === '' || textBetween === '&nbsp;';
-        if (isEmptySpan) {
-          currentLine++;  // Only increment line number for empty spans or spans with only &nbsp;
-        }
-      }
-    });
-    
-    return highlightedText;    
-  };
   
+      sizeOffset += highlightStart.length + highlightEnd.length;
+    });
+    console.log("Spans with new lines: ", spansWithNewLines);
+    return highlightedText;
+  };
+        
 
   
   const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); };
