@@ -341,9 +341,7 @@ export default function AI_Detection(){
     console.log("Spans with new lines: ", spansWithNewLines);
     return highlightedText;
   };
-        
-
-  
+          
   const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); };
   const handleHighlightClick = (e,className) => { console.log("handleHighlightClick | e: ",e,"className: ",className); };
   const handleFileClick = (index) => { setIndexFile(index); };
@@ -351,7 +349,7 @@ export default function AI_Detection(){
     console.log("scrollToLine | lineNumber: ",lineNumber);
     const lineElement = document.querySelector(`.line-${lineNumber}`);
     console.log("scrollToLine | lineElement: ",lineElement);
-    if (lineElement) { lineElement.scrollIntoView({ behavior: 'smooth' }); }  
+    if (lineElement) { lineElement.scrollIntoView({ behavior: 'smooth' }); }
   }
 
   // ---- useEffect
@@ -372,9 +370,10 @@ export default function AI_Detection(){
     }
   }, [selectedUser, indexFile]);
 
-  // TODO assess whether we need to keep. Seems not to work sometimes
+  
   useEffect(() => {
     console.log("textRef.current: ", textRef.current);
+    // TODO assess whether we need to keep. Seems not to work sometimes    
     if (textRef.current) {
       console.log('ParentComponent | Initial scrollHeight:', textRef.current.scrollHeight);
       const highlights = textRef.current.querySelectorAll('.highlight');
@@ -384,6 +383,10 @@ export default function AI_Detection(){
         });
       });
     }
+
+    // Addition for markers
+
+
   }, [fileContent, maxScoreAI, textRef.current]); // seems like it is the textRef.current that needs to be called for the querySelector to work
 
   useEffect(() => {
@@ -473,11 +476,8 @@ export default function AI_Detection(){
     const textElement = textRef.current;
     if (textElement !== null) {
       textElement.addEventListener('scroll', handleScroll);
-
       // Clean up the event listener on component unmount
-      return () => {
-        textElement.removeEventListener('scroll', handleScroll);
-      };
+      return () => { textElement.removeEventListener('scroll', handleScroll); };
     }
   }, []);
 
@@ -487,7 +487,6 @@ export default function AI_Detection(){
       // Get the height of BlackBar and Navbar
       const blackBarHeight = blackBarRef.current ? blackBarRef.current.offsetHeight : 0;
       const navbarHeight = navbarRef.current ? navbarRef.current.offsetHeight : 0;
-
       // Calculate the available height for the content div
       const totalHeight = window.innerHeight;
       const remainingHeight = totalHeight - blackBarHeight - navbarHeight;
@@ -495,19 +494,18 @@ export default function AI_Detection(){
       // Apply the calculated height to the content div
       setContentHeight(`${remainingHeight}px`);
     };
-
     // Run on initial render and when the window is resized
     updateContentHeight();
     window.addEventListener('resize', updateContentHeight);
     console.log("changing heights. contentHeight: ",contentHeight);
     // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', updateContentHeight);
-    };
+    return () => { window.removeEventListener('resize', updateContentHeight); };
   }, []);
 
-
-
+  // Styles
+  const containerStyle = { height: `${0.94 * Number(contentHeight.split("px")[0])}px`, maxHeight: `${0.94 * Number(contentHeight.split("px")[0])}px`, display: 'flex', overflow: 'hidden', };
+  const markerAreaStyle = { width: '33px', backgroundColor: '#f0f0f0', };
+  const textContentStyle = { fontSize: '25px', fontFamily: 'Poppins, sans-serif', fontWeight: '500', letterSpacing: '-1.5px', color: '#252525', overflow: 'visible', whiteSpace: 'pre-wrap', wordBreak: 'break-word', width: 'calc(100% - 33px)', };
 
   return (
     <>
@@ -529,23 +527,11 @@ export default function AI_Detection(){
             md={12} 
             lg={10} 
             className="content" 
-            style={{
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              paddingLeft: '15px',
-              paddingRight: '15px',
-              height: contentHeight, // Dynamically set the height
-              maxHeight: contentHeight,
-            }}
+            style={{ marginLeft: 'auto', marginRight: 'auto', paddingLeft: '15px', paddingRight: '15px', height: contentHeight, maxHeight: contentHeight, }}
             ref={contentRef}
           >
-            <Row style={{
-              border:" solid #eae9e9 thin", 
-              borderRadius:"20px", 
-              backgroundColor:"#f1f1f1", 
-              margin: "10px 0 0 18px", // used to be "28px 0 0 18px",
+            <Row style={{ border:" solid #eae9e9 thin", borderRadius:"20px", height:"95%", backgroundColor:"#f1f1f1", margin: "10px 0 0 18px", // used to be "28px 0 0 18px",
               padding: "5px 5px 5px 5px", // used to be "44px 65px 34px 50px"
-              height:"95%",
             }}>
               {/* <HorizontalNav features={["Similarity", "AI_Detection", "Plagiarism"]} selectedUser={selectedUser} colorBases={colorBases} /> */}
               <Col lg={8} md={8} sm={12} className="mb-3 biggerContent" >
@@ -557,39 +543,53 @@ export default function AI_Detection(){
                     <div className="text-center"> <div className="spinner-border text-primary" role="status" /> </div>
                   </>
                 ) : (
-                  outputAI.details && (
-                    <>
-                      <div className="card overflow-x-scroll overflow-y-scroll mainContent" 
-                          style={{
-                            height: (0.94*Number(contentHeight.split("px")[0]))+"px", // Dynamically set the height
-                            maxHeight:(0.94*Number(contentHeight.split("px")[0]))+"px",
-                          }}
-                        >
-                          <div className="card-body" style={{
-                            fontSize: 25,
-                            fontFamily: 'Poppins', // could be 'Poppins-Medium'? Doesn't change. 
-                            fontWeight: 'Medium', 
-                            letterSpacing: '-1.5px', 
-                            color: '#252525'
-                          }} >
-                          <div ref={textRef} className="text-content">
+                    outputAI.details && (
+                      <>
+                        {/* 
+                      <div className="card overflow-x-scroll overflow-y-scroll mainContent" style={{ height: (0.94*Number(contentHeight.split("px")[0]))+"px", maxHeight:(0.94*Number(contentHeight.split("px")[0]))+"px", }}>
+                          <div className="card-body" style={{ fontSize: 25, fontFamily: 'Poppins', fontWeight: 'Medium',  letterSpacing: '-1.5px', color: '#252525'}} >
+                            <div ref={textRef} className="text-content">
+                                <pre style={{ fontFamily: 'Poppins, sans-serif', fontSize: '25px', fontWeight: '500', letterSpacing: '-1.5px', color: '#252525', overflow: "visible", whiteSpace: "pre-wrap", wrapAround:'break-word', }} dangerouslySetInnerHTML={{ __html: fileContent }} />
+                            </div>
+                        </div>
+                      </div> 
+                      */}
+                        <div className="card overflow-x-scroll overflow-y-scroll mainContent" style={{
+                          height: `${0.94 * Number(contentHeight.split("px")[0])}px`,
+                          maxHeight: `${0.94 * Number(contentHeight.split("px")[0])}px`,
+                        }}>
+                          <div className="card-body" style={{ display: 'flex', fontSize: '25px', fontFamily: 'Poppins', fontWeight: 'Medium', letterSpacing: '-1.5px', color: '#252525' }}>
+
+                            {/* Marker Area */}
+                            <div className="markerArea" style={markerAreaStyle}>
+                              {/* Add marker content here, for example: */}
+                              {/* TODO this is actual line... and not line \n Need to adapt */}
+                              <div style={numberBoxStyle}>1</div>
+                              <div style={numberBoxStyle}>2</div>
+                              <div style={numberBoxStyle}>3</div>
+                              <div style={numberBoxStyle}>4</div>
+                              <div style={numberBoxStyle}>5</div>
+                            </div>
+
+                            {/* Text Content Area */}
+                            <div ref={textRef} className="text-content" style={textContentStyle}>
                               <pre
                                 style={{
-                                  fontFamily: 'Poppins, sans-serif', // Re-apply font settings to <pre>
-                                  fontSize: '25px', // Set explicitly to ensure consistency
-                                  fontWeight: '500', // Ensure medium weight here too
-                                  letterSpacing: '-1.5px', // Apply letter spacing
+                                  fontFamily: 'Poppins, sans-serif',
+                                  fontSize: '25px',
+                                  fontWeight: '500',
+                                  letterSpacing: '-1.5px',
                                   color: '#252525',
-                                  overflow: "visible",
-                                  whiteSpace: "pre-wrap",
-                                  wrapAround:'break-word',
+                                  overflow: 'visible',
+                                  whiteSpace: 'pre-wrap',
+                                  wordBreak: 'break-word',
                                 }}
                                 dangerouslySetInnerHTML={{ __html: fileContent }}
                               />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </>
+                      </>
                   ))}
               </Col>
               {outputAI.details &&
@@ -600,7 +600,6 @@ export default function AI_Detection(){
                     overflowY: 'auto' // Enable scrolling when content exceeds the height
                   }}
                 >
-                  {/* <ScrollGraph data={outputAI.details} width="400" height="600" onScrollPositionChange={handleScrollPositionChange} scrollRatio={scrollPosition} /> */}
                   <ScrollGraphAggregate
                     data={outputAI.details}
                     globalData={codecheckerData_ai_detection_Daryl}
@@ -614,31 +613,13 @@ export default function AI_Detection(){
               }
               <Col lg={3} md={3} sm={12} className="smallerContent"  style={{ display: 'flex', flexDirection: 'column' }}>
                 {outputAI.average && (
-                  <div
-                    className='score_big'
-                    style={{
-                      width: "100%",
-                      color: "black",
-                      backgroundColor: "#f2f2f2",
-                      padding: "0.15rem",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
+                  <div className='score_big' style={{width: "100%", color: "black", backgroundColor: "#f2f2f2", padding: "0.15rem", borderRadius: "0.5rem", }} >
                     <Row style={{ height: "60px", fontSize: "xx-large" }}>
                       <Col lg={8} md={8} style={{ alignContent: "center", fontSize: "2vw"}}>
                         AI Score: {Math.floor(100*outputAI.average.toFixed(2))}
                       </Col>
                       <Col lg={4} md={4}>
-                        <div
-                          className="rectanglesScores"
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-end", // This ensures the rectangles start from the bottom
-                            gap: "2px",
-                            maxWidth:"100px",
-                            height: "60px",
-                          }}
-                        >
+                        <div className="rectanglesScores" style={{ display: "flex", alignItems: "flex-end", gap: "2px", maxWidth:"100px", height: "60px", }}>
                           {[...Array(7)].map((_, i) => (
                             <div
                               key={`rect-${i}`}
@@ -654,92 +635,28 @@ export default function AI_Detection(){
                         </div>
                       </Col>
                     </Row>
-                    <Row style={{
-                      margin:"37px 15px 19px 0px",
-                      "font-size":"20px",
-                    }}
-                    >The colours below represent the text that corresponds with the level of AI</Row>
+                    <Row style={{margin:"37px 15px 19px 0px","font-size":"20px", }}>The colours below represent the text that corresponds with the level of AI</Row>
                     <Row style={{"font-size":"20px",}}>
-                      <div
-                        className="rectIndex"
-                        index={1}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "95%",
-                          maxWidth:"95%",
-                          height: "38px",
-                          margin: "5px 0px 5px 5px",
-                          padding: "5px",
-                          objectFit: "contain",
-                          borderRadius: "5px",
-                          border: "1px solid rgb(17, 91, 78)",
-                          backgroundColor: "rgb(255, 255, 255)"
-                        }}
+                      <div className="rectIndex" index={1} style={{ display: "flex", alignItems: "center", width: "95%", maxWidth:"95%", height: "38px", margin: "5px 0px 5px 5px", padding: "5px", objectFit: "contain", borderRadius: "5px", border: "1px solid rgb(17, 91, 78)", backgroundColor: "rgb(255, 255, 255)" }} 
                       >
                         <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[3] }}></div> AI </div>
-                      <div
-                        className="rectIndex"
-                        index={2}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "95%",
-                          maxWidth:"95%",
-                          height: "38px",
-                          margin: "5px 0px 5px 5px",
-                          padding: "5px",
-                          objectFit: "contain",
-                          borderRadius: "5px",
-                          border: "1px solid rgb(17, 91, 78)",
-                          backgroundColor: "rgb(255, 255, 255)"
-                        }}
+                      <div className="rectIndex" index={2} style={{ display: "flex", alignItems: "center", width: "95%", maxWidth:"95%", height: "38px", margin: "5px 0px 5px 5px", padding: "5px", objectFit: "contain", borderRadius: "5px", border: "1px solid rgb(17, 91, 78)", backgroundColor: "rgb(255, 255, 255)" }} 
                       >
                         <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[2] }}></div> Highly likely AI </div>
-                      <div
-                        className="rectIndex"
-                        index={3}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "95%",
-                          maxWidth:"95%",
-                          height: "38px",
-                          margin: "5px 0px 5px 5px",
-                          padding: "5px",
-                          objectFit: "contain",
-                          borderRadius: "5px",
-                          border: "1px solid rgb(17, 91, 78)",
-                          backgroundColor: "rgb(255, 255, 255)"
-                        }}
+                      <div className="rectIndex" index={3} style={{ display: "flex", alignItems: "center", width: "95%", maxWidth:"95%", height: "38px", margin: "5px 0px 5px 5px", padding: "5px", objectFit: "contain", borderRadius: "5px", border: "1px solid rgb(17, 91, 78)", backgroundColor: "rgb(255, 255, 255)" }} 
                       >
                         <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px",  backgroundColor: colorBases[1]}} ></div> Ambiguous </div>
                       <div
-                        className="rectIndex"
-                        index={4}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "95%",
-                          maxWidth:"95%",
-                          height: "38px",
-                          margin: "5px 0px 5px 5px",
-                          padding: "5px",
-                          objectFit: "contain",
-                          borderRadius: "5px",
-                          border: "1px solid rgb(17, 91, 78)",
-                          backgroundColor: "rgb(255, 255, 255)"
-                        }}
+                        className="rectIndex" index={4} style={{ display: "flex", alignItems: "center", width: "95%", maxWidth:"95%", height: "38px", margin: "5px 0px 5px 5px", padding: "5px", objectFit: "contain", borderRadius: "5px", border: "1px solid rgb(17, 91, 78)", backgroundColor: "rgb(255, 255, 255)" }}
                       >
                         <div style={{ width: "20px", height: "20px", marginRight: "10px", border: "1px solid #115b4e", borderRadius: "5px", backgroundColor: colorBases[0] }} ></div> Human </div>
                     </Row>
                     <Row>
+                      {/* TODO update with selection of worst lines */}
                       <span style={{"font-size":"20px","padding-top":"1em"}} class="Click-the-numbers-below-to-see-the-top-5-highest-density-areas">
-                        Click the numbers below to see the top 5
-                        highest density areas of AI-generated text.
+                        Click the numbers below to see the top 5 highest density areas of AI-generated text.
                       </span>
                       <div style={numberGridStyle}>
-                      {/* TODO update with selection of worst lines */}
                         <div style={numberBoxStyle} onClick={() => scrollToLine(1)}>1</div>
                         <div style={numberBoxStyle} onClick={() => scrollToLine(2)}>2</div>
                         <div style={numberBoxStyle} onClick={() => scrollToLine(3)}>3</div>
