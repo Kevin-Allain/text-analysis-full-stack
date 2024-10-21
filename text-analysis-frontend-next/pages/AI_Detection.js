@@ -23,7 +23,7 @@ import codecheckerData_ai_detection_News_article_results from '@/public/data/Dar
 
 import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/all_results_inverted_tipped_detail_late.json';
 // TODO communicate about issue: all average are 0 or super close to 0
-// import codecheckerData_ai_detection_Daryl from '@/public/data/Daryl/dataset_results_filename_fix.json';
+import example_linesScores_issue from '@/public/data/Daryl/dataset_results_filename_fix.json';
 
 import LegendQuant from '@/components/vis/LegendQuant';
 import LegendBinned from '@/components/vis/LegendBinned';
@@ -35,15 +35,10 @@ import ScrollGraph from '@/components/ScrollGraph'
 import ScrollGraphAggregate from '@/components/ScrollGraphAggregate';
 import '@/styles/AI_Detection.css';
 
-const numberButtonStyle = {
-  width: '32px', height: '32px', padding: '6px', objectFit: 'contain', borderRadius: '5px', border: 'solid 1px #115b4e', backgroundColor: '#252525', color: 'white', textAlign: 'center', fontSize: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
-};
-const numberBoxStyle = {
-  width: '32px', height: '32px', padding: '6px', objectFit: 'contain', borderRadius: '5px', border: 'solid 1px #115b4e', backgroundColor: '#252525', color: 'white', textAlign: 'center', fontSize: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'
-};
-const numberGridStyle = {
-  display: 'flex', justifyContent: 'space-between', width: '50%', paddingTop: '1em'
-};
+// Styles
+const numberButtonStyle = { width: '32px', height: '32px', padding: '6px', objectFit: 'contain', borderRadius: '5px', border: 'solid 1px #115b4e', backgroundColor: '#252525', color: 'white', textAlign: 'center', fontSize: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' };
+const numberBoxStyle = { width: '32px', height: '32px', padding: '6px', objectFit: 'contain', borderRadius: '5px', border: 'solid 1px #115b4e', backgroundColor: '#252525', color: 'white', textAlign: 'center', fontSize: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' };
+const numberGridStyle = { display: 'flex', justifyContent: 'space-between', width: '50%', paddingTop: '1em' };
 
 export default function AI_Detection(){
   // ---- useState
@@ -175,110 +170,29 @@ export default function AI_Detection(){
     } finally { setIsLoadingAI(false); }
   };
 
-  // const highlightText_quant = (text, scoreDetails, binning = false, numBin = 10) => {
-  //   let highlightedText = text;
-  //   let sizeOffset = 0;
-  //   console.log("highlightText_quant | scoreDetails: ", {scoreDetails, binning, numBin});
-  //   let allScores = scoreDetails.map(a => a.score);
-  //   let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
-  //   scoreDetails.forEach(detail => {
-  //     const { type, range, score } = detail;
-  //     const opacity = calculateOpacity(score.toFixed(2), minScore, maxScore, binning, numBin);
-  //     const binIndex = binning ? getBinFromScore(score.toFixed(2), minScore, maxScore, numBin) : 0;
-  //     const binClass = "bin_" + binIndex;
-  //     const highlightStart = `<span class="highlight ${type} ${binClass}" score="${score}" ${binning ? `data-bin="${binIndex}"` : ''} 
-  //       style="background-color: rgba(0, 100, 0, ${opacity});">`;
-  //     const highlightEnd = "</span>";
-  //     const start = range[0];
-  //     const end = range[1];
-  //     highlightedText =
-  //       highlightedText.slice(0, start + sizeOffset) +
-  //       highlightStart +
-  //       highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
-  //       highlightEnd +
-  //       highlightedText.slice(end + sizeOffset + 1);
-  //     sizeOffset += highlightStart.length + highlightEnd.length;
-  //   });
-  //   return highlightedText;
-  // };
+  const getWorstLines = (data, fileName, model) => {
+    // Find the matching entry for the given fileName and model
+    const matchingEntry = data.find(entry => entry.fileName === fileName && entry.model === model);
+    if (!matchingEntry) {
+      console.error("No matching data found for the specified fileName and model.");
+      return [];
+    }
+    // Sort lines based on the 'value' field in descending order (worst score first)
+    const sortedLines = matchingEntry.lines_prediction.sort((a, b) => b.value - a.value);
+    // Extract the line numbers of the top 5 worst lines
+    const worstLines = sortedLines.slice(0, 5).map(line => line.line_number);  
+    return worstLines;
+  };
 
-  // const highlightText_quant_binned = (text, scoreDetails, binning = false, numBin = 4) => {
-  //   let highlightedText = text;
-  //   console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin, text });
-  //   // TODO update the code so that minScores and maxScores are based on all content!
-  //   let scoresTotal = [];
-  //   codecheckerData_ai_detection_Daryl.map(a => scoresTotal = scoresTotal.concat(a.details.map(b => b.value) ) );
-  //   console.log("~~~~ scoresTotal: ", scoresTotal);
-  //   let averagesTotal = [];
-  //   codecheckerData_ai_detection_Daryl.map(a => averagesTotal = averagesTotal.concat([a.average]) );
-  //   console.log("~~~~ averagesTotal: ", averagesTotal);
+  // TODO once data is fixed, get the updated data
+  const highlightText_quant_binned = (text, scoreDetails, binning = false, numBin = 4, fileName = null, model = null) => {
+    console.log("highlightText_quant_binned | ", { scoreDetails, binning, numBin, fileName, model });
 
-  //   // Extract all scores and find the minimum and maximum
-  //   let allScores = scoreDetails.map(a => a.score);
-  //   // let minScore = Math.min(...allScores);
-  //   // let maxScore = Math.max(...allScores);
-  //   let maxScore = Math.max(...scoresTotal);
-  //   // let maxScore = Math.max(...averagesTotal);
-  
-  //   // Function to determine the background color based on the score
-  //   const getBinnedColor = (score) => {
-  //     // Define bin thresholds based on the min and max scores
-  //     const bin1 = maxScore * 0.75; // Highest bin
-  //     const bin2 = maxScore * 0.5;  // Mid-high bin
-  //     const bin3 = maxScore * 0.25; // Mid-low bin  
-  //     // Assign color based on which bin the score falls into
-  //     if (score >= bin1) { return colorBases[3]; } else if (score >= bin2) { return colorBases[2]; } else if (score >= bin3) { return colorBases[1]; } else { return colorBases[0]; }
-  //   };
-  //   // Create the highlight span with the appropriate background color
-  //   // const highlightStart = `<span class="highlight ${type}" score="${score}" style="background-color: ${backgroundColor};" line-height: 1.15;" "wrap-around:break-word" >`;
-  //   //   // style="background-color: ${backgroundColor}; color: ${backgroundColor === colorBases[3] ? 'lightgray' : 'black'}; line-height: 1.15;">`;
-  //   //   // "color: ${backgroundColor === colorBases[3] ? 'black' : 'black'}; "
-  //   // const highlightEnd = "</span>";
+    // test (array from worst score to less)
+    console.log("example_linesScores_issue: ",example_linesScores_issue);
+    const worstLines = getWorstLines(example_linesScores_issue, fileName, model);
+    console.log("worstLines: ", worstLines);
 
-  //   let currentLine = 1;  // Start line numbering
-  //   let sizeOffset = 0;   // Track text size adjustment
-  //   scoreDetails.forEach((detail) => {
-  //     const { type, range, score } = detail;
-  //     const backgroundColor = getBinnedColor(score);
-  //     const highlightStart = `<span 
-  //       class="highlight ${type} line-${currentLine}" 
-  //       score="${score}" 
-  //       style="background-color: ${backgroundColor}; line-height: 1.15; word-wrap: break-word; word-break: break-word;"
-  //     >`;
-  //     const highlightEnd = "</span>";
-  //     const start = range[0];
-  //     const end = range[1];
-
-  //     console.log("highlightedText.slice(start + sizeOffset, end + sizeOffset + 1): ", highlightedText.slice(start + sizeOffset, end + sizeOffset + 1));
-
-  //     // Insert the highlight span into the text
-  //     highlightedText =
-  //       highlightedText.slice(0, start + sizeOffset) +
-  //       highlightStart +
-  //       highlightedText.slice(start + sizeOffset, end + sizeOffset + 1) +
-  //       highlightEnd +
-  //       highlightedText.slice(end + sizeOffset + 1);
-  //     sizeOffset += highlightStart.length + highlightEnd.length;
-  //     // Check the content between spans to detect line breaks or empty spans
-  //     const textBetween = highlightedText.slice(start + sizeOffset, end + sizeOffset);
-  //     // Check for actual line breaks (\n)
-  //     const newLineBreaks = textBetween.match(/(\r\n|\n|\r)/g) || [];
-  //     if (newLineBreaks.length > 0) {
-  //       currentLine += newLineBreaks.length;  // Increment by the number of line breaks found
-  //     } else {
-  //       // Check if the span is completely empty or contains only non-breaking spaces (&nbsp;)
-  //       const isEmptySpan = textBetween.trim() === '' || textBetween === '&nbsp;';
-  //       if (isEmptySpan) {
-  //         currentLine++;  // Only increment line number for empty spans or spans with only &nbsp;
-  //       }
-  //     }
-  //   });
-    
-  //   return highlightedText;    
-  // };
-
-  const highlightText_quant_binned = (text, scoreDetails, binning = false, numBin = 4) => {
-    console.log("highlightText_quant_binned | scoreDetails: ", { scoreDetails, binning, numBin });
     let sizeOffset = 0;
     let highlightedText = text;
     let scoresTotal = [];
@@ -311,7 +225,7 @@ export default function AI_Detection(){
       const { type, range, score } = detail;
       const backgroundColor = getBinnedColor(score);
       // Step 2: Add a unique index to each span and add the line number to every span
-      let additionalClass = `span-index-${index} line-${lineNumber}`; // Unique index class and line number for each span
+      let additionalClass = `span-index-${index} line-marker-${lineNumber}`; // Unique index class and line number for each span
       // Step 3: Check if the current span overlaps with a \n position
       let spanContainsNewLine = newLineIndexes.some(newLineIndex => {
         return newLineIndex >= range[0] && newLineIndex <= range[1]; // Check if \n is within the span's range
@@ -325,7 +239,7 @@ export default function AI_Detection(){
       }
       const highlightStart = `<span 
         class="highlight ${type} ${additionalClass}" score="${score}" 
-        style="background-color: ${backgroundColor}; line-height: 1.15; word-wrap: break-word; word-break: break-word;"
+        style="background-color: ${backgroundColor}; line-marker-height: 1.15; word-wrap: break-word; word-break: break-word;"
       >`;
       const highlightEnd = "</span>";
       const start = range[0];
@@ -350,7 +264,7 @@ export default function AI_Detection(){
   const handleFileClick = (index) => { setIndexFile(index); };
   const scrollToLine = (lineNumber) => {
     console.log("scrollToLine | lineNumber: ",lineNumber);
-    const lineElement = document.querySelector(`.line-${lineNumber}`);
+    const lineElement = document.querySelector(`.line-marker-${lineNumber}`);
     console.log("scrollToLine | lineElement: ",lineElement);
     if (lineElement) { lineElement.scrollIntoView({ behavior: 'smooth' }); }
   }
@@ -388,14 +302,15 @@ export default function AI_Detection(){
     }
 
     // Addition for markers
+    // TODO connect marker to line number
     const adjustMarkerPositions = () => {
       const markerElements = document.querySelectorAll('.markerArea div');
       const lineElements = [
-        document.querySelector('.line-1'), 
-        document.querySelector('.line-2'), 
-        document.querySelector('.line-3'), 
-        document.querySelector('.line-4'), 
-        document.querySelector('.line-10'),
+        document.querySelector('.line-marker-1'), 
+        document.querySelector('.line-marker-2'), 
+        document.querySelector('.line-marker-3'), 
+        document.querySelector('.line-marker-4'), 
+        document.querySelector('.line-marker-5'),
       ];
 
       // Adjust each marker's position based on the corresponding line's position
@@ -446,7 +361,7 @@ export default function AI_Detection(){
       console.log("transformDataToScoreDetails resultScore: ",resultScore,", ¬ outputAI: ",outputAI);
       // fourth, apply highlight
       // setFileContent( highlightText_quant(originalText, resultScore.scoreDetails, true, maxBin) );
-      setFileContent( highlightText_quant_binned(originalText, resultScore.scoreDetails, true, maxBin) );
+      setFileContent( highlightText_quant_binned(originalText, resultScore.scoreDetails, true, maxBin, outputAI.fileName,outputAI.model) );
       let allScores = resultScore.scoreDetails.map(a => a.score);
       let minScore = Math.min(...allScores), maxScore = Math.max(...allScores);
       setMinScoreAI(minScore);
@@ -456,34 +371,6 @@ export default function AI_Detection(){
       console.log("Check | selectedUser: ",selectedUser,", outputAI: ",outputAI,", outputAI.scoreDetails: ",outputAI.scoreDetails);
     }
   },[outputAI])
-
-
-
-  // // FOR MARKER POSITION
-  // useEffect(() => {
-  //   const adjustMarkerPositions = () => {
-  //     const markerElements = document.querySelectorAll('.markerArea div');
-  //     // TODO update for lines with worst scores
-  //     const lineElements = document.querySelectorAll('.line-1, .line-2, .line-3, .line-4, .line-5');      
-  //     let previousBottom = 0;
-  //     // Adjust each marker's position based on the corresponding line's position
-  //     markerElements.forEach((marker, index) => {
-  //       if (lineElements[index]) {
-  //         const lineTop = lineElements[index].offsetTop;          
-  //         // Calculate the margin-top by subtracting the previous marker's bottom position
-  //         const marginTop = lineTop - previousBottom;
-  //         marker.style.marginTop = `${marginTop}px`;
-  //         // Update the bottom position of the current marker for the next iteration
-  //         previousBottom = lineTop + marker.offsetHeight;
-  //       }
-  //     });
-  //   };
-  //   // Adjust markers after content is rendered
-  //   adjustMarkerPositions();
-  //   // Listen to window resize events to recalculate positions if the window is resized
-  //   window.addEventListener('resize', adjustMarkerPositions);
-  //   return () => { window.removeEventListener('resize', adjustMarkerPositions); };
-  // }, [fileContent]);  // Re-run whenever fileContent changes
 
 
 
@@ -627,7 +514,7 @@ export default function AI_Detection(){
                               <div className="marker-2" style={numberBoxStyle}>2</div>
                               <div className="marker-3" style={numberBoxStyle}>3</div>
                               <div className="marker-4" style={numberBoxStyle}>4</div>
-                              <div className="marker-10" style={numberBoxStyle}>10</div>
+                              <div className="marker-5" style={numberBoxStyle}>5</div>
                             </div>
 
                             {/* Text Content Area */}
@@ -720,7 +607,7 @@ export default function AI_Detection(){
                         <div style={numberButtonStyle} onClick={() => scrollToLine(2)}>2</div>
                         <div style={numberButtonStyle} onClick={() => scrollToLine(3)}>3</div>
                         <div style={numberButtonStyle} onClick={() => scrollToLine(4)}>4</div>
-                        <div style={numberButtonStyle} onClick={() => scrollToLine(10)}>10</div>
+                        <div style={numberButtonStyle} onClick={() => scrollToLine(5)}>5</div>
                       </div>
                     </Row>
                   </div>
