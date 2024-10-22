@@ -55,6 +55,8 @@ export default function AI_Detection(){
   const [selectedBinIndex, setSelectedBinIndex] = useState(null);
   const { formData, setFormData } = useContext(FormDataContext);
 
+  const [worstLines, setWorstLines] = useState([]);
+
   // const users = codecheckerData_plagiarism.data.sort((a, b) => b.globalScore - a.globalScore);
   const users = codecheckerData_ai_detection.data.sort( (a,b) => b.name - a.name );
   const oddTabChar='ĉ', oddSpaceChar='Ġ', oddNewLineChar='Ċ', oddEndLineChar='č';
@@ -180,8 +182,9 @@ export default function AI_Detection(){
     // Sort lines based on the 'value' field in descending order (worst score first)
     const sortedLines = matchingEntry.lines_prediction.sort((a, b) => b.value - a.value);
     // Extract the line numbers of the top 5 worst lines
-    const worstLines = sortedLines.slice(0, 5).map(line => line.line_number);  
-    return worstLines;
+    const latestWorstLines = sortedLines.slice(0, 5).map(line => line.line_number);  
+    setWorstLines(latestWorstLines);
+    return latestWorstLines;
   };
 
   // TODO once data is fixed, get the updated data
@@ -190,8 +193,8 @@ export default function AI_Detection(){
 
     // test (array from worst score to less)
     console.log("example_linesScores_issue: ",example_linesScores_issue);
-    const worstLines = getWorstLines(example_linesScores_issue, fileName, model);
-    console.log("worstLines: ", worstLines);
+    const latestWorstLines = getWorstLines(example_linesScores_issue, fileName, model);
+    console.log("latestWorstLines: ", latestWorstLines);
 
     let sizeOffset = 0;
     let highlightedText = text;
@@ -258,13 +261,16 @@ export default function AI_Detection(){
     console.log("Spans with new lines: ", spansWithNewLines);
     return highlightedText;
   };
-          
+
+  
+  
+
   const handleUserClick = (user) => { setSelectedUser(user.name); setIndexFile(0); };
   const handleHighlightClick = (e,className) => { console.log("handleHighlightClick | e: ",e,"className: ",className); };
   const handleFileClick = (index) => { setIndexFile(index); };
   const scrollToLine = (lineNumber) => {
     console.log("scrollToLine | lineNumber: ",lineNumber);
-    const lineElement = document.querySelector(`.line-marker-${lineNumber}`);
+    const lineElement = document.querySelector(`.marker-${lineNumber}`);
     console.log("scrollToLine | lineElement: ",lineElement);
     if (lineElement) { lineElement.scrollIntoView({ behavior: 'smooth' }); }
   }
@@ -302,15 +308,18 @@ export default function AI_Detection(){
     }
 
     // Addition for markers
-    // TODO connect marker to line number
     const adjustMarkerPositions = () => {
       const markerElements = document.querySelectorAll('.markerArea div');
+      console.log("adjustMarkerPositions | worstLines: ", worstLines);
+      let adaptedLines = worstLines.map(a => a+1);
+      console.log("adjustMarkerPositions | adaptedLines: ", adaptedLines);
+
       const lineElements = [
-        document.querySelector('.line-marker-1'), 
-        document.querySelector('.line-marker-2'), 
-        document.querySelector('.line-marker-3'), 
-        document.querySelector('.line-marker-4'), 
-        document.querySelector('.line-marker-5'),
+        document.querySelector(`.line-marker-${adaptedLines[0]}`), 
+        document.querySelector(`.line-marker-${adaptedLines[1]}`), 
+        document.querySelector(`.line-marker-${adaptedLines[2]}`), 
+        document.querySelector(`.line-marker-${adaptedLines[3]}`), 
+        document.querySelector(`.line-marker-${adaptedLines[4]}`),
       ];
 
       // Adjust each marker's position based on the corresponding line's position
